@@ -542,10 +542,11 @@
         return;
       }
 
-      // Quick add → header bag count
+      // Quick add → header bag count + confirmation modal
       if (e.target.closest("[data-quickadd]")) {
         e.preventDefault();
         bumpBag();
+        if (product) openCartModal(product);
         return;
       }
 
@@ -939,6 +940,140 @@
     var n = (parseInt(el.textContent, 10) || 0) + 1;
     el.textContent = n;
     el.hidden = false;
+  }
+
+  /* ── Add-to-bag confirmation modal ─────────────────────────── */
+  var cartScrim = document.getElementById("plpCartScrim");
+  var cartModal = document.getElementById("plpCartModal");
+  var cartModalBody = document.getElementById("plpCartModalBody");
+
+  function closeCartModal() {
+    if (!cartModal) return;
+    cartModal.classList.remove("is-open");
+    if (cartScrim) cartScrim.classList.remove("is-open");
+    setTimeout(function () {
+      cartModal.hidden = true;
+      if (cartScrim) cartScrim.hidden = true;
+    }, 200); // let the close transition finish
+    document.body.style.overflow = "";
+    document.removeEventListener("keydown", onCartModalKey);
+  }
+  function onCartModalKey(e) { if (e.key === "Escape") closeCartModal(); }
+
+  var cartModalProduct = null; // product currently shown in the modal
+
+  /* Modal body — same swatch chips and size text-chips as the listing
+     cards (shared .plp-swatch / .plp-size styles), selectable in-place. */
+  function cartModalBodyHTML(product) {
+    var img = displayImage(product);
+    var onSale = product.compareAt && product.compareAt > product.price;
+    var price = onSale
+      ? '<span class="was">' + money(product.compareAt) + '</span><span class="now">' + money(product.price) + "</span>"
+      : money(product.price);
+
+    var selIdx = state.selected[product.id] || 0;
+    var variant = product.variants[selIdx] || product.variants[0];
+
+    var swatches = product.variants.map(function (v, i) {
+      var style = product.imageSwatches && v.image
+        ? "background-image:url(" + v.image + ")"
+        : "background:" + v.hex;
+      return '<button type="button" class="plp-swatch' + (product.imageSwatches ? " plp-swatch-img" : "") +
+        (i === selIdx ? " is-active" : "") + '" data-modal-swatch="' + i + '" style="' + style + '" ' +
+        'aria-label="' + v.color + '" title="' + v.color + '"></button>';
+    }).join("");
+
+    var colourRow =
+      '<span class="plp-cart-modal-variant">Colour: <b>' + (variant ? variant.color : "") + "</b></span>" +
+      '<div class="plp-swatches plp-cart-modal-swatches">' + swatches + "</div>";
+
+    var sizeSel = state.size[product.id];
+    var sizeRow;
+    if (product.sizes && product.sizes.length) {
+      var chips = product.sizes.map(function (s) {
+        var soldOut = product.soldOutSizes && product.soldOutSizes.indexOf(s) !== -1;
+        return '<button type="button" class="plp-size' +
+          (soldOut ? " is-soldout" : "") + (s === sizeSel ? " is-active" : "") + '" ' +
+          (soldOut ? 'disabled aria-disabled="true" ' : "") +
+          'data-modal-size="' + s + '">' + s + "</button>";
+      }).join("");
+      sizeRow =
+        '<span class="plp-cart-modal-variant">Size:' + (sizeSel ? " <b>" + sizeSel + "</b>" : "") + "</span>" +
+        '<div class="plp-sizes plp-cart-modal-sizes">' + chips + "</div>";
+    } else {
+      sizeRow = '<span class="plp-cart-modal-variant">Size: <b>One Size</b></span>';
+    }
+
+    return (
+      '<img class="plp-cart-modal-img" src="' + img + '" alt="' + product.name + '">' +
+      '<div class="plp-cart-modal-info">' +
+        '<span class="plp-cart-modal-brand">' + product.vendor + "</span>" +
+        '<span class="plp-cart-modal-name">' + product.name + "</span>" +
+        colourRow +
+        sizeRow +
+        '<span class="plp-cart-modal-price">' + price + "</span>" +
+      "</div>"
+    );
+  }
+
+  /* Keep the grid card behind the modal in step with modal selections. */
+  function syncCardFromState(product) {
+    var card = grid && grid.querySelector('.plp-card[data-id="' + product.id + '"]');
+    if (!card) return;
+    var selIdx = state.selected[product.id] || 0;
+    card.querySelectorAll(".plp-swatch").forEach(function (el, i) {
+      el.classList.toggle("is-active", i === selIdx);
+    });
+    var img = card.querySelector(".plp-card-mainimg");
+    if (img) img.src = displayImage(product);
+    var sizeSel = state.size[product.id];
+    card.querySelectorAll(".plp-size").forEach(function (el) {
+      el.classList.toggle("is-active", el.dataset.size === sizeSel);
+    });
+  }
+
+  function openCartModal(product) {
+    if (!cartScrim || !cartModal || !cartModalBody) return;
+    cartModalProduct = product;
+    cartModalBody.innerHTML = cartModalBodyHTML(product);
+
+    cartModal.hidden = false;
+    cartScrim.hidden = false;
+    void cartModal.offsetWidth; // force layout so the open transition actually runs
+    cartModal.classList.add("is-open");
+    cartScrim.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onCartModalKey);
+  }
+
+  if (cartModal) {
+    var cartCloseBtn = document.getElementById("plpCartModalClose");
+    var cartContinueBtn = document.getElementById("plpCartModalContinue");
+    var cartViewBagBtn = document.getElementById("plpCartModalViewBag");
+    if (cartCloseBtn) cartCloseBtn.addEventListener("click", closeCartModal);
+    if (cartContinueBtn) cartContinueBtn.addEventListener("click", closeCartModal);
+    if (cartScrim) cartScrim.addEventListener("click", closeCartModal);
+    // No real bag page in this demo — "View bag" just closes for now.
+    if (cartViewBagBtn) cartViewBagBtn.addEventListener("click", closeCartModal);
+
+    // Colour / size selection inside the modal — updates the shared state,
+    // refreshes the modal body and keeps the grid card behind it in sync.
+    cartModalBody.addEventListener("click", function (e) {
+      if (!cartModalProduct) return;
+      var sw = e.target.closest("[data-modal-swatch]");
+      if (sw) {
+        state.selected[cartModalProduct.id] = Number(sw.dataset.modalSwatch);
+        cartModalBody.innerHTML = cartModalBodyHTML(cartModalProduct);
+        syncCardFromState(cartModalProduct);
+        return;
+      }
+      var sz = e.target.closest("[data-modal-size]");
+      if (sz && !sz.disabled) {
+        state.size[cartModalProduct.id] = sz.dataset.modalSize;
+        cartModalBody.innerHTML = cartModalBodyHTML(cartModalProduct);
+        syncCardFromState(cartModalProduct);
+      }
+    });
   }
 
   render();

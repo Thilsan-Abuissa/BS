@@ -532,14 +532,14 @@
 }
 
 .plp-wish.is-active {
-  color: var(--sale);
+  color: var(--ink-900);
   opacity: 1;
   transform: translateY(0);
 }
 
 .plp-wish.is-active svg {
-  fill: var(--sale);
-  stroke: var(--sale);
+  fill: var(--ink-900);
+  stroke: var(--ink-900);
 }
 
 /* Stacked hover actions (wishlist + add to bag) — default style.
@@ -580,8 +580,8 @@
               background var(--dur-base) var(--ease-standard);
 }
 .plp-action:hover { color: var(--color-primary); background: #fff; }
-.plp-action.is-active { color: var(--sale); }
-.plp-action.is-active svg { fill: var(--sale); stroke: var(--sale); }
+.plp-action.is-active { color: var(--ink-900); }
+.plp-action.is-active svg { fill: var(--ink-900); stroke: var(--ink-900); }
 
 /* Image gallery dots — browse a product's photos, revealed on hover */
 .plp-dots {
@@ -838,7 +838,9 @@ a.plp-card-name:hover {
 .plp-filters, .plp-filters-head, .plp-filter-hide, .plp-facet-head, .plp-facet-size, .plp-facet-opt,
 .plp-subcat, .plp-subcat-toggle,
 .plp-card, .plp-card-brand, .plp-card-name, .plp-card-price, .plp-swatch-more,
-.plp-size, .plp-quickadd button, .plp-tag, .plp-empty {
+.plp-size, .plp-quickadd button, .plp-tag, .plp-empty,
+.plp-cart-modal-head, .plp-cart-modal-brand, .plp-cart-modal-name, .plp-cart-modal-variant,
+.plp-cart-modal-price, .plp-cart-modal-continue, .plp-cart-modal-viewbag {
   font-family: 'League Spartan', sans-serif;
 }
 
@@ -871,6 +873,153 @@ a.plp-card-name:hover {
 }
 @media (prefers-reduced-motion: reduce) {
   .plp-loadmore-spinner { animation: none; }
+}
+
+/* ── Add-to-bag confirmation modal ─────────────────────────── */
+.plp-cart-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 590;
+  background: rgba(0, 42, 87, 0.42);
+  opacity: 0;
+  transition: opacity var(--dur-base, .25s) var(--ease-standard);
+}
+.plp-cart-scrim[hidden] { display: none; }
+.plp-cart-scrim.is-open { opacity: 1; }
+
+.plp-cart-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 600;
+  width: min(92vw, 420px);
+  background: #fff;
+  box-shadow: var(--shadow-lg);
+  transform: translate(-50%, -50%) scale(0.96);
+  opacity: 0;
+  transition: opacity var(--dur-base, .25s) var(--ease-standard),
+              transform var(--dur-base, .25s) var(--ease-standard);
+}
+.plp-cart-modal[hidden] { display: none; }
+.plp-cart-modal.is-open {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.plp-cart-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.plp-cart-modal-head > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-900);
+}
+.plp-cart-modal-head svg:first-child { color: var(--success, #1f8a5b); flex: none; }
+.plp-cart-modal-close { background: none; border: 0; color: var(--ink-800); cursor: pointer; padding: 0; }
+.plp-cart-modal-close:hover { color: var(--color-primary); }
+
+.plp-cart-modal-body {
+  display: flex;
+  gap: 16px;
+  padding: 22px 20px;
+}
+.plp-cart-modal-img {
+  width: 84px;
+  height: 105px;
+  object-fit: cover;
+  background: var(--surface-sunken);
+  flex: none;
+}
+.plp-cart-modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.plp-cart-modal-brand {
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-900);
+}
+.plp-cart-modal-name {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-800);
+}
+.plp-cart-modal-variant {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.plp-cart-modal-variant b {
+  font-weight: var(--fw-medium);
+  color: var(--ink-800);
+}
+/* Swatch + size rows inside the modal reuse the card chip styles but are
+   always visible (the card's size row is hover-revealed) and sit tighter. */
+.plp-cart-modal-swatches { margin: 2px 0 6px; }
+.plp-cart-modal-sizes {
+  opacity: 1 !important;      /* .plp-sizes hides until card hover — not here */
+  margin: 2px 0 0;
+}
+.plp-cart-modal-price {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--ink-900);
+}
+.plp-cart-modal-price .was {
+  color: var(--text-subtle);
+  text-decoration: line-through;
+  margin-inline-end: 8px;
+}
+.plp-cart-modal-price .now { color: var(--sale); }
+
+.plp-cart-modal-actions {
+  display: flex;
+  gap: 12px;
+  padding: 0 20px 20px;
+}
+.plp-cart-modal-continue,
+.plp-cart-modal-viewbag {
+  flex: 1;
+  height: 44px;
+  font-size: 11.5px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--dur-base) var(--ease-standard),
+              color var(--dur-base) var(--ease-standard),
+              border-color var(--dur-base) var(--ease-standard);
+}
+.plp-cart-modal-continue {
+  background: #fff;
+  color: var(--ink-900);
+  border: 1px solid var(--border-default);
+}
+.plp-cart-modal-continue:hover { border-color: var(--ink-900); }
+.plp-cart-modal-viewbag {
+  background: var(--ink-900);
+  color: #fff;
+  border: 1px solid var(--ink-900);
+}
+.plp-cart-modal-viewbag:hover { background: var(--color-primary); border-color: var(--color-primary); }
+
+@media (max-width: 480px) {
+  .plp-cart-modal-body { flex-direction: column; align-items: flex-start; }
+  .plp-cart-modal-img { width: 100px; height: 125px; }
+  .plp-cart-modal-actions { flex-direction: column; }
 }
 
 /* ── Responsive ───────────────────────────────────────────── */

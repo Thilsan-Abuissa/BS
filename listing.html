@@ -182,6 +182,22 @@
 
   </main>
 
+  <!-- ════════════════ Add-to-bag confirmation modal ════════════════ -->
+  <div class="plp-cart-scrim" id="plpCartScrim" hidden></div>
+  <div class="plp-cart-modal" id="plpCartModal" role="dialog" aria-modal="true" aria-labelledby="plpCartModalTitle" hidden>
+    <div class="plp-cart-modal-head">
+      <span id="plpCartModalTitle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Added to bag</span>
+      <button type="button" class="plp-cart-modal-close" id="plpCartModalClose" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="plp-cart-modal-body" id="plpCartModalBody"><!-- rendered by listing.js --></div>
+    <div class="plp-cart-modal-actions">
+      <button type="button" class="plp-cart-modal-continue" id="plpCartModalContinue">Continue shopping</button>
+      <button type="button" class="plp-cart-modal-viewbag" id="plpCartModalViewBag">View bag</button>
+    </div>
+  </div>
+
   <!-- ════════════════ Footer ════════════════ -->
   <footer class="bs-footer">
 

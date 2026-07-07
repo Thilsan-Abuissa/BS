@@ -15,7 +15,7 @@
   var PRODUCTS = [
     {
       id: "miriam-ostrich", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Patchwork Leather Chain‑Handle Tote Bag", cat: "shoes",
-      price: 9700, tag: "New", tagTone: "dark", order: 1,
+      price: 9700, tag: "New", tagTone: "dark", order: 1, imageSwatches: true,
       sizes: ["36","37","38","39","40","41"],
       soldOutSizes: ["36"],
       variants: [
@@ -106,6 +106,23 @@
         { color: "Black", hex: "#191919" },
         { color: "Ivory", hex: "#efece3" }
       ]
+    },
+    {
+      id: "crystal-drop-earrings", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Crystal Drop Earrings", cat: "jewelry",
+      price: 1650, order: 10,
+      variants: [
+        { color: "Silver", hex: "#c9cdd1", image: "images/Artboard3-1_P26_R2_ShopTheLook_Desktop_6.9.26.webp" },
+        { color: "Gold", hex: "#c2a25e" }
+      ]
+    },
+    {
+      id: "leopard-print-vest", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Leopard-Print Satin Vest", cat: "beauty",
+      price: 1980, order: 11,
+      sizes: ["XS","S","M","L","XL"],
+      variants: [
+        { color: "Leopard", hex: "#a9873f", image: "images/setsi.png" },
+        { color: "Black", hex: "#191919" }
+      ]
     }
   ];
 
@@ -126,10 +143,12 @@
   PRODUCTS.forEach(function (p) { if (!p.material && MATERIALS[p.id]) p.material = MATERIALS[p.id]; });
 
   var MAX_SWATCHES = 3; // show up to 3 inline, rest as "+N"
+  var PAGE_SIZE = 9;    // products per infinite-scroll batch
 
   /* ── State ────────────────────────────────────────────────── */
   var state = {
     sort: "featured",
+    page: 1,             // infinite-scroll: how many PAGE_SIZE batches are shown
     wishlist: {},        // id -> true
     selected: {},        // id -> selected variant index
     size: {},            // id -> selected size (on-card size chip)
@@ -216,8 +235,14 @@
     var extra = p.variants.length - shown.length;
 
     var swatches = shown.map(function (v, i) {
-      return '<button type="button" class="plp-swatch' + (i === selIdx ? " is-active" : "") +
-        '" data-swatch="' + i + '" style="background:' + v.hex + '" ' +
+      // Variant-image swatches (opt-in per product): show a thumbnail of
+      // that colourway's actual photo instead of a flat colour chip;
+      // variants without their own shot fall back to the colour swatch.
+      var style = p.imageSwatches && v.image
+        ? "background-image:url(" + v.image + ")"
+        : "background:" + v.hex;
+      return '<button type="button" class="plp-swatch' + (p.imageSwatches ? " plp-swatch-img" : "") +
+        (i === selIdx ? " is-active" : "") + '" data-swatch="' + i + '" style="' + style + '" ' +
         'aria-label="' + v.color + '" title="' + v.color + '"></button>';
     }).join("");
     if (extra > 0) swatches += '<span class="plp-swatch-more">+' + extra + "</span>";
@@ -387,17 +412,55 @@
     syncSubcats();
   }
 
+  var loadMoreEl = document.getElementById("plpLoadMore");
+
   function render() {
     if (!grid) return;
     var list = visibleProducts();
-    grid.innerHTML = list.length
-      ? list.map(cardHTML).join("")
+    var shown = list.slice(0, state.page * PAGE_SIZE);
+    grid.innerHTML = shown.length
+      ? shown.map(cardHTML).join("")
       : '<p class="plp-empty">No pieces match these filters — try clearing some.</p>';
     if (countEl) {
       countEl.textContent = list.length + (list.length === 1 ? " item" : " items");
     }
+    if (loadMoreEl) loadMoreEl.hidden = shown.length >= list.length;
     equalizeTitles();
     syncFacetUI();
+  }
+
+  /* Any filter/sort change starts back at page 1 — infinite scroll then
+     re-accumulates pages as the shopper scrolls through the new result set. */
+  function resetPageAndRender() {
+    state.page = 1;
+    render();
+  }
+
+  /* ── Infinite scroll: grow the page count once the sentinel nears the
+     viewport. Driven by the scroll event (+ rAF throttling) rather than
+     IntersectionObserver — simpler to reason about and just as reliable. ── */
+  function maybeLoadMore() {
+    if (!loadMoreEl || loadMoreEl.hidden) return;
+    var rect = loadMoreEl.getBoundingClientRect();
+    if (rect.top > window.innerHeight + 200) return; // still well below the fold
+    var total = visibleProducts().length;
+    if (state.page * PAGE_SIZE < total) {
+      state.page++;
+      render();
+    }
+  }
+  var scrollTicking = false;
+  function onScrollOrResize() {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(function () {
+      maybeLoadMore();
+      scrollTicking = false;
+    });
+  }
+  if (loadMoreEl) {
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
   }
 
   var resizeTimer = null;
@@ -491,12 +554,42 @@
       var link = e.target.closest("a");
       if (link && (link.getAttribute("href") || "#") === "#") e.preventDefault();
     });
+
+    // Hovering a variant-image swatch previews that colourway on the main
+    // photo; leaving it (without clicking) restores the actual selection.
+    // mouseover/mouseout are used (not mouseenter/mouseleave) since they
+    // bubble, so one delegated listener covers every card.
+    grid.addEventListener("mouseover", function (e) {
+      var sw = e.target.closest(".plp-swatch-img");
+      if (!sw || sw.classList.contains("is-hover-active")) return;
+      var card = sw.closest(".plp-card");
+      if (!card) return;
+      var idx = Number(sw.dataset.swatch);
+      var product = PRODUCTS.find(function (p) { return p.id === card.dataset.id; });
+      var variant = product && product.variants[idx];
+      if (!variant || !variant.image) return;
+      sw.classList.add("is-hover-active");
+      var img = card.querySelector(".plp-card-mainimg");
+      if (img) img.src = variant.image;
+    });
+
+    grid.addEventListener("mouseout", function (e) {
+      var sw = e.target.closest(".plp-swatch-img");
+      if (!sw || !sw.classList.contains("is-hover-active")) return;
+      if (sw.contains(e.relatedTarget)) return; // still inside the same swatch
+      sw.classList.remove("is-hover-active");
+      var card = sw.closest(".plp-card");
+      var product = card && PRODUCTS.find(function (p) { return p.id === card.dataset.id; });
+      var img = card && card.querySelector(".plp-card-mainimg");
+      if (img && product) img.src = displayImage(product); // back to the real selection
+    });
   }
 
   /* ── Filter sidebar (accordion facets) ────────────────────── */
   var filtersEl = document.getElementById("plpFilters");
 
-  var CAT_LABELS = { shoes: "Shoes", bags: "Bags", clothing: "Clothing", accessories: "Accessories", readytowear: "Ready-to-Wear" };
+  var CAT_LABELS = { shoes: "Shoes", bags: "Bags", clothing: "Clothing", accessories: "Accessories", readytowear: "Ready-to-Wear", jewelry: "Jewelry", beauty: "Beauty" };
+  var SUBCAT_VISIBLE_COUNT = 5; // categories shown before the "Show more" link kicks in
   var GENDER_OPTIONS = ["Women", "Men", "Kids"];   // fixed list — not derived from products
   var PRICE_BUCKETS = [
     { v: "0-2000", label: "Under QAR 2,000" },
@@ -635,7 +728,7 @@
         if (state.facets.size[s]) delete state.facets.size[s];
         else state.facets.size[s] = true;
         sz.classList.toggle("is-active");
-        render();
+        resetPageAndRender();
         return;
       }
     });
@@ -644,26 +737,26 @@
       var t = e.target;
       if (t.dataset.sale != null) {
         state.facets.sale = t.checked;
-        render();
+        resetPageAndRender();
       } else if (t.dataset.brand != null) {
         if (t.checked) state.facets.brand[t.dataset.brand] = true;
         else delete state.facets.brand[t.dataset.brand];
-        render();
+        resetPageAndRender();
       } else if (t.dataset.gender != null) {
         if (t.checked) state.facets.gender[t.dataset.gender] = true;
         else delete state.facets.gender[t.dataset.gender];
-        render();
+        resetPageAndRender();
       } else if (t.dataset.material != null) {
         if (t.checked) state.facets.material[t.dataset.material] = true;
         else delete state.facets.material[t.dataset.material];
-        render();
+        resetPageAndRender();
       } else if (t.dataset.colour != null) {
         if (t.checked) state.facets.colour[t.dataset.colour] = true;
         else delete state.facets.colour[t.dataset.colour];
-        render();
+        resetPageAndRender();
       } else if (t.dataset.price != null) {
         state.facets.price = t.checked ? t.dataset.price : null;
-        render();
+        resetPageAndRender();
       }
     });
   }
@@ -690,16 +783,32 @@
   // it's the default selected tab, matching the page title/breadcrumb.
   function noCategoryActive() { return Object.keys(state.facets.category).length === 0; }
 
+  function subcatTab(c, label) {
+    var active = c === "" ? noCategoryActive() : !!state.facets.category[c];
+    return '<button type="button" class="plp-subcat' + (active ? " is-active" : "") +
+      '" data-subcat="' + c + '">' + label + "</button>";
+  }
+
+  var subcatsExpanded = false;
+
   function buildQuickFilters() {
     if (!quickEl) return;
     var f = collectFacets();
-    var newInTab = '<button type="button" class="plp-subcat' + (noCategoryActive() ? " is-active" : "") +
-      '" data-subcat="">New In</button>';
-    var catTabs = f.cats.map(function (c) {
-      return '<button type="button" class="plp-subcat' + (state.facets.category[c] ? " is-active" : "") +
-        '" data-subcat="' + c + '">' + (CAT_LABELS[c] || c) + "</button>";
-    }).join("");
-    quickEl.innerHTML = newInTab + catTabs;
+    var visible = f.cats.slice(0, SUBCAT_VISIBLE_COUNT);
+    var extra = f.cats.slice(SUBCAT_VISIBLE_COUNT);
+
+    var html = subcatTab("", "New In") +
+      visible.map(function (c) { return subcatTab(c, CAT_LABELS[c] || c); }).join("");
+
+    if (extra.length) {
+      html += '<span class="plp-subcat-more' + (subcatsExpanded ? " is-expanded" : "") + '" id="plpSubcatMore">' +
+        extra.map(function (c) { return subcatTab(c, CAT_LABELS[c] || c); }).join("") +
+      "</span>" +
+      '<button type="button" class="plp-subcat-toggle" id="plpSubcatToggle">' +
+        (subcatsExpanded ? "Show less" : "Show more") +
+      "</button>";
+    }
+    quickEl.innerHTML = html;
   }
 
   function syncSubcats() {
@@ -713,6 +822,16 @@
   if (quickEl) {
     buildQuickFilters();
     quickEl.addEventListener("click", function (e) {
+      var toggle = e.target.closest("#plpSubcatToggle");
+      if (toggle) {
+        subcatsExpanded = !subcatsExpanded;
+        buildQuickFilters();
+        // The expanded tab list can crowd the sort/density controls —
+        // hide them while expanded; "Show less" brings them back.
+        var toolbar = document.querySelector(".plp-toolbar");
+        if (toolbar) toolbar.classList.toggle("subcats-expanded", subcatsExpanded);
+        return;
+      }
       var b = e.target.closest("[data-subcat]");
       if (!b) return;
       var c = b.dataset.subcat;
@@ -723,7 +842,7 @@
         state.facets.category = {};        // single-select sub-category
         if (!wasActive) state.facets.category[c] = true;
       }
-      render();
+      resetPageAndRender();
       syncSubcats();
     });
   }
@@ -784,7 +903,7 @@
       });
       valueEl.textContent = opt.textContent;
       state.sort = opt.dataset.value;
-      render();
+      resetPageAndRender();
     }
 
     btn.addEventListener("click", function () {
@@ -823,4 +942,5 @@
   }
 
   render();
+  if (loadMoreEl) maybeLoadMore(); // covers the case where the sentinel is already in view on load
 })();

@@ -66,6 +66,17 @@
   margin: 0;
 }
 
+/* Item count beside the collection title — small, muted, sits on the
+   title's baseline rather than stretching to its display-font size. */
+.plp-title .plp-count {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-wide);
+  margin-inline-start: 14px;
+  vertical-align: middle;
+}
+
 .plp-rule {
   margin: 16px 0 14px;
 }
@@ -101,15 +112,17 @@
   border-bottom: 1px solid var(--border-subtle);
 }
 .plp-toolbar-inner {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;   /* (filter btn) · centered count · right tools */
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   padding: 12px 0;
 }
-.plp-toolbar-left { grid-column: 1; justify-self: start; display: flex; align-items: center; gap: 24px; }
-.plp-count { grid-column: 2; justify-self: center; text-align: center; }
-.plp-tools-right { grid-column: 3; justify-self: end; }
+.plp-toolbar-left { display: flex; align-items: center; gap: 24px; min-width: 0; flex-wrap: wrap; }
+.plp-tools-right { flex: none; display: flex; align-items: center; gap: 20px; }
+/* The expanded sub-category list can crowd the sort/density controls —
+   hide them while "Show more" is expanded; "Show less" restores them. */
+.plp-toolbar.subcats-expanded .plp-tools-right { display: none; }
 
 /* Sub-category links (toolbar) — always visible on desktop, whether the
    sidebar is shown or hidden */
@@ -132,6 +145,29 @@
 .plp-subcat:hover { color: var(--ink-900); }
 .plp-subcat.is-active { color: var(--ink-900); border-bottom-color: var(--ink-900); }
 
+/* Extra sub-category links revealed by "Show more" */
+.plp-subcat-more {
+  display: none;
+  align-items: center;
+  gap: 24px;
+}
+.plp-subcat-more.is-expanded { display: inline-flex; }
+.plp-subcat-toggle {
+  height: 34px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 11.5px;
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.plp-subcat-toggle:hover { color: var(--ink-900); }
+
 /* Toolbar "Show filters" — visible only while the sidebar is collapsed */
 .plp-filter-collapse {
   display: none;
@@ -140,7 +176,7 @@
   height: 34px;
   padding: 0;
   font-size: 11.5px;
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-bold);
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--ink-900);
@@ -204,7 +240,7 @@
   border: 0;
   cursor: pointer;
   font-size: 11.5px;
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-bold);
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--ink-900);
@@ -306,13 +342,6 @@
   background: rgba(0, 42, 87, 0.42);
 }
 .plp-filters-scrim[hidden] { display: none; }
-
-/* Right cluster: count · sort · density */
-.plp-tools-right {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
 
 .plp-count {
   font-size: 12px;
@@ -745,6 +774,17 @@ a.plp-card-name:hover {
   outline-offset: 2px;
 }
 
+/* Variant-image swatches — thumbnail of the actual colourway photo,
+   sized up from the flat colour chip so the image reads clearly. */
+.plp-swatch-img {
+  width: 30px;
+  height: 38px;
+  border-radius: 2px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface-sunken);
+}
+
 .plp-swatch-more {
   font-size: 13px;
   color: var(--ink-800);
@@ -796,7 +836,7 @@ a.plp-card-name:hover {
 .plp-toolbar, .plp-count, .plp-filter-toggle, .plp-filter-collapse,
 .plp-sort, .plp-sort-btn, .plp-sort-value, .plp-sort-opt,
 .plp-filters, .plp-filters-head, .plp-filter-hide, .plp-facet-head, .plp-facet-size, .plp-facet-opt,
-.plp-subcat,
+.plp-subcat, .plp-subcat-toggle,
 .plp-card, .plp-card-brand, .plp-card-name, .plp-card-price, .plp-swatch-more,
 .plp-size, .plp-quickadd button, .plp-tag, .plp-empty {
   font-family: 'League Spartan', sans-serif;
@@ -809,6 +849,28 @@ a.plp-card-name:hover {
   padding: 60px 0;
   color: var(--text-muted);
   font-size: 14px;
+}
+
+/* Infinite-scroll sentinel — entering view triggers the next batch */
+.plp-loadmore {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+.plp-loadmore[hidden] { display: none; }
+.plp-loadmore-spinner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border-subtle);
+  border-top-color: var(--ink-700);
+  animation: plp-spin 0.7s linear infinite;
+}
+@keyframes plp-spin {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plp-loadmore-spinner { animation: none; }
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
@@ -867,7 +929,6 @@ a.plp-card-name:hover {
   .plp-shell { padding: 0 16px 56px; }
   .plp-grid { --plp-cols: 2 !important; gap: 30px 16px; }
   .plp-tools-right { gap: 12px; }
-  .plp-count { display: none; }
 
   /* Touch has no hover — keep controls visible */
   .plp-wish { opacity: 1; transform: none; }

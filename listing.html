@@ -112,7 +112,7 @@
         <span class="sep">/</span>
         <span class="current">New In</span>
       </nav>
-      <h1 class="plp-title">New In — Women</h1>
+      <h1 class="plp-title">New In — Women <span class="plp-count" id="plpCount">7 items</span></h1>
       <hr class="bs-rule-gold plp-rule">
       <p class="plp-intro">The season's first arrivals — sculpted pumps, hand-finished leathers and quiet-luxury essentials, curated by the Blue Salon buying team.</p>
     </section>
@@ -145,8 +145,6 @@
               <div class="plp-quickfilters" id="plpQuickFilters"><!-- built by listing.js --></div>
             </div>
 
-            <span class="plp-count" id="plpCount">7 items</span>
-
             <div class="plp-tools-right">
               <div class="plp-density" role="group" aria-label="Grid density">
                 <button type="button" class="is-active" data-cols="3" aria-label="3 columns" title="3 per row">
@@ -174,6 +172,11 @@
         </div>
 
         <div class="plp-grid" id="plpGrid"><!-- rendered by listing.js --></div>
+
+        <!-- Infinite-scroll sentinel: entering view loads the next batch -->
+        <div class="plp-loadmore" id="plpLoadMore" aria-hidden="true" hidden>
+          <span class="plp-loadmore-spinner"></span>
+        </div>
       </div>
     </div>
 

@@ -19,6 +19,7 @@
 
 .women-quicknav-row {
   display: flex;
+  justify-content: center;
   gap: 28px;
   overflow-x: auto;
   scrollbar-width: none;

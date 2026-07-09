@@ -539,13 +539,29 @@
         wishBtn.classList.toggle("is-active", active);
         wishBtn.setAttribute("aria-label", active ? "Remove from wishlist" : "Add to wishlist");
         syncHeaderWishCount();
+        if (window.bsToast) window.bsToast(active ? "Added to wishlist" : "Removed from wishlist");
         return;
       }
 
-      // Quick add → header bag count + confirmation modal
+      // Quick add → shared cart store + confirmation modal
       if (e.target.closest("[data-quickadd]")) {
         e.preventDefault();
-        bumpBag();
+        if (product && window.BS_CART) {
+          var addedVariant = product.variants[state.selected[id] || 0] || product.variants[0];
+          window.BS_CART.add({
+            id: product.id,
+            vendor: product.vendor,
+            name: product.name,
+            image: displayImage(product),
+            price: product.price,
+            compareAt: product.compareAt,
+            color: addedVariant ? addedVariant.color : null,
+            colorHex: addedVariant ? addedVariant.hex : null,
+            colorImage: addedVariant ? addedVariant.image : null,
+            size: state.size[id] || null,
+            qty: 1
+          });
+        }
         if (product) openCartModal(product);
         return;
       }
@@ -934,14 +950,6 @@
     el.textContent = n;
     el.hidden = n === 0;
   }
-  function bumpBag() {
-    var el = document.getElementById("cartCount");
-    if (!el) return;
-    var n = (parseInt(el.textContent, 10) || 0) + 1;
-    el.textContent = n;
-    el.hidden = false;
-  }
-
   /* ── Add-to-bag confirmation modal ─────────────────────────── */
   var cartScrim = document.getElementById("plpCartScrim");
   var cartModal = document.getElementById("plpCartModal");

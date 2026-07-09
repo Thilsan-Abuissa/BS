@@ -829,10 +829,11 @@ a.plp-card-name:hover {
 .plp-size.is-soldout:hover { color: var(--text-disabled); }
 
 /* ── Match the header/nav typeface across the listing surface ──
-   The header sets font-family: 'League Spartan', sans-serif on
+   The header sets font-family: 'Jost', sans-serif on
    .bs-nav-root; mirror it here so the collection page reads with
-   the same type as the top navigation. */
-.plp-head, .plp-crumbs, .plp-crumbs a, .plp-title, .plp-intro,
+   the same type as the top navigation. (.plp-title is deliberately
+   excluded — it keeps the display font for an editorial headline.) */
+.plp-head, .plp-crumbs, .plp-crumbs a, .plp-intro,
 .plp-toolbar, .plp-count, .plp-filter-toggle, .plp-filter-collapse,
 .plp-sort, .plp-sort-btn, .plp-sort-value, .plp-sort-opt,
 .plp-filters, .plp-filters-head, .plp-filter-hide, .plp-facet-head, .plp-facet-size, .plp-facet-opt,
@@ -841,7 +842,7 @@ a.plp-card-name:hover {
 .plp-size, .plp-quickadd button, .plp-tag, .plp-empty,
 .plp-cart-modal-head, .plp-cart-modal-brand, .plp-cart-modal-name, .plp-cart-modal-variant,
 .plp-cart-modal-price, .plp-cart-modal-continue, .plp-cart-modal-viewbag {
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
 }
 
 /* Empty state (when a filter matches nothing) */

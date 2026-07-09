@@ -26,14 +26,14 @@
 }
 
 /* ── Match the header/nav typeface across the detail surface ──
-   The header sets font-family: 'League Spartan', sans-serif on
+   The header sets font-family: 'Jost', sans-serif on
    .bs-nav-root, and the listing page mirrors it. Do the same here
    so the product page reads with the same type as the rest of the
    store (the .pdp container cascades to every child; .pdp-eyebrow
    is called out because .bs-eyebrow sets its own family). */
 .pdp,
 .pdp-eyebrow {
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
 }
 
 /* ── Breadcrumb (matches the listing crumbs) ──────────────── */
@@ -62,8 +62,8 @@
 /* ── Two-column layout: gallery · panel ───────────────────── */
 .pdp-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(340px, 460px);
-  gap: 56px;
+  grid-template-columns: minmax(0, 1fr) minmax(440px, 620px);
+  gap: 40px;
   align-items: start;
 }
 
@@ -101,6 +101,7 @@
   position: relative;
   margin: 0;
   aspect-ratio: 4 / 5;
+  max-height: min(680px, 74vh);
   background: #f8f8f8;
   overflow: hidden;
   cursor: zoom-in;
@@ -170,7 +171,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 
 .pdp-name {
   margin: 10px 0 0;
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-weight: var(--fw-light);
   font-size: 20px;
   line-height: 1.12;
@@ -186,8 +187,9 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   font-size: 18px;
   color: var(--ink-900);
 }
+.pdp-price-val { font-weight: var(--fw-semibold); }
 .pdp-was { color: var(--text-subtle); text-decoration: line-through; font-size: 15px; }
-.pdp-now { color: var(--sale); }
+.pdp-now { color: var(--sale); font-weight: var(--fw-semibold); }
 .pdp-price-tag {
   align-self: center;
   padding: 3px 9px;
@@ -198,6 +200,14 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   color: #fff;
   background: var(--sale);
 }
+
+/* Buy-now-pay-later line */
+.pdp-paylater {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.pdp-paylater b { color: var(--ink-900); font-weight: var(--fw-semibold); }
 
 /* Loyalty earn banner — MOZOON points */
 .pdp-loyalty {
@@ -265,7 +275,10 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   text-transform: uppercase;
   color: var(--ink-900);
 }
-.pdp-colour-name { font-size: 13px; color: var(--text-muted); }
+/* "Colour: Ice Blue" reads as one inline label:value pair, not the
+   uppercase kicker style used for the Size block's heading. */
+.pdp-colour-label { font-size: 13px; color: var(--text-body); }
+.pdp-colour-name { font-weight: var(--fw-medium); color: var(--ink-900); }
 .pdp-link {
   padding: 0;
   font-size: 12px;
@@ -301,7 +314,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-size {
   height: var(--control-md);
   padding: 0 8px;
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-size: 13px;
   color: var(--ink-800);
   background: #fff;
@@ -354,7 +367,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-addbag {
   flex: 1 1 auto;
   height: var(--control-lg);
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-size: 12px;
   font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-wider);
@@ -404,7 +417,6 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   margin: 0 0 28px;
   padding: 22px 0;
   border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
   display: grid;
   gap: 14px;
 }
@@ -417,6 +429,41 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 }
 .pdp-service svg { flex: none; color: var(--color-primary); }
 
+/* ── Share ────────────────────────────────────────────────── */
+.pdp-share { display: flex; align-items: center; gap: 12px; margin: 28px 0; }
+.pdp-share-label {
+  font-size: 11px;
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.pdp-share-btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-circle);
+  background: #fff;
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-standard),
+              background var(--dur-base) var(--ease-standard),
+              border-color var(--dur-base) var(--ease-standard);
+}
+.pdp-share-btn:hover { text-decoration: none; }
+
+/* Each platform in its own brand colour, filling solid on hover */
+.pdp-share-whatsapp { color: #25D366; }
+.pdp-share-whatsapp:hover { background: #25D366; color: #fff; border-color: #25D366; }
+.pdp-share-facebook { color: #1877F2; }
+.pdp-share-facebook:hover { background: #1877F2; color: #fff; border-color: #1877F2; }
+.pdp-share-instagram { color: #E1306C; }
+.pdp-share-instagram:hover { background: #E1306C; color: #fff; border-color: #E1306C; }
+.pdp-share-email { color: var(--color-primary); }
+.pdp-share-email:hover { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+
 /* ── Accordion ────────────────────────────────────────────── */
 .pdp-accordion { border-top: 1px solid var(--border-subtle); }
 .pdp-acc { border-bottom: 1px solid var(--border-subtle); }
@@ -427,7 +474,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   justify-content: space-between;
   gap: 12px;
   padding: 18px 0;
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-size: 12px;
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-wide);
@@ -463,6 +510,20 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-detail-list li { margin-bottom: 8px; }
 .pdp-detail-list li:last-child { margin-bottom: 0; }
 
+/* Specifications — key:value rows (SKU, colour, size, material…) */
+.pdp-spec-list { list-style: none; margin: 0; padding: 0; }
+.pdp-spec-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.pdp-spec-list li:first-child { padding-top: 0; }
+.pdp-spec-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.pdp-spec-key { color: var(--text-subtle); }
+.pdp-spec-val { color: var(--ink-800); font-weight: var(--fw-medium); text-align: right; }
+
 /* ── Reviews ──────────────────────────────────────────────── */
 .pdp-reviews { margin-top: 80px; }
 .pdp-reviews-title {
@@ -496,7 +557,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-review-btn {
   height: var(--control-lg);
   padding: 0 40px;
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-size: 13px;
   font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-wider);
@@ -674,7 +735,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   flex: none;
   height: 44px;
   padding: 0 34px;
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-size: 12px;
   font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-wider);
@@ -758,7 +819,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   width: 100%;
   height: var(--control-md);
   padding: 0 14px;
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-size: 14px;
   color: var(--ink-900);
   background: #fff;
@@ -775,7 +836,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-btn-ghost, .pdp-btn-solid {
   flex: 1 1 auto;
   height: var(--control-md);
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-size: 12px;
   font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-wider);
@@ -797,7 +858,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-related { margin-top: 88px; }
 .pdp-related-head { text-align: center; margin-bottom: 36px; }
 .pdp-related-head h2 {
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-weight: var(--fw-light);
   font-size: 26px;
   letter-spacing: var(--ls-tight);
@@ -810,43 +871,123 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   grid-template-columns: repeat(4, 1fr);
   gap: 28px;
 }
-.pdp-rel-card { display: block; color: inherit; }
-.pdp-rel-card:hover { text-decoration: none; }
+.pdp-rel-card { color: inherit; }
+
+/* Media — same treatment as the listing card: tag top-left, hover
+   actions stacked on the right, hover-swap-style image scale. */
 .pdp-rel-media {
+  position: relative;
   display: block;
   aspect-ratio: 4 / 5;
   background: #f8f8f8;
   overflow: hidden;
   margin-bottom: 14px;
 }
-.pdp-rel-media img {
+.pdp-rel-img {
   width: 100%; height: 100%;
   object-fit: cover;
+  display: block;
   transition: transform var(--dur-slow) var(--ease-standard);
 }
-.pdp-rel-card:hover .pdp-rel-media img { transform: scale(1.045); }
+.pdp-rel-media:hover .pdp-rel-img { transform: scale(1.045); }
+
+.pdp-rel-tag {
+  position: absolute;
+  top: 14px;
+  inset-inline-start: 0;
+  z-index: 2;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  background: #fff;
+}
+.pdp-rel-tag.sale { color: #fff; background: var(--sale); }
+.pdp-rel-tag.dark { color: #fff; background: var(--ink-900); }
+
+.pdp-rel-actions {
+  position: absolute;
+  top: 86%;
+  inset-inline-end: 14px;
+  z-index: 2;
+  transform: translateY(-50%) translateX(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-standard),
+              transform var(--dur-base) var(--ease-standard);
+}
+.pdp-rel-card:hover .pdp-rel-actions,
+.pdp-rel-actions:focus-within {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: auto;
+}
+.pdp-rel-action {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 0;
+  border-radius: 3px;
+  color: var(--ink-900);
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(14, 23, 34, 0.12);
+  transition: color var(--dur-base) var(--ease-standard);
+}
+.pdp-rel-action:hover { color: var(--color-primary); }
+.pdp-rel-action.is-active { color: var(--sale); }
+.pdp-rel-action.is-active svg { fill: var(--sale); stroke: var(--sale); }
+
+/* Info block: brand (left) + price (right) · name · swatches */
+.pdp-rel-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .pdp-rel-brand {
-  display: block;
   font-size: 12px;
   font-weight: var(--fw-bold);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-900);
 }
+a.pdp-rel-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-rel-name {
   display: block;
   margin-top: 6px;
   font-size: 13px;
+  line-height: 1.4;
   color: var(--ink-800);
 }
+a.pdp-rel-name:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-rel-price {
-  display: block;
-  margin-top: 6px;
+  flex: none;
   font-size: 12.5px;
+  font-weight: 600;
   color: var(--ink-800);
+  white-space: nowrap;
 }
-.pdp-rel-price .was { color: var(--text-subtle); text-decoration: line-through; margin-inline-end: 8px; }
+.pdp-rel-price .was { color: var(--text-subtle); text-decoration: line-through; margin-inline-end: 8px; font-weight: var(--fw-regular); }
 .pdp-rel-price .now { color: var(--sale); }
+
+.pdp-rel-swatches { display: flex; align-items: center; gap: 8px; margin-top: 10px; min-height: 14px; }
+.pdp-rel-swatch {
+  width: 22px;
+  height: 14px;
+  padding: 0;
+  border-radius: 3px;
+  border: 1px solid rgba(14, 23, 34, 0.12);
+  background-clip: padding-box;
+  cursor: pointer;
+  transition: transform var(--dur-fast, .12s) var(--ease-standard);
+}
+.pdp-rel-swatch:hover { transform: scale(1.08); }
+.pdp-rel-swatch.is-active { outline: 1px solid var(--ink-800); outline-offset: 2px; }
+.pdp-rel-swatch.has-img { width: 30px; height: 38px; border-radius: 2px; background-size: cover; background-position: center; background-color: var(--surface-sunken); }
+.pdp-rel-swatch-more { font-size: 13px; color: var(--ink-800); margin-inline-start: 4px; letter-spacing: 0.02em; }
 
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 1080px) {

@@ -1,0 +1,638 @@
+<!-- @dsCard group="Website" viewport="1320x900" name="Storefront — Women Landing" subtitle="bluesalon.com Women hub: hero, shop-by-department, new arrivals, edit, brands" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blue Salon — Women</title>
+<link rel="icon" href="assets/app-icon.png">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="listing.css">
+<link rel="stylesheet" href="women.css">
+</head>
+<body>
+
+  <!-- ════════════════ Header ════════════════ -->
+  <header class="bs-nav-root bs-header">
+
+    <!-- Announcement -->
+    <div class="bs-announce">
+      <div class="bs-announce-inner">
+      <span class="bs-announce-msg">Complimentary shipping on orders over QAR 499 &nbsp;·&nbsp; Split your payment into 4 installments</span>
+      <div class="bs-announce-utils">
+        <span class="bs-util-wrap bs-locale">
+          <button class="bs-iconbtn bs-locale-btn" type="button" id="localeBtn" aria-label="Switch language" title="Switch language">
+            <span class="bs-lang-switch is-ar" id="localeLangSwitch" aria-hidden="true">ع</span>
+          </button>
+        </span>
+        <button class="bs-iconbtn bs-locale-btn" type="button" aria-label="Store locator" title="Store locator">
+          <span class="bs-lang-switch">Store</span>
+        </button>
+      </div>
+      </div>
+    </div>
+
+    <!-- Main bar -->
+    <div class="bs-topbar">
+      <!-- Hamburger (mobile only) -->
+      <button class="bs-iconbtn bs-hamburger" type="button" id="hamburgerBtn" aria-label="Menu" aria-expanded="false" aria-controls="mobileDrawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <!-- Search -->
+      <div class="bs-search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="7"/></svg>
+        <input type="search" placeholder="Search 500+ luxury brands">
+      </div>
+      <!-- Logo -->
+      <a class="bs-logo" href="index.html">
+        <img src="assets/logo-horizontal.svg" alt="Blue Salon">
+      </a>
+      <!-- Utilities -->
+      <div class="bs-utils">
+        <button class="bs-iconbtn" type="button" aria-label="Account" title="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        </button>
+        <span class="bs-util-wrap">
+          <button class="bs-iconbtn" type="button" aria-label="Wishlist" title="Wishlist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l9 9 8.8-8.6a5.5 5.5 0 0 0-.2-7.8z"/></svg>
+          </button>
+          <span class="bs-count" id="wishCount" hidden>0</span>
+        </span>
+        <span class="bs-util-wrap">
+          <button class="bs-iconbtn" type="button" aria-label="Bag" title="Bag">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+          </button>
+          <span class="bs-count" id="cartCount" hidden>0</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Nav + mega menu hover zone -->
+    <div id="navZone">
+      <nav class="bs-nav">
+        <div class="bs-nav-inner" id="navInner">
+          <div class="bs-nav-item" data-menu="new" data-href="listing.html">New In</div>
+          <div class="bs-nav-item is-current" data-menu="women" data-href="women.html">Women</div>
+          <div class="bs-nav-item" data-menu="men">Men</div>
+          <div class="bs-nav-item" data-menu="kids">Kids &amp; Baby</div>
+          <div class="bs-nav-item" data-menu="beauty">Beauty</div>
+          <div class="bs-nav-item" data-menu="luggage">Luggage</div>
+          <div class="bs-nav-item" data-menu="home">Home &amp; Linen</div>
+          <div class="bs-nav-item" data-menu="gourmet">Gourmet</div>
+          <div class="bs-nav-item" data-menu="brands">Brands</div>
+          <div class="bs-nav-item" data-menu="gift">Gift</div>
+          <div class="bs-nav-item sale" data-menu="sale">Sale</div>
+          <div class="bs-mega-holder" id="megaHolder"></div>
+        </div>
+      </nav>
+    </div>
+
+  </header>
+
+  <!-- ════════════════ Mobile drawer (built by app.js) ════════════════ -->
+  <div class="bs-drawer-scrim" id="drawerScrim" hidden></div>
+  <aside class="bs-drawer" id="mobileDrawer" aria-hidden="true" hidden>
+    <div class="bs-drawer-head">
+      <img class="bs-drawer-logo" src="assets/logo-horizontal.svg" alt="Blue Salon">
+      <button class="bs-iconbtn bs-drawer-close" type="button" id="drawerClose" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <nav class="bs-drawer-nav" id="drawerNav"></nav>
+  </aside>
+
+  <main>
+
+    <!-- ════════════════ Hero ════════════════ -->
+    <section class="women-hero">
+      <img class="women-hero-img" src="https://bluesalon-new-simple.vercel.app/assets/fashion-women.jpg" alt="">
+      <div class="women-hero-panel">
+        <span class="women-hero-kicker">SS26 Edit</span>
+        <h1 class="bs-display women-hero-title">Women</h1>
+        <p class="women-hero-sub">Sculpted silhouettes, quiet-luxury essentials and the season's most-wanted — curated from Zuhair Murad, La Perla and 500 more maisons.</p>
+        <div class="women-hero-ctas">
+          <a class="bs-btn bs-btn-primary" href="listing.html">Shop New In</a>
+          <a class="women-hero-link" href="#womenDepts">Explore departments</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Shop by Department ════════════════ -->
+    <section class="cat-fashion cat-fashion-women" id="womenDepts">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <span class="bs-eyebrow">Explore</span>
+          <h2 class="cat-fashion-title">Shop by Department</h2>
+          <hr class="bs-rule-gold women-dept-rule">
+          <p class="cat-fashion-sub">Everything for her, curated department by department.</p>
+        </div>
+
+        <div class="women-dept-row">
+
+          <a href="listing.html" class="women-dept-circle">
+            <span class="women-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_600x.jpg?v=1778078027" alt="Clothing"></span>
+            <span class="women-dept-circle-label">Clothing</span>
+          </a>
+
+          <a href="listing.html" class="women-dept-circle">
+            <span class="women-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_6_e27b0143-e408-4c18-a241-834fabf6d437_600x.jpg?v=1778151636" alt="Lingerie &amp; Intimates"></span>
+            <span class="women-dept-circle-label">Lingerie &amp; Intimates</span>
+          </a>
+
+          <a href="listing.html" class="women-dept-circle">
+            <span class="women-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_7_16aa4789-aee1-4741-a7c6-0f3fd30903b0_600x.jpg?v=1778151902" alt="Footwear"></span>
+            <span class="women-dept-circle-label">Footwear</span>
+          </a>
+
+          <a href="listing.html" class="women-dept-circle">
+            <span class="women-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_79_600x.jpg?v=1776689958" alt="Bags"></span>
+            <span class="women-dept-circle-label">Bags</span>
+          </a>
+
+          <a href="listing.html" class="women-dept-circle">
+            <span class="women-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/BS_Watches_600x.jpg?v=1771492826" alt="Watches &amp; Jewellery"></span>
+            <span class="women-dept-circle-label">Watches &amp; Jewellery</span>
+          </a>
+
+          <a href="listing.html" class="women-dept-circle">
+            <span class="women-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_1_5fe2ba48-9160-4650-b7ff-065ea291e2a6_600x.jpg?v=1778140218" alt="Fashion Jewellery"></span>
+            <span class="women-dept-circle-label">Fashion Jewellery</span>
+          </a>
+
+          <a href="listing.html" class="women-dept-circle">
+            <span class="women-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/Guerlain_Make_up-Blue_Salon_600x.jpg?v=1778160088" alt="Beauty"></span>
+            <span class="women-dept-circle-label">Beauty</span>
+          </a>
+
+          <a href="listing.html" class="women-dept-circle">
+            <span class="women-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/Parfume_de_Marly_600x.jpg?v=1778160612" alt="Perfumes"></span>
+            <span class="women-dept-circle-label">Perfumes</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Style Notes ════════════════ -->
+    <section class="cat-fashion">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">Style Notes</h2>
+          <p class="cat-fashion-sub">A quick read on what's inside each department.</p>
+        </div>
+
+        <div class="women-notes-row">
+
+          <a href="listing.html" class="women-notes-item">
+            <div class="women-notes-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_600x.jpg?v=1778078027" alt="Clothing"></div>
+            <div class="women-notes-rule"></div>
+            <p class="women-notes-name">Clothing</p>
+            <p class="women-notes-desc">Dresses, tailoring, knitwear &amp; resort</p>
+          </a>
+
+          <a href="listing.html" class="women-notes-item">
+            <div class="women-notes-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_6_e27b0143-e408-4c18-a241-834fabf6d437_600x.jpg?v=1778151636" alt="Lingerie &amp; Intimates"></div>
+            <div class="women-notes-rule"></div>
+            <p class="women-notes-name">Lingerie &amp; Intimates</p>
+            <p class="women-notes-desc">Bras, sleepwear &amp; shapewear</p>
+          </a>
+
+          <a href="listing.html" class="women-notes-item">
+            <div class="women-notes-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_7_16aa4789-aee1-4741-a7c6-0f3fd30903b0_600x.jpg?v=1778151902" alt="Footwear"></div>
+            <div class="women-notes-rule"></div>
+            <p class="women-notes-name">Footwear</p>
+            <p class="women-notes-desc">Heels, flats &amp; boots</p>
+          </a>
+
+          <a href="listing.html" class="women-notes-item">
+            <div class="women-notes-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_79_600x.jpg?v=1776689958" alt="Bags"></div>
+            <div class="women-notes-rule"></div>
+            <p class="women-notes-name">Bags</p>
+            <p class="women-notes-desc">Totes, shoulder bags &amp; clutches</p>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ New Arrivals ════════════════ -->
+    <section class="cat-fashion">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">New Arrivals</h2>
+          <a class="cat-fashion-sub-link" href="listing.html">Shop all new in →</a>
+        </div>
+
+        <div class="plp-grid" style="--plp-cols:4">
+
+          <!-- Cards mirror listing.js's cardHTML() exactly — same
+               markup/classes as the New In grid, so a shopper sees
+               one consistent product-card design everywhere. -->
+
+          <article class="plp-card" data-id="miriam-ostrich">
+            <a class="plp-card-media" href="product.html?id=miriam-ostrich" aria-label="Patchwork Leather Chain-Handle Tote Bag">
+              <img class="plp-card-mainimg" src="images/0_1.webp" alt="Patchwork Leather Chain-Handle Tote Bag" loading="lazy">
+              <img class="plp-card-hoverimg" src="images/0_4.webp" alt="" aria-hidden="true" loading="lazy">
+              <span class="plp-tag dark">New</span>
+              <div class="plp-actions">
+                <button type="button" class="plp-action" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+                <button type="button" class="plp-action" aria-label="Add to bag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></button>
+              </div>
+              <div class="plp-dots">
+                <button type="button" class="plp-dot is-active" aria-label="View image 1"></button>
+                <button type="button" class="plp-dot" aria-label="View image 2"></button>
+              </div>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=miriam-ostrich">ZUHAIR MURAD</a>
+                <span class="plp-card-price">QAR 9,700</span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=miriam-ostrich">Patchwork Leather Chain-Handle Tote Bag</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch plp-swatch-img" style="background-image:url(images/0_1.webp)" aria-label="Ice Blue" title="Ice Blue"></button>
+                <button type="button" class="plp-swatch plp-swatch-img" style="background-image:url(images/0_4.webp)" aria-label="Chocolate" title="Chocolate"></button>
+                <button type="button" class="plp-swatch" style="background:#191919" aria-label="Black" title="Black"></button>
+                <span class="plp-swatch-more">+1</span>
+              </div>
+              <div class="plp-sizes">
+                <button type="button" class="plp-size is-soldout" disabled aria-disabled="true" data-size="36">36</button>
+                <button type="button" class="plp-size" data-size="37">37</button>
+                <button type="button" class="plp-size" data-size="38">38</button>
+                <button type="button" class="plp-size" data-size="39">39</button>
+                <button type="button" class="plp-size" data-size="40">40</button>
+                <button type="button" class="plp-size" data-size="41">41</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="plp-card" data-id="inara-top">
+            <a class="plp-card-media" href="product.html?id=inara-top" aria-label="Inara Ice-Green Draped Top">
+              <img class="plp-card-mainimg" src="images/INARA-TOP_ICE-GREEN_24814232-499_GHOST.webp" alt="Inara Ice-Green Draped Top" loading="lazy">
+              <span class="plp-tag">New</span>
+              <div class="plp-actions">
+                <button type="button" class="plp-action" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+                <button type="button" class="plp-action" aria-label="Add to bag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></button>
+              </div>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=inara-top">ZUHAIR MURAD</a>
+                <span class="plp-card-price">QAR 1,850</span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=inara-top">Inara Ice-Green Draped Top</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch" style="background:#d6e4dc" aria-label="Ice Green" title="Ice Green"></button>
+                <button type="button" class="plp-swatch" style="background:#efece3" aria-label="Ivory" title="Ivory"></button>
+                <button type="button" class="plp-swatch" style="background:#191919" aria-label="Black" title="Black"></button>
+              </div>
+              <div class="plp-sizes">
+                <button type="button" class="plp-size" data-size="XS">XS</button>
+                <button type="button" class="plp-size" data-size="S">S</button>
+                <button type="button" class="plp-size" data-size="M">M</button>
+                <button type="button" class="plp-size" data-size="L">L</button>
+                <button type="button" class="plp-size is-soldout" disabled aria-disabled="true" data-size="XL">XL</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="plp-card" data-id="marlene-natural">
+            <a class="plp-card-media" href="product.html?id=marlene-natural" aria-label="Marlene 50 Python-Print Pump">
+              <img class="plp-card-mainimg" src="images/product4.png" alt="Marlene 50 Python-Print Pump" loading="lazy">
+              <img class="plp-card-hoverimg" src="images/MARLENE-PUMP-50_TAUPE_F2055-803-461_A.webp" alt="" aria-hidden="true" loading="lazy">
+              <span class="plp-tag sale">Sale</span>
+              <div class="plp-actions">
+                <button type="button" class="plp-action" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+                <button type="button" class="plp-action" aria-label="Add to bag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></button>
+              </div>
+              <div class="plp-dots">
+                <button type="button" class="plp-dot is-active" aria-label="View image 1"></button>
+                <button type="button" class="plp-dot" aria-label="View image 2"></button>
+              </div>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=marlene-natural">ZUHAIR MURAD</a>
+                <span class="plp-card-price"><span class="was">QAR 5,900</span><span class="now">QAR 4,100</span></span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=marlene-natural">Marlene 50 Python-Print Pump</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch" style="background:#8a7350" aria-label="Python Natural" title="Python Natural"></button>
+                <button type="button" class="plp-swatch" style="background:#b8a582" aria-label="Python Taupe" title="Python Taupe"></button>
+                <button type="button" class="plp-swatch" style="background:#191919" aria-label="Black" title="Black"></button>
+              </div>
+              <div class="plp-sizes">
+                <button type="button" class="plp-size" data-size="36">36</button>
+                <button type="button" class="plp-size" data-size="37">37</button>
+                <button type="button" class="plp-size" data-size="38">38</button>
+                <button type="button" class="plp-size" data-size="39">39</button>
+                <button type="button" class="plp-size" data-size="40">40</button>
+                <button type="button" class="plp-size is-soldout" disabled aria-disabled="true" data-size="41">41</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="plp-card" data-id="auggie-short">
+            <a class="plp-card-media" href="product.html?id=auggie-short" aria-label="Tailored Wool-Blend Bermuda Shorts">
+              <img class="plp-card-mainimg" src="images/AUGGIE-SHORT_DARK-OLIVE_3205582-429_GHOST_dd4bd26c-edae-43f5-932d-4e9e8f907fc1.webp" alt="Tailored Wool-Blend Bermuda Shorts" loading="lazy">
+              <div class="plp-actions">
+                <button type="button" class="plp-action" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+                <button type="button" class="plp-action" aria-label="Add to bag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></button>
+              </div>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=auggie-short">ZUHAIR MURAD</a>
+                <span class="plp-card-price">QAR 2,200</span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=auggie-short">Tailored Wool-Blend Bermuda Shorts</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch" style="background:#4b4a2f" aria-label="Dark Olive" title="Dark Olive"></button>
+                <button type="button" class="plp-swatch" style="background:#191919" aria-label="Black" title="Black"></button>
+                <button type="button" class="plp-swatch" style="background:#cbb997" aria-label="Sand" title="Sand"></button>
+              </div>
+              <div class="plp-sizes">
+                <button type="button" class="plp-size" data-size="34">34</button>
+                <button type="button" class="plp-size" data-size="36">36</button>
+                <button type="button" class="plp-size" data-size="38">38</button>
+                <button type="button" class="plp-size" data-size="40">40</button>
+                <button type="button" class="plp-size" data-size="42">42</button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ In Focus ════════════════ -->
+    <section class="cat-fashion">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">In Focus</h2>
+          <p class="cat-fashion-sub">One world at a time — hover a name to step inside.</p>
+        </div>
+
+        <div class="women-focus">
+          <nav class="women-focus-list" id="womenFocusList">
+            <a href="listing.html" class="women-focus-item is-active" data-img="https://www.bluesalon.com/cdn/shop/files/New_Project_600x.jpg?v=1778078027" data-name="Clothing">
+              <span class="women-focus-name">Clothing</span>
+              <span class="women-focus-desc">Dresses · Tailoring · Knitwear</span>
+            </a>
+            <a href="listing.html" class="women-focus-item" data-img="https://www.bluesalon.com/cdn/shop/files/BS_Watches_600x.jpg?v=1771492826" data-name="Watches &amp; Jewellery">
+              <span class="women-focus-name">Watches &amp; Jewellery</span>
+              <span class="women-focus-desc">Timepieces · Fine Jewellery</span>
+            </a>
+            <a href="listing.html" class="women-focus-item" data-img="https://www.bluesalon.com/cdn/shop/files/New_Project_1_5fe2ba48-9160-4650-b7ff-065ea291e2a6_600x.jpg?v=1778140218" data-name="Fashion Jewellery">
+              <span class="women-focus-name">Fashion Jewellery</span>
+              <span class="women-focus-desc">Necklaces · Earrings · Rings</span>
+            </a>
+            <a href="listing.html" class="women-focus-item" data-img="https://www.bluesalon.com/cdn/shop/files/Guerlain_Make_up-Blue_Salon_600x.jpg?v=1778160088" data-name="Beauty">
+              <span class="women-focus-name">Beauty</span>
+              <span class="women-focus-desc">Skincare · Make-up · Fragrance</span>
+            </a>
+            <a href="listing.html" class="women-focus-item" data-img="https://www.bluesalon.com/cdn/shop/files/Parfume_de_Marly_600x.jpg?v=1778160612" data-name="Perfumes">
+              <span class="women-focus-name">Perfumes</span>
+              <span class="women-focus-desc">Niche · Signature Fragrance</span>
+            </a>
+          </nav>
+          <div class="women-focus-stage" id="womenFocusStage">
+            <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_600x.jpg?v=1778078027" class="is-active" data-key="https://www.bluesalon.com/cdn/shop/files/New_Project_600x.jpg?v=1778078027" alt="">
+            <img src="https://www.bluesalon.com/cdn/shop/files/BS_Watches_600x.jpg?v=1771492826" data-key="https://www.bluesalon.com/cdn/shop/files/BS_Watches_600x.jpg?v=1771492826" alt="">
+            <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_1_5fe2ba48-9160-4650-b7ff-065ea291e2a6_600x.jpg?v=1778140218" data-key="https://www.bluesalon.com/cdn/shop/files/New_Project_1_5fe2ba48-9160-4650-b7ff-065ea291e2a6_600x.jpg?v=1778140218" alt="">
+            <img src="https://www.bluesalon.com/cdn/shop/files/Guerlain_Make_up-Blue_Salon_600x.jpg?v=1778160088" data-key="https://www.bluesalon.com/cdn/shop/files/Guerlain_Make_up-Blue_Salon_600x.jpg?v=1778160088" alt="">
+            <img src="https://www.bluesalon.com/cdn/shop/files/Parfume_de_Marly_600x.jpg?v=1778160612" data-key="https://www.bluesalon.com/cdn/shop/files/Parfume_de_Marly_600x.jpg?v=1778160612" alt="">
+            <span class="women-focus-caption" id="womenFocusCaption">Clothing</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Editorial edits (two-up) ════════════════ -->
+    <section class="edit-duo">
+      <div class="edit-duo-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">The Edit</h2>
+        </div>
+
+        <a href="listing.html" class="edit-duo-card">
+          <img src="https://cdn.shopify.com/s/files/1/0370/6444/1991/files/womens-fashion_56845cc2-ab69-42ba-ac03-2fe02d90f9bf.jpg?v=1782392049" alt="Eid 2026 — Abaya &amp; Kaftan Edit" class="edit-duo-img" loading="lazy">
+          <span class="edit-duo-overlay"></span>
+          <span class="edit-duo-caption">
+            <span class="bs-display edit-duo-title">Eid 2026 — Abaya &amp; Kaftan Edit</span>
+            <span class="edit-duo-link">Shop the edit</span>
+          </span>
+        </a>
+
+        <a href="listing.html" class="edit-duo-card">
+          <img src="https://cdn.shopify.com/s/files/1/0370/6444/1991/files/womens-footwear.jpg?v=1782392049" alt="Bridal — Trousseau by La Perla" class="edit-duo-img" loading="lazy">
+          <span class="edit-duo-overlay"></span>
+          <span class="edit-duo-caption">
+            <span class="bs-display edit-duo-title">Bridal — Trousseau by La Perla</span>
+            <span class="edit-duo-link">Shop the edit</span>
+          </span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ The Atelier ════════════════ -->
+    <section class="cat-fashion">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">The Atelier</h2>
+          <p class="cat-fashion-sub">Favourites from the collection, framed.</p>
+        </div>
+
+        <div class="women-atelier-grid">
+
+          <a href="listing.html" class="women-atelier-item">
+            <div class="women-atelier-frame"><div class="women-atelier-frame-inner"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_7_16aa4789-aee1-4741-a7c6-0f3fd30903b0_600x.jpg?v=1778151902" alt="Footwear"></div></div>
+            <div class="women-atelier-dot"></div>
+            <p class="women-atelier-name">Footwear</p>
+          </a>
+
+          <a href="listing.html" class="women-atelier-item">
+            <div class="women-atelier-frame"><div class="women-atelier-frame-inner"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_79_600x.jpg?v=1776689958" alt="Bags"></div></div>
+            <div class="women-atelier-dot"></div>
+            <p class="women-atelier-name">Bags</p>
+          </a>
+
+          <a href="listing.html" class="women-atelier-item">
+            <div class="women-atelier-frame"><div class="women-atelier-frame-inner"><img src="https://www.bluesalon.com/cdn/shop/files/Guerlain_Make_up-Blue_Salon_600x.jpg?v=1778160088" alt="Beauty"></div></div>
+            <div class="women-atelier-dot"></div>
+            <p class="women-atelier-name">Beauty</p>
+          </a>
+
+          <a href="listing.html" class="women-atelier-item">
+            <div class="women-atelier-frame"><div class="women-atelier-frame-inner"><img src="https://www.bluesalon.com/cdn/shop/files/Parfume_de_Marly_600x.jpg?v=1778160612" alt="Perfumes"></div></div>
+            <div class="women-atelier-dot"></div>
+            <p class="women-atelier-name">Perfumes</p>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Brands loved by her ════════════════ -->
+    <section class="cat-fashion cat-fashion-brands">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">Brands Loved By Her</h2>
+          <a class="cat-fashion-sub-link" href="/collections">All Brands →</a>
+        </div>
+
+        <div class="brands-collection-home-grid-wrapper">
+          <div class="brands-collection-home-grid">
+
+            <a title="Zuhair Murad" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/floris_250x_a3e21544-7a23-4a0a-bc28-8e1734e3fd54_250x.avif?v=1771916867" alt="Floris London" loading="lazy"></span>
+            </a>
+
+            <a title="La Perla" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/la-perla_250x_fb3e3d61-b391-436c-8b52-e1792a457f80_250x.avif?v=1771916867" alt="La Perla" loading="lazy"></span>
+            </a>
+
+            <a title="Sensai" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/Untitled-2_250x_db6c3e68-8632-4d58-83fa-78317400f90c_250x.avif?v=1771916863" alt="Sensai" loading="lazy"></span>
+            </a>
+
+            <a title="MCM" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/mcm_logo_250x_1_250x.avif?v=1771916863" alt="MCM" loading="lazy"></span>
+            </a>
+
+            <a title="Aigner" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/aigner_250x_65346155-e057-4adb-aae5-ddc4a61f9a72_250x.webp?v=1771916863" alt="Aigner" loading="lazy"></span>
+            </a>
+
+            <a title="Swarovski" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/swarovski_250x_8ae97c0e-56d0-4cfb-b2e2-70120be6819e_250x.avif?v=1771916863" alt="Swarovski" loading="lazy"></span>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════ Footer ════════════════ -->
+  <footer class="bs-footer">
+
+    <!-- Shop more -->
+    <div class="bs-shopmore">
+      <div class="bs-shopmore-inner">
+        <h2>Shop more</h2>
+        <div class="bs-shopmore-grid" id="shopMoreGrid"></div>
+      </div>
+    </div>
+
+    <!-- Newsletter / App download -->
+    <div class="bs-appband">
+      <div class="bs-appband-inner">
+
+        <!-- Newsletter -->
+        <div>
+          <h3>Never miss a thing</h3>
+          <p class="bs-appband-copy">Sign up for exclusive launches, offers, and in-store events.</p>
+          <form class="bs-newsletter-form" onsubmit="return false;">
+            <input type="email" placeholder="Your email address">
+            <button type="submit">Sign up</button>
+          </form>
+          <p class="bs-newsletter-fine">By subscribing you agree to our privacy policy. Unsubscribe anytime.</p>
+        </div>
+
+        <!-- App download -->
+        <div>
+          <h3>Download our App</h3>
+          <p class="bs-app-sub">Your pocket-sized Blue Salon</p>
+          <p class="bs-appband-copy bs-app-copy">
+            The iOS and Android app puts the extraordinary world of Blue Salon at your fingertips — with personalised style inspiration from the brands you love.
+          </p>
+        </div>
+
+        <!-- QR code -->
+        <div class="bs-qr">
+          <div class="bs-qr-label">Scan to download</div>
+           <div class="foot-qr-code">
+            <a href="https://apps.apple.com/qa/app/blue-salon-%D8%A7%D9%84%D8%B5%D8%A7%D9%84%D9%88%D9%86-%D8%A7%D9%84%D8%A7%D8%B2%D8%B1%D9%82/id1512188214" target="_blank" rel="noopener">
+              <img src="https://cdn.shopify.com/s/files/1/0370/6444/1991/files/qrapp-01.svg?v=1632989194" alt="App Store" width="98">
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=co.shopney.bluesaloncom&amp;hl=en&amp;gl=US" target="_blank" rel="noopener">
+              <img src="https://cdn.shopify.com/s/files/1/0370/6444/1991/files/qrapp-02.svg?v=1632667366" alt="Play Store" width="120">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Original footer -->
+    <div class="bs-mainfooter">
+      <div class="bs-mainfooter-inner">
+        <div class="bs-mainfooter-about">
+          <img src="https://www.bluesalon.com/cdn/shop/files/BS_Logo_horizontal-01-white1.png?v=1644232279" alt="Blue Salon">
+          <p>Qatar's first and foremost luxury department store since 1981. Over 500 international and niche brands, curated for you.</p>
+
+          <ul class="bs-contact">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Suhaim Bin Hamad Street, Doha, Qatar</span>
+            </li>
+          </ul>
+
+        </div>
+        <div id="footerCols" class="bs-mainfooter-cols"></div>
+      </div>
+      <div class="bs-bottomstrip">
+        <div class="bs-bottomstrip-inner">
+          <span class="bs-copyright">Ⓒ Copyright 2026
+            <a class="bs-copyright-aih" href="https://www.abuissa.com" target="_blank" rel="noopener">
+              <img src="https://www.abuissa.com/wp-content/uploads/2024/09/cropped-aih-favicon-192x192.png" alt="AbuIssa Holding" width="16" height="16" loading="lazy">
+              AbuIssa Holding
+            </a>
+            all rights reserved.</span>
+          <ul class="payment-methods">
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/Visa_Inverted_x32_5700ab8c-cb49-4355-83c3-4d1146a8076c_x32.png?v=1644226717" alt="Visa" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/mastercard-logo-design-history-1979_x32.jpg?v=1644232735" alt="Mastercard" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/Group_1_x32.jpg?v=1660140162" alt="Apple Pay" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/21Google_Pay9bc22ee1-7e10-4d6f-b0ec-57672824e23d_x32_1_x32.png?v=1709793011" alt="Google Pay" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/unnamed_1_x32.webp?v=1776589537" alt="Western Union" loading="lazy"></li>
+            <li><img src="https://colehaan.qa/cdn/shop/files/Theqa-01.svg?v=1726476176&width=540" alt="Theqa" loading="lazy"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // "In Focus" — hovering (or focusing, for keyboard users) a
+    // department name swaps the single large photo on the right.
+    (function () {
+      "use strict";
+      var list = document.getElementById("womenFocusList");
+      var stage = document.getElementById("womenFocusStage");
+      var caption = document.getElementById("womenFocusCaption");
+      if (!list || !stage || !caption) return;
+      var items = list.querySelectorAll(".women-focus-item");
+      var imgs = stage.querySelectorAll("img");
+      function show(item) {
+        items.forEach(function (i) { i.classList.remove("is-active"); });
+        item.classList.add("is-active");
+        var key = item.getAttribute("data-img");
+        imgs.forEach(function (img) {
+          img.classList.toggle("is-active", img.getAttribute("data-key") === key);
+        });
+        caption.textContent = item.getAttribute("data-name");
+      }
+      items.forEach(function (item) {
+        item.addEventListener("mouseenter", function () { show(item); });
+        item.addEventListener("focus", function () { show(item); });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -14,7 +14,7 @@
   /* ── Catalogue (mirrors listing.js, enriched with PDP copy) ── */
   var PRODUCTS = [
     {
-      id: "miriam-ostrich", vendor: "ZUHAIR MURAD",
+      id: "miriam-ostrich", vendor: "ZUHAIR MURAD", sku: "ZM-10234",
       name: "Patchwork Leather Chain‑Handle Tote Bag",
       cat: "bags", price: 9700, tag: "New",
       sizes: ["36","37","38","39","40","41"], soldOutSizes: ["36"],
@@ -34,7 +34,7 @@
       composition: "Outer: 100% Calf Leather. Lining: 100% Suede."
     },
     {
-      id: "miriam-leather", vendor: "ZUHAIR MURAD",
+      id: "miriam-leather", vendor: "ZUHAIR MURAD", sku: "ZM-10235",
       name: "Patchwork Leather Chain‑Handle Tote Bag",
       cat: "bags", price: 4500, tag: "New",
       sizes: ["36","37","38","39","40","41"],
@@ -53,7 +53,7 @@
       composition: "Outer: 100% Calf Leather. Lining: 100% Cotton."
     },
     {
-      id: "marlene-natural", vendor: "ZUHAIR MURAD",
+      id: "marlene-natural", vendor: "ZUHAIR MURAD", sku: "ZM-20561",
       name: "Marlene 50 Python-Print Pump",
       cat: "shoes", price: 4100, compareAt: 5900,
       sizes: ["36","37","38","39","40","41"], soldOutSizes: ["41"],
@@ -72,7 +72,7 @@
       composition: "Upper, lining & sole: 100% Leather."
     },
     {
-      id: "marlene-taupe", vendor: "ZUHAIR MURAD",
+      id: "marlene-taupe", vendor: "ZUHAIR MURAD", sku: "ZM-20562",
       name: "Marlene 50 Python-Print Pump",
       cat: "shoes", price: 4300,
       sizes: ["36","37","38","39","40","41"],
@@ -91,7 +91,7 @@
       composition: "Upper, lining & sole: 100% Leather."
     },
     {
-      id: "emma-tote", vendor: "ZUHAIR MURAD",
+      id: "emma-tote", vendor: "ZUHAIR MURAD", sku: "ZM-11890",
       name: "Emma Mini Ruby-Multi Tote",
       cat: "bags", price: 6900, compareAt: 8600,
       variants: [
@@ -109,7 +109,7 @@
       composition: "Outer: 100% Calf Leather. Lining: 100% Cotton."
     },
     {
-      id: "inara-top", vendor: "ZUHAIR MURAD",
+      id: "inara-top", vendor: "ZUHAIR MURAD", sku: "ZM-30047",
       name: "Inara Ice-Green Draped Top",
       cat: "clothing", price: 1850, tag: "New",
       sizes: ["XS","S","M","L","XL"], soldOutSizes: ["XL"],
@@ -128,7 +128,7 @@
       composition: "Main: 96% Triacetate, 4% Polyurethane."
     },
     {
-      id: "auggie-short", vendor: "ZUHAIR MURAD",
+      id: "auggie-short", vendor: "ZUHAIR MURAD", sku: "ZM-30048",
       name: "Tailored Wool-Blend Bermuda Shorts",
       cat: "clothing", price: 2200,
       sizes: ["34","36","38","40","42"],
@@ -153,6 +153,27 @@
   /* ── Helpers ──────────────────────────────────────────────── */
   function money(qar) { return "QAR " + Number(qar).toLocaleString("en-US"); }
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+
+  /* Country of origin — read off the last "Made in X" detail bullet;
+     every product in this catalogue is finished in Italy even when
+     that line is omitted from the copy, so default to it. */
+  function originOf(p) {
+    var line = (p.details || []).find(function (d) { return /^Made in /i.test(d); });
+    return line ? line.replace(/^Made in /i, "") : "Italy";
+  }
+
+  /* Short colour code for the SKU suffix, e.g. "Ice Blue" → "ICE". */
+  function skuColorCode(color) {
+    return color ? color.replace(/\s+/g, "").toUpperCase().slice(0, 3) : "";
+  }
+
+  /* Full SKU for whichever colour/size is currently selected. */
+  function computeSku() {
+    var variant = product.variants[state.variant];
+    var bits = [product.sku, skuColorCode(variant && variant.color)];
+    if (state.size) bits.push(state.size);
+    return bits.filter(Boolean).join("-");
+  }
 
   function getParam(name) {
     var m = new RegExp("[?&]" + name + "=([^&]+)").exec(window.location.search);
@@ -183,13 +204,22 @@
     return p.variants[firstImageVariant(p)].image;
   }
 
+  /* First in-stock size — pre-selected by default, same as the colour swatch. */
+  function firstAvailableSize(p) {
+    if (!p.sizes || !p.sizes.length) return null;
+    for (var i = 0; i < p.sizes.length; i++) {
+      if (!p.soldOutSizes || p.soldOutSizes.indexOf(p.sizes[i]) === -1) return p.sizes[i];
+    }
+    return p.sizes[0];
+  }
+
   /* ── Resolve the product from ?id= ────────────────────────── */
   var product = PRODUCTS.find(function (p) { return p.id === getParam("id"); }) || PRODUCTS[0];
   var gallery = galleryOf(product);
 
   var state = {
     variant: firstImageVariant(product),
-    size: null,
+    size: firstAvailableSize(product),
     wished: false,
     photo: imageForVariant(product, firstImageVariant(product)),
     reviews: [],          // populated just below (after state_reviews exists)
@@ -199,6 +229,11 @@
 
   /* ── SVG glyphs (match the header/listing set) ────────────── */
   var HEART = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
+  var BAG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>';
+
+  /* Selected colour swatch per related-card, keyed by product id
+     (mirrors listing.js's state.selected for the same card style). */
+  var relSelected = {};
   var CHEV = '<svg class="pdp-acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
   function svcIcon(d) {
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + d + "</svg>";
@@ -208,6 +243,31 @@
     { icon: '<path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-7 3.3M3 4v3.5h3.5"/>', label: "Free 14-day returns & exchanges" },
     { icon: '<path d="M12 3l7 3v5c0 4.4-3 8-7 10-4-2-7-5.6-7-10V6z"/><path d="m9.5 12 2 2 3.5-4"/>', label: "Guaranteed authentic · Blue Salon since 1981" }
   ];
+
+  /* ── Share icons (match the footer's social glyph set) ────── */
+  var SHARE_WHATSAPP = '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5-1.3c1.4.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm5.9 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.7 1.7.8 1.9.1.2.1.3 0 .5-.1.2-.2.3-.3.5l-.5.5c-.2.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.4.1.6-.1l.7-.8c.2-.3.4-.2.6-.1l1.7.8c.2.1.3.1.4.3.1.2.1.9-.1 1.6z"/></svg>';
+  var SHARE_FACEBOOK = '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>';
+  var SHARE_INSTAGRAM = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>';
+  var SHARE_EMAIL = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>';
+
+  /* "Share" row — WhatsApp/Facebook open a real share dialog; Instagram
+     has no web share URL scheme, so it copies the link instead. */
+  function shareHTML() {
+    var url = window.location.href;
+    var text = product.name + " — " + product.vendor + " · Blue Salon";
+    var wa = "https://wa.me/?text=" + encodeURIComponent(text + " " + url);
+    var fb = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
+    var mail = "mailto:?subject=" + encodeURIComponent(text) + "&body=" + encodeURIComponent(text + "\n\n" + url);
+    return (
+      '<div class="pdp-share">' +
+        '<span class="pdp-share-label">Share</span>' +
+        '<a class="pdp-share-btn pdp-share-whatsapp" href="' + wa + '" target="_blank" rel="noopener" aria-label="Share on WhatsApp">' + SHARE_WHATSAPP + "</a>" +
+        '<a class="pdp-share-btn pdp-share-facebook" href="' + fb + '" target="_blank" rel="noopener" aria-label="Share on Facebook">' + SHARE_FACEBOOK + "</a>" +
+        '<button type="button" class="pdp-share-btn pdp-share-instagram" data-share-instagram aria-label="Copy link to share on Instagram">' + SHARE_INSTAGRAM + "</button>" +
+        '<a class="pdp-share-btn pdp-share-email" href="' + mail + '" aria-label="Share via email">' + SHARE_EMAIL + "</a>" +
+      "</div>"
+    );
+  }
   var ICON_CLOSE = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   var ICON_PREV = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>';
   var ICON_NEXT = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
@@ -286,7 +346,9 @@
     return (
       '<div class="pdp-block">' +
         '<div class="pdp-block-head">' +
-          '<span class="pdp-label">Size</span>' +
+          '<span class="pdp-colour-label" id="pdpSizeLabel">' +
+            (state.size ? 'Size: <span class="pdp-colour-name">' + esc(state.size) + "</span>" : "Size") +
+          "</span>" +
           '<button type="button" class="pdp-link" data-guide>Size guide</button>' +
         "</div>" +
         '<div class="pdp-sizes">' + chips + "</div>" +
@@ -295,10 +357,31 @@
     );
   }
 
+  /* Specifications — SKU/colour/size stay live via their ids, updated
+     in place whenever the swatch or size chip selection changes. */
+  function specsHTML() {
+    var variant = product.variants[state.variant];
+    var rows = [
+      ["SKU", '<span id="pdpSpecSku">' + esc(computeSku()) + "</span>"],
+      ["Colour", '<span id="pdpSpecColour">' + esc(variant ? variant.color : "—") + "</span>"]
+    ];
+    if (product.sizes && product.sizes.length) {
+      rows.push(["Size", '<span id="pdpSpecSize">' + esc(state.size || "—") + "</span>"]);
+    }
+    rows.push(["Brand", esc(product.vendor)]);
+    rows.push(["Category", esc(CAT_LABELS[product.cat] || product.cat)]);
+    rows.push(["Material", esc(product.composition)]);
+    rows.push(["Made in", esc(originOf(product))]);
+    return '<ul class="pdp-spec-list">' + rows.map(function (r) {
+      return "<li><span class='pdp-spec-key'>" + r[0] + "</span><span class='pdp-spec-val'>" + r[1] + "</span></li>";
+    }).join("") + "</ul>";
+  }
+
   function accordionHTML() {
     var items = [
       { title: "Details", open: true, body: "<ul class='pdp-detail-list'>" +
           product.details.map(function (d) { return "<li>" + esc(d) + "</li>"; }).join("") + "</ul>" },
+      { title: "Specifications", open: false, body: specsHTML() },
       { title: "Composition & Care", open: false, body: "<p>" + esc(product.composition) +
           "</p><p>Store dust-bag protected, away from direct light and heat.</p>" },
       { title: "Shipping & Returns", open: false, body:
@@ -313,6 +396,12 @@
         '<div class="pdp-acc-body"><div class="pdp-acc-inner">' + it.body + "</div></div>" +
       "</div>";
     }).join("") + "</div>";
+  }
+
+  /* Buy-now-pay-later line — splits the current selling price into 4. */
+  function payLaterHTML() {
+    var amt = (product.price / 4).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return '<p class="pdp-paylater">or 4 interest-free payments of <b>QAR ' + amt + '</b> with <b>PayLater</b></p>';
   }
 
   /* Loyalty earn banner — MOZOON points (1 point per QAR spent). */
@@ -342,14 +431,14 @@
         '<h1 class="pdp-name">' + esc(product.name) + "</h1>" +
         '<div class="pdp-price' + (onSale ? " is-sale" : "") + '">' + price +
           (onSale ? '<span class="pdp-price-tag">Sale</span>' : "") + "</div>" +
+        payLaterHTML() +
         loyaltyHTML() +
         '<hr class="bs-rule-gold pdp-rule">' +
         '<p class="pdp-desc">' + esc(product.desc) + "</p>" +
 
         '<div class="pdp-block">' +
           '<div class="pdp-block-head">' +
-            '<span class="pdp-label">Colour</span>' +
-            '<span class="pdp-colour-name" id="pdpColourName">' + esc(product.variants[state.variant].color) + "</span>" +
+            '<span class="pdp-colour-label">Colour: <span class="pdp-colour-name" id="pdpColourName">' + esc(product.variants[state.variant].color) + "</span></span>" +
           "</div>" +
           '<div class="pdp-swatches">' + swatchesHTML() + "</div>" +
         "</div>" +
@@ -360,6 +449,8 @@
           '<button type="button" class="pdp-addbag" id="pdpAddBag">Add to bag</button>' +
           '<button type="button" class="pdp-wish" id="pdpWish" aria-label="Add to wishlist" aria-pressed="false">' + HEART + "</button>" +
         "</div>" +
+
+        shareHTML() +
 
         '<p class="pdp-delivery">' + ICON_TRUCK +
           '<span>Order now for estimated delivery to Qatar <strong>' + deliveryWindow() + "</strong></span></p>" +
@@ -376,7 +467,7 @@
   function crumbHTML() {
     return '<nav class="pdp-crumbs" aria-label="Breadcrumb">' +
         '<a href="index.html">Home</a><span class="sep">/</span>' +
-        '<a href="listing.html">Women</a><span class="sep">/</span>' +
+        '<a href="women.html">Women</a><span class="sep">/</span>' +
         '<a href="listing.html">' + esc(CAT_LABELS[product.cat] || "New In") + "</a><span class='sep'>/</span>" +
         '<span class="current">' + esc(product.name) + "</span>" +
       "</nav>";
@@ -521,27 +612,64 @@
       "</div>";
   }
 
-  /* ── Related ("You may also like") ────────────────────────── */
+  /* ── Related ("You may also like") — same card style as the
+     listing grid: tag badge, hover wishlist/bag actions, brand+price
+     row, name, colour swatches. ─────────────────────────────── */
+  var MAX_REL_SWATCHES = 3;
+
+  function relatedCardHTML(p) {
+    var variants = p.variants || [];
+    var selIdx = relSelected[p.id] || 0;
+    var img = imageForVariant(p, selIdx);
+    var onSale = p.compareAt && p.compareAt > p.price;
+    var price = onSale
+      ? '<span class="was">' + money(p.compareAt) + '</span><span class="now">' + money(p.price) + "</span>"
+      : money(p.price);
+
+    var tag = "";
+    if (onSale) tag = '<span class="pdp-rel-tag sale">Sale</span>';
+    else if (p.tag) tag = '<span class="pdp-rel-tag' + (p.tag === "New" ? " dark" : "") + '">' + esc(p.tag) + "</span>";
+
+    var shown = variants.slice(0, MAX_REL_SWATCHES);
+    var extra = variants.length - shown.length;
+    var swatches = shown.map(function (v, i) {
+      var style = v.image ? "background-image:url(" + v.image + ")" : "background:" + v.hex;
+      return '<button type="button" class="pdp-rel-swatch' + (v.image ? " has-img" : "") + (i === selIdx ? " is-active" : "") +
+        '" data-rel-swatch="' + i + '" data-rel-id="' + p.id + '" style="' + style + '" ' +
+        'aria-label="' + esc(v.color) + '" title="' + esc(v.color) + '"></button>';
+    }).join("");
+    if (extra > 0) swatches += '<span class="pdp-rel-swatch-more">+' + extra + "</span>";
+
+    var href = "product.html?id=" + p.id;
+    return (
+      '<div class="pdp-rel-card" data-rel-id="' + p.id + '">' +
+        '<a class="pdp-rel-media" href="' + href + '" aria-label="' + esc(p.name) + '">' +
+          '<img class="pdp-rel-img" src="' + img + '" alt="' + esc(p.name) + '" loading="lazy">' +
+          tag +
+          '<div class="pdp-rel-actions">' +
+            '<button type="button" class="pdp-rel-action" data-rel-wish="' + p.id + '" aria-label="Add to wishlist">' + HEART + "</button>" +
+            '<button type="button" class="pdp-rel-action" data-rel-add="' + p.id + '" aria-label="Add to bag">' + BAG + "</button>" +
+          "</div>" +
+        "</a>" +
+        '<div class="pdp-rel-info">' +
+          '<div class="pdp-rel-row">' +
+            '<a class="pdp-rel-brand" href="' + href + '">' + esc(p.vendor) + "</a>" +
+            '<span class="pdp-rel-price">' + price + "</span>" +
+          "</div>" +
+          '<a class="pdp-rel-name" href="' + href + '">' + esc(p.name) + "</a>" +
+          (variants.length ? '<div class="pdp-rel-swatches">' + swatches + "</div>" : "") +
+        "</div>" +
+      "</div>"
+    );
+  }
+
   function relatedHTML() {
     var others = PRODUCTS.filter(function (p) { return p.id !== product.id; });
     others.sort(function (a, b) {
       var as = a.cat === product.cat ? 0 : 1, bs = b.cat === product.cat ? 0 : 1;
       return as - bs;
     });
-    var cards = others.slice(0, 4).map(function (p) {
-      var g = galleryOf(p);
-      var img = g[0] || "";
-      var onSale = p.compareAt && p.compareAt > p.price;
-      var price = onSale
-        ? '<span class="was">' + money(p.compareAt) + '</span><span class="now">' + money(p.price) + "</span>"
-        : money(p.price);
-      return '<a class="pdp-rel-card" href="product.html?id=' + p.id + '">' +
-          '<span class="pdp-rel-media"><img src="' + img + '" alt="' + esc(p.name) + '" loading="lazy"></span>' +
-          '<span class="pdp-rel-brand">' + esc(p.vendor) + "</span>" +
-          '<span class="pdp-rel-name">' + esc(p.name) + "</span>" +
-          '<span class="pdp-rel-price">' + price + "</span>" +
-        "</a>";
-    }).join("");
+    var cards = others.slice(0, 4).map(relatedCardHTML).join("");
     return '<section class="pdp-related">' +
         '<div class="pdp-related-head"><h2>You may also like</h2><hr class="bs-rule-gold"></div>' +
         '<div class="pdp-rel-grid">' + cards + "</div>" +
@@ -576,6 +704,18 @@
     });
   }
 
+  /* Keep the Specifications accordion's SKU/Colour/Size in step with
+     whatever's currently selected, without re-rendering the whole
+     accordion (which would also collapse it back closed). */
+  function refreshSpecs() {
+    var skuEl = document.getElementById("pdpSpecSku");
+    if (skuEl) skuEl.textContent = computeSku();
+    var colourEl = document.getElementById("pdpSpecColour");
+    if (colourEl) colourEl.textContent = product.variants[state.variant].color;
+    var sizeEl = document.getElementById("pdpSpecSize");
+    if (sizeEl) sizeEl.textContent = state.size || "—";
+  }
+
   function needsSize() { return product.sizes && product.sizes.length && !state.size; }
 
   function flagSize() {
@@ -591,11 +731,21 @@
   }
 
   function bumpCart() {
-    var cEl = document.getElementById("cartCount");
-    if (!cEl) return;
-    var cn = (parseInt(cEl.textContent, 10) || 0) + 1;
-    cEl.textContent = cn;
-    cEl.hidden = false;
+    if (!window.BS_CART) return;
+    var variant = product.variants[state.variant];
+    window.BS_CART.add({
+      id: product.id,
+      vendor: product.vendor,
+      name: product.name,
+      image: state.photo,
+      price: product.price,
+      compareAt: product.compareAt,
+      color: variant ? variant.color : null,
+      colorHex: variant ? variant.hex : null,
+      colorImage: variant ? variant.image : null,
+      size: state.size,
+      qty: 1
+    });
   }
 
   function addToBag(btn, resetLabel) {
@@ -714,6 +864,7 @@
       var nameEl = document.getElementById("pdpColourName");
       if (nameEl) nameEl.textContent = product.variants[idx].color;
       setPhoto(imageForVariant(product, idx));
+      refreshSpecs();
       return;
     }
 
@@ -724,8 +875,11 @@
       root.querySelectorAll(".pdp-size").forEach(function (el) {
         el.classList.toggle("is-active", el === sizeBtn);
       });
+      var sizeLabel = document.getElementById("pdpSizeLabel");
+      if (sizeLabel) sizeLabel.innerHTML = 'Size: <span class="pdp-colour-name">' + esc(state.size) + "</span>";
       var hint = document.getElementById("pdpSizeHint");
       if (hint) hint.hidden = true;
+      refreshSpecs();
       return;
     }
 
@@ -741,6 +895,23 @@
     /* Size-guide link (placeholder) */
     if (e.target.closest("[data-guide]")) { e.preventDefault(); return; }
 
+    /* Share on Instagram — no web share URL scheme exists, so copy
+       the link instead and let the shopper paste it in. */
+    if (e.target.closest("[data-share-instagram]")) {
+      e.preventDefault();
+      var shareUrl = window.location.href;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareUrl).then(function () {
+          if (window.bsToast) window.bsToast("Link copied — paste it into Instagram");
+        }).catch(function () {
+          if (window.bsToast) window.bsToast("Couldn’t copy the link — copy it from the address bar");
+        });
+      } else if (window.bsToast) {
+        window.bsToast("Copy the link from the address bar to share on Instagram");
+      }
+      return;
+    }
+
     /* Wishlist toggle */
     var wish = e.target.closest("#pdpWish");
     if (wish) {
@@ -754,12 +925,74 @@
         wEl.textContent = wn;
         wEl.hidden = wn === 0;
       }
+      if (window.bsToast) window.bsToast(state.wished ? "Added to wishlist" : "Removed from wishlist");
       return;
     }
 
     /* Add to bag (main + sticky bar) */
     if (e.target.closest("#pdpAddBag")) { addToBag(document.getElementById("pdpAddBag"), "Add to bag"); return; }
     if (e.target.closest("#pdpSbAdd")) { addToBag(document.getElementById("pdpSbAdd"), "Add to bag"); return; }
+
+    /* Related card: colour swatch → swap that card's photo only */
+    var relSw = e.target.closest("[data-rel-swatch]");
+    if (relSw) {
+      e.preventDefault();
+      var relId = relSw.dataset.relId;
+      var relProduct = PRODUCTS.find(function (p) { return p.id === relId; });
+      var relIdx = Number(relSw.dataset.relSwatch);
+      relSelected[relId] = relIdx;
+      var relCard = relSw.closest(".pdp-rel-card");
+      if (relCard && relProduct) {
+        relCard.querySelectorAll(".pdp-rel-swatch").forEach(function (el, i) {
+          el.classList.toggle("is-active", i === relIdx);
+        });
+        var relImg = relCard.querySelector(".pdp-rel-img");
+        if (relImg) relImg.src = imageForVariant(relProduct, relIdx);
+      }
+      return;
+    }
+
+    /* Related card: wishlist (visual + header count only, same as elsewhere) */
+    var relWish = e.target.closest("[data-rel-wish]");
+    if (relWish) {
+      e.preventDefault();
+      var relWished = relWish.classList.toggle("is-active");
+      relWish.setAttribute("aria-label", relWished ? "Remove from wishlist" : "Add to wishlist");
+      var relWEl = document.getElementById("wishCount");
+      if (relWEl) {
+        var relWn = Math.max(0, (parseInt(relWEl.textContent, 10) || 0) + (relWished ? 1 : -1));
+        relWEl.textContent = relWn;
+        relWEl.hidden = relWn === 0;
+      }
+      if (window.bsToast) window.bsToast(relWished ? "Added to wishlist" : "Removed from wishlist");
+      return;
+    }
+
+    /* Related card: add to bag (uses whichever colour is selected on the card) */
+    var relAdd = e.target.closest("[data-rel-add]");
+    if (relAdd) {
+      e.preventDefault();
+      var addId = relAdd.dataset.relAdd;
+      var addProduct = PRODUCTS.find(function (p) { return p.id === addId; });
+      if (addProduct && window.BS_CART) {
+        var addVariant = addProduct.variants[relSelected[addId] || 0];
+        window.BS_CART.add({
+          id: addProduct.id,
+          vendor: addProduct.vendor,
+          name: addProduct.name,
+          image: imageForVariant(addProduct, relSelected[addId] || 0),
+          price: addProduct.price,
+          compareAt: addProduct.compareAt,
+          color: addVariant ? addVariant.color : null,
+          colorHex: addVariant ? addVariant.hex : null,
+          colorImage: addVariant ? addVariant.image : null,
+          size: null,
+          qty: 1
+        });
+      }
+      if (window.bsToast) window.bsToast("Added to bag");
+      return;
+    }
   });
 
   /* Keyboard: Esc closes overlays; arrows page the lightbox; Enter/Space zooms. */

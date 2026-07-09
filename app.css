@@ -47,6 +47,28 @@
 
 html, body { margin: 0; background: var(--paper); }
 
+/* ── Toast — shared transient notification (wishlist, etc.) ─── */
+.bs-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: var(--z-toast);
+  transform: translate(-50%, 12px);
+  padding: 12px 22px;
+  background: var(--ink-900);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: var(--fw-medium);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-standard),
+              transform var(--dur-base) var(--ease-standard);
+}
+.bs-toast.is-in { opacity: 1; transform: translate(-50%, 0); }
+
 /* ── Header shell ─────────────────────────────────────────── */
 .bs-header {
   position: relative;
@@ -318,7 +340,7 @@ html, body { margin: 0; background: var(--paper); }
 .bs-btn-gold:hover { background: var(--gold-600); }
 
 /* ── Nav bar + mega menu ──────────────────────────────────── */
-.bs-nav-root { font-family: 'League Spartan', sans-serif; }
+.bs-nav-root { font-family: 'Jost', sans-serif; }
 
 .bs-nav-root .bs-nav { background: var(--paper); }
 .bs-nav-root .bs-nav-inner { display: flex; align-items: stretch; justify-content: center; padding: 0 24px; max-width: var(--container-max); margin: 0 auto; position: relative; border-bottom: 1px solid var(--border-subtle); }
@@ -558,7 +580,7 @@ html, body { margin: 0; background: var(--paper); }
   color: #fff;
 }
 .bs-shopcat-name {
-  font-family: var(--font-display); /* Qatar */
+  font-family: var(--font-display);
   font-weight: var(--fw-light);
   font-size: 30px;
   color: #fff;
@@ -1243,7 +1265,7 @@ html, body { margin: 0; background: var(--paper); }
   background: none;
   border: 0;
   cursor: pointer;
-  font-family: 'League Spartan', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 1px;
@@ -1278,6 +1300,198 @@ html, body { margin: 0; background: var(--paper); }
 .bs-drawer .bs-col h4.sub { margin-top: 14px; }
 .bs-drawer .bs-az { grid-template-columns: repeat(5, 1fr); }
 .bs-drawer .bs-edit { display: none; } /* drop promo cards in the compact drawer */
+
+/* ── Mini-bag dropdown — pops out of the header bag icon ────────
+   Not an edge-anchored drawer: app.js positions it (top/right) to
+   sit just under whichever bag icon was clicked, so it visually
+   drops out of the icon itself on every page and breakpoint. The
+   scrim is invisible — it only exists to catch outside clicks. */
+.bs-cartdrw-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: transparent;
+}
+.bs-cartdrw-scrim[hidden] { display: none; }
+
+/* Pointer diamond — visually ties the dropdown back to the icon that
+   opened it. Sits above the drawer (z-index) and straddles its top
+   edge, so its lower half blends into whichever CTA button (View
+   Cart/white or Checkout/black) happens to be under the icon. */
+.bs-cartdrw-arrow {
+  position: fixed;
+  z-index: 501;
+  width: 14px;
+  height: 14px;
+  background: var(--ink-900);
+  transform: rotate(45deg) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base, .22s) var(--ease-standard, ease);
+}
+.bs-cartdrw-arrow.is-open { opacity: 1; }
+.bs-cartdrw-arrow[hidden] { display: none; }
+
+.bs-cartdrw {
+  position: fixed;
+  z-index: 500;
+  width: min(92vw, 380px);
+  max-height: min(80vh, 640px);
+  background: var(--paper);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  transform-origin: top right;
+  transform: scale(0.96) translateY(-6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base, .22s) var(--ease-standard, ease),
+              transform var(--dur-base, .22s) var(--ease-standard, ease);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.bs-cartdrw.is-open { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+.bs-cartdrw[hidden] { display: none; }
+[dir="rtl"] .bs-cartdrw { transform-origin: top left; }
+
+/* View Cart + Checkout — pinned at the very top of the card, not the
+   bottom. Both point at cart.html for now (no separate checkout flow
+   exists in this prototype yet), but stay visually distinct so the
+   pair reads like the usual "review" vs "pay" mini-cart actions. */
+.bs-cartdrw-ctas { flex: none; display: flex; }
+.bs-cartdrw-viewcart,
+.bs-cartdrw-checkout {
+  flex: 1;
+  text-align: center;
+  padding: 16px 12px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  transition: background var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard);
+}
+.bs-cartdrw-viewcart {
+  color: var(--ink-900);
+  background: #fff;
+  border-bottom: 1px solid var(--border-subtle);
+  border-inline-end: 1px solid var(--border-subtle);
+}
+.bs-cartdrw-viewcart:hover { background: var(--surface-hover); text-decoration: none; }
+.bs-cartdrw-checkout { color: #fff; background: var(--ink-900); }
+.bs-cartdrw-checkout:hover { background: var(--color-primary); text-decoration: none; }
+
+.bs-cartdrw-head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-900);
+}
+.bs-cartdrw-close { background: none; border: 0; color: var(--ink-800); cursor: pointer; padding: 4px; }
+.bs-cartdrw-close:hover { color: var(--color-primary); }
+
+.bs-cartdrw-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.bs-cartdrw-empty { padding: 48px 20px; text-align: center; font-size: 13.5px; color: var(--text-muted); }
+
+.bs-cartdrw-items { list-style: none; margin: 0; padding: 0 20px; }
+.bs-cartdrw-item { display: flex; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--border-subtle); }
+.bs-cartdrw-item:last-child { border-bottom: 0; }
+.bs-cartdrw-img { flex: none; width: 66px; height: 82px; object-fit: cover; background: var(--surface-sunken); }
+.bs-cartdrw-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; font-family: var(--font-sans); }
+
+.bs-cartdrw-toprow { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.bs-cartdrw-brand { font-size: 11.5px; font-weight: var(--fw-bold); letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-900); }
+.bs-cartdrw-remove {
+  flex: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.bs-cartdrw-remove:hover { color: var(--sale); }
+
+.bs-cartdrw-name {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--ink-800);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.bs-cartdrw-unitprice { font-size: 13px; font-weight: var(--fw-medium); color: var(--ink-900); }
+
+.bs-cartdrw-field { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 2px; font-size: 12px; color: var(--text-muted); }
+.bs-cartdrw-field b { font-weight: var(--fw-medium); color: var(--ink-900); }
+
+/* Colour chip — actual swatch (hex or the variant's own photo) rather
+   than printing the colour's name. */
+.bs-cartdrw-swatch {
+  flex: none;
+  width: 22px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid rgba(14, 23, 34, 0.12);
+  background-clip: padding-box;
+}
+.bs-cartdrw-swatch.has-img { width: 22px; height: 26px; border-radius: 2px; background-size: cover; background-position: center; background-color: var(--surface-sunken); }
+
+.bs-cartdrw-qty { display: inline-flex; align-items: center; gap: 8px; }
+.bs-cartdrw-qty button {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-default);
+  background: #fff;
+  border-radius: 3px;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--ink-800);
+  cursor: pointer;
+}
+.bs-cartdrw-qty button:hover:not(:disabled) { background: var(--surface-hover); }
+.bs-cartdrw-qty button:disabled { opacity: 0.4; cursor: not-allowed; }
+.bs-cartdrw-qty-val { min-width: 16px; text-align: center; font-size: 12px; font-weight: var(--fw-medium); color: var(--ink-900); }
+
+.bs-cartdrw-foot { flex: none; padding: 16px 20px 20px; border-top: 1px solid var(--border-subtle); font-family: var(--font-sans); }
+.bs-cartdrw-row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 13px; color: var(--ink-900); }
+.bs-cartdrw-row-muted { color: var(--text-muted); font-size: 12px; }
+.bs-cartdrw-div { border: 0; border-top: 1px solid var(--border-subtle); margin: 10px 0; }
+.bs-cartdrw-total { font-weight: var(--fw-semibold); font-size: 14px; }
+.bs-cartdrw-loyalty { display: flex; align-items: center; gap: 10px; margin: 12px 0 0; font-size: 11.5px; color: var(--text-muted); }
+.bs-cartdrw-loyalty b { color: var(--ink-900); font-weight: var(--fw-semibold); }
+
+/* Mozoon badge — same treatment as the product page's loyalty banner */
+.bs-cartdrw-loyalty-badge {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  min-width: 44px;
+  padding: 5px 8px;
+  color: #fff;
+  background: var(--ink-900);
+  border-radius: var(--radius-sm);
+  line-height: 1;
+}
+.bs-cartdrw-loyalty-ar { font-size: 10px; opacity: 0.85; }
+.bs-cartdrw-loyalty-en { font-size: 5px; font-weight: var(--fw-medium); letter-spacing: 0.22em; text-indent: 0.22em; }
 
 /* ════════════════════════════════════════════════════════════
    RESPONSIVE — header, hero, services and footer.

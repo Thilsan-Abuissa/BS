@@ -32,12 +32,24 @@
     return Object.assign({ id: id, line: nextLine++, vendor: p.vendor, name: p.name, image: p.image, price: p.price, compareAt: p.compareAt }, opts);
   }
 
+  /* Read the shared cart store (app.js). On a genuine first-ever visit
+     (the key was never written) seed it with a few demo items so the
+     page isn't blank before anyone has added anything for real; after
+     that, this page always reflects exactly what BS_CART holds. */
+  function loadItems() {
+    if (!window.BS_CART) return [];
+    var stored = window.BS_CART.load();
+    if (stored !== null) return stored;
+    var seed = [
+      lineItem("miriam-ostrich", { color: "Ice Blue", colorHex: "#bcc9cd", colorImage: "images/0_1.webp", size: "38", qty: 1 }),
+      lineItem("marlene-natural", { color: "Python Natural", colorHex: "#8a7350", colorImage: "images/product4.png", size: "39", qty: 1 }),
+      lineItem("inara-top", { color: "Ice Green", colorHex: "#d6e4dc", colorImage: "images/INARA-TOP_ICE-GREEN_24814232-499_GHOST.webp", size: "M", qty: 2 })
+    ];
+    return window.BS_CART.save(seed);
+  }
+
   var state = {
-    items: [
-      lineItem("miriam-ostrich", { color: "Ice Blue", size: "38", qty: 1 }),
-      lineItem("marlene-natural", { color: "Python Natural", size: "39", qty: 1 }),
-      lineItem("inara-top", { color: "Ice Green", size: "M", qty: 2 })
-    ],
+    items: loadItems(),
     promoCode: null,
     promoInput: "",
     promoMsg: null,
@@ -244,17 +256,25 @@
       var qtyBtn = e.target.closest("[data-qty]");
       if (qtyBtn && line) {
         e.preventDefault();
-        var item = state.items.find(function (i) { return i.line === Number(line.dataset.line); });
+        var lineNo = Number(line.dataset.line);
+        var item = state.items.find(function (i) { return i.line === lineNo; });
         if (!item) return;
-        if (qtyBtn.dataset.qty === "inc") item.qty++;
-        else if (item.qty > 1) item.qty--;
+        var nextQty = qtyBtn.dataset.qty === "inc" ? item.qty + 1 : Math.max(1, item.qty - 1);
+        if (window.BS_CART) {
+          state.items = window.BS_CART.setQty(lineNo, nextQty);
+        } else {
+          item.qty = nextQty;
+        }
         render();
         return;
       }
 
       if (e.target.closest("[data-remove]") && line) {
         e.preventDefault();
-        state.items = state.items.filter(function (i) { return i.line !== Number(line.dataset.line); });
+        var removeLine = Number(line.dataset.line);
+        state.items = window.BS_CART
+          ? window.BS_CART.remove(removeLine)
+          : state.items.filter(function (i) { return i.line !== removeLine; });
         render();
         return;
       }

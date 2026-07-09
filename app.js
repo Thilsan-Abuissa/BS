@@ -7,6 +7,278 @@
 
   var data = window.BS_DATA;
 
+  /* ── Shared toast — small transient notification (wishlist, etc.)
+     Exposed on window so listing.js / product.js can reuse it. ── */
+  var bsToastTimer = null;
+  function bsToast(message) {
+    var el = document.getElementById("bsToast");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "bsToast";
+      el.className = "bs-toast";
+      el.setAttribute("role", "status");
+      el.setAttribute("aria-live", "polite");
+      document.body.appendChild(el);
+    }
+    el.textContent = message;
+    el.classList.remove("is-in");
+    void el.offsetWidth; // restart the transition if a toast is already showing
+    el.classList.add("is-in");
+    clearTimeout(bsToastTimer);
+    bsToastTimer = setTimeout(function () { el.classList.remove("is-in"); }, 2200);
+  }
+  window.bsToast = bsToast;
+
+  /* ── Shared cart store (localStorage) ────────────────────────
+     A real add-to-bag state shared across every page — the header
+     badge, the mini-bag drawer below and cart.html all read/write
+     the same list, instead of each page bumping its own counter.
+     `cartLoad()` returns null (not []) when the key has never been
+     written, so callers can tell "never touched" from "emptied". */
+  var CART_KEY = "bsCart";
+  function cartLoad() {
+    try {
+      var raw = localStorage.getItem(CART_KEY);
+      return raw === null ? null : JSON.parse(raw);
+    } catch (e) { return null; }
+  }
+  function cartSave(items) {
+    try { localStorage.setItem(CART_KEY, JSON.stringify(items)); } catch (e) {}
+    syncCartCount();
+    return items;
+  }
+  function cartAdd(item) {
+    var items = cartLoad() || [];
+    var match = items.find(function (i) { return i.id === item.id && i.color === item.color && i.size === item.size; });
+    if (match) match.qty += item.qty || 1;
+    else items.push(Object.assign({ line: Date.now() + Math.floor(Math.random() * 1000) }, item, { qty: item.qty || 1 }));
+    return cartSave(items);
+  }
+  function cartRemove(line) {
+    return cartSave((cartLoad() || []).filter(function (i) { return i.line !== line; }));
+  }
+  function cartSetQty(line, qty) {
+    var items = cartLoad() || [];
+    var it = items.find(function (i) { return i.line === line; });
+    if (it) it.qty = Math.max(1, qty);
+    return cartSave(items);
+  }
+  function cartTotalQty() { return (cartLoad() || []).reduce(function (s, i) { return s + i.qty; }, 0); }
+
+  function syncCartCount() {
+    var el = document.getElementById("cartCount");
+    if (!el) return;
+    var n = cartTotalQty();
+    el.textContent = n;
+    el.hidden = n === 0;
+  }
+
+  window.BS_CART = {
+    load: cartLoad, save: cartSave, add: cartAdd, remove: cartRemove,
+    setQty: cartSetQty, totalQty: cartTotalQty, sync: syncCartCount
+  };
+  syncCartCount(); // reflect whatever was persisted, on every fresh page load
+
+  /* ── Mini-bag drawer — opens from the header bag icon ────────
+     Lazily built on first open; re-rendered from the cart store
+     each time so it never drifts from what cart.html shows. */
+  var cartDrawerEl = null, cartScrimEl = null, cartArrowEl = null, cartDrawerAnchor = null;
+
+  var ICON_CLOSE_SM =
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+  function cartDrawerFieldHTML(label, value) {
+    return '<div class="bs-cartdrw-field"><span>' + label + "</span><b>" + value + "</b></div>";
+  }
+
+  /* Visual colour chip (hex or the variant's own photo) instead of
+     just printing the colour's name — but only when that data is
+     actually known. Items added before this existed (or from any
+     future path that doesn't resolve a swatch) fall back to the
+     plain name rather than a meaningless grey box. */
+  function cartDrawerSwatchHTML(item) {
+    if (!item.colorHex && !item.colorImage) return cartDrawerFieldHTML("Colour", item.color);
+    var style = item.colorImage ? "background-image:url(" + item.colorImage + ")" : "background:" + item.colorHex;
+    return '<div class="bs-cartdrw-field"><span>Colour</span>' +
+      '<span class="bs-cartdrw-swatch' + (item.colorImage ? " has-img" : "") + '" style="' + style + '" title="' + item.color + '" aria-label="' + item.color + '"></span>' +
+    "</div>";
+  }
+
+  function cartDrawerItemHTML(item) {
+    return (
+      '<li class="bs-cartdrw-item" data-line="' + item.line + '">' +
+        '<img class="bs-cartdrw-img" src="' + item.image + '" alt="">' +
+        '<div class="bs-cartdrw-info">' +
+          '<div class="bs-cartdrw-toprow">' +
+            '<span class="bs-cartdrw-brand">' + item.vendor + "</span>" +
+            '<button type="button" class="bs-cartdrw-remove" data-line-remove>Remove</button>' +
+          "</div>" +
+          '<span class="bs-cartdrw-name">' + item.name + "</span>" +
+          '<span class="bs-cartdrw-unitprice">' + formatMoney(item.price) + "</span>" +
+          (item.color ? cartDrawerSwatchHTML(item) : "") +
+          (item.size ? cartDrawerFieldHTML("Size", item.size) : "") +
+          '<div class="bs-cartdrw-field">' +
+            "<span>Quantity</span>" +
+            '<span class="bs-cartdrw-qty">' +
+              '<button type="button" data-qty="dec" aria-label="Decrease quantity"' + (item.qty <= 1 ? " disabled" : "") + ">&minus;</button>" +
+              '<span class="bs-cartdrw-qty-val">' + item.qty + "</span>" +
+              '<button type="button" data-qty="inc" aria-label="Increase quantity">+</button>' +
+            "</span>" +
+          "</div>" +
+        "</div>" +
+      "</li>"
+    );
+  }
+
+  function cartDrawerHTML() {
+    var items = cartLoad() || [];
+    var n = items.reduce(function (s, i) { return s + i.qty; }, 0);
+    var subtotal = items.reduce(function (s, i) { return s + i.price * i.qty; }, 0);
+    var points = Math.round(subtotal);
+    return (
+      (items.length
+        ? '<div class="bs-cartdrw-ctas">' +
+            '<a class="bs-cartdrw-viewcart" href="cart.html">View Cart</a>' +
+            '<a class="bs-cartdrw-checkout" href="cart.html">Checkout</a>' +
+          "</div>"
+        : "") +
+      '<div class="bs-cartdrw-head">' +
+        "<span>Your Bag" + (n ? " (" + n + ")" : "") + "</span>" +
+        '<button type="button" class="bs-cartdrw-close" data-cartdrw-close aria-label="Close bag">' + ICON_CLOSE_SM + "</button>" +
+      "</div>" +
+      '<div class="bs-cartdrw-body">' +
+        (items.length
+          ? '<ul class="bs-cartdrw-items">' + items.map(cartDrawerItemHTML).join("") + "</ul>"
+          : '<div class="bs-cartdrw-empty"><p>Your bag is empty.</p></div>') +
+      "</div>" +
+      (items.length
+        ? '<div class="bs-cartdrw-foot">' +
+            '<div class="bs-cartdrw-row"><span>Subtotal (' + n + (n === 1 ? " item" : " items") + ")</span><span>" + formatMoney(subtotal) + "</span></div>" +
+            '<div class="bs-cartdrw-row bs-cartdrw-row-muted"><span>Delivery</span><span>Calculated at checkout</span></div>' +
+            '<hr class="bs-cartdrw-div">' +
+            '<div class="bs-cartdrw-row bs-cartdrw-total"><span>Item Total</span><span>' + formatMoney(subtotal) + "</span></div>" +
+            '<p class="bs-cartdrw-loyalty">' +
+              '<span class="bs-cartdrw-loyalty-badge" aria-hidden="true">' +
+                '<span class="bs-cartdrw-loyalty-ar">مزون</span>' +
+                '<span class="bs-cartdrw-loyalty-en">MOZOON</span>' +
+              "</span>" +
+              '<span>Earn <b>' + points.toLocaleString("en-US") + "</b> Mozoon Points on this order</span>" +
+            "</p>" +
+          "</div>"
+        : "")
+    );
+  }
+
+  function renderCartDrawer() { if (cartDrawerEl) cartDrawerEl.innerHTML = cartDrawerHTML(); }
+
+  function ensureCartDrawer() {
+    if (cartDrawerEl) return;
+    cartScrimEl = document.createElement("div");
+    cartScrimEl.className = "bs-cartdrw-scrim";
+    cartScrimEl.hidden = true;
+    document.body.appendChild(cartScrimEl);
+
+    cartDrawerEl = document.createElement("aside");
+    cartDrawerEl.className = "bs-cartdrw";
+    cartDrawerEl.setAttribute("aria-hidden", "true");
+    cartDrawerEl.hidden = true;
+    document.body.appendChild(cartDrawerEl);
+
+    /* Small pointer connecting the drawer back to the icon that
+       opened it — a separate element (not part of the re-rendered
+       drawer markup) so its position survives every qty/remove
+       re-render without being recomputed each time. */
+    cartArrowEl = document.createElement("div");
+    cartArrowEl.className = "bs-cartdrw-arrow";
+    cartArrowEl.hidden = true;
+    document.body.appendChild(cartArrowEl);
+
+    cartScrimEl.addEventListener("click", closeCartDrawer);
+    cartDrawerEl.addEventListener("click", function (e) {
+      if (e.target.closest("[data-cartdrw-close]")) { closeCartDrawer(); return; }
+      var removeBtn = e.target.closest("[data-line-remove]");
+      if (removeBtn) {
+        var li = removeBtn.closest("[data-line]");
+        cartRemove(Number(li.dataset.line));
+        renderCartDrawer();
+        return;
+      }
+      var qtyBtn = e.target.closest("[data-qty]");
+      if (qtyBtn) {
+        var qtyLi = qtyBtn.closest("[data-line]");
+        var lineNo = Number(qtyLi.dataset.line);
+        var it = (cartLoad() || []).find(function (i) { return i.line === lineNo; });
+        if (!it) return;
+        cartSetQty(lineNo, qtyBtn.dataset.qty === "inc" ? it.qty + 1 : Math.max(1, it.qty - 1));
+        renderCartDrawer();
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && cartDrawerEl.classList.contains("is-open")) closeCartDrawer();
+    });
+    window.addEventListener("resize", function () {
+      if (cartDrawerEl.classList.contains("is-open")) positionCartDrawer(cartDrawerAnchor);
+    });
+  }
+
+  /* Anchor the card directly under whichever bag icon was clicked
+     (rather than sliding in from the screen edge), so it visually
+     drops out of the icon itself on every breakpoint. */
+  function positionCartDrawer(anchorEl) {
+    if (!anchorEl) return;
+    cartDrawerAnchor = anchorEl;
+    var r = anchorEl.getBoundingClientRect();
+    var gap = 10;
+    var top = Math.round(r.bottom + gap);
+    cartDrawerEl.style.top = top + "px";
+    if (document.documentElement.dir === "rtl") {
+      cartDrawerEl.style.left = Math.max(12, Math.round(r.left)) + "px";
+      cartDrawerEl.style.right = "auto";
+    } else {
+      cartDrawerEl.style.right = Math.max(12, Math.round(window.innerWidth - r.right)) + "px";
+      cartDrawerEl.style.left = "auto";
+    }
+    // Pointer diamond — centred on the icon, straddling the drawer's top edge.
+    if (cartArrowEl) {
+      var iconCenter = Math.round(r.left + r.width / 2);
+      cartArrowEl.style.top = (top - 7) + "px";
+      cartArrowEl.style.left = (iconCenter - 7) + "px";
+    }
+  }
+
+  function openCartDrawer(anchorEl) {
+    ensureCartDrawer();
+    renderCartDrawer();
+    cartDrawerEl.hidden = false;
+    cartScrimEl.hidden = false;
+    cartArrowEl.hidden = false;
+    positionCartDrawer(anchorEl);
+    void cartDrawerEl.offsetWidth; // commit the pre-transition state so it animates
+    cartDrawerEl.classList.add("is-open");
+    cartScrimEl.classList.add("is-open");
+    cartArrowEl.classList.add("is-open");
+    cartDrawerEl.setAttribute("aria-hidden", "false");
+  }
+
+  function closeCartDrawer() {
+    if (!cartDrawerEl) return;
+    cartDrawerEl.classList.remove("is-open");
+    cartScrimEl.classList.remove("is-open");
+    if (cartArrowEl) cartArrowEl.classList.remove("is-open");
+    cartDrawerEl.setAttribute("aria-hidden", "true");
+    // The scrim has no fade of its own — hide it immediately so its
+    // full-viewport hit area stops swallowing clicks on the rest of
+    // the page. The drawer/arrow wait for their opacity transition to
+    // finish before actually leaving the layout.
+    cartScrimEl.hidden = true;
+    var onEnd = function () {
+      cartDrawerEl.hidden = true;
+      if (cartArrowEl) cartArrowEl.hidden = true;
+      cartDrawerEl.removeEventListener("transitionend", onEnd);
+    };
+    cartDrawerEl.addEventListener("transitionend", onEnd);
+  }
+
   /* ── GCC locales (region · currency · language) ─────────────
      Prices in the data are stored in QAR (base). `rate` converts
      QAR → the country's currency; `dec` is the minor-unit count. */
@@ -525,6 +797,11 @@
       megaHolder.innerHTML = MEGA_MENUS[el.dataset.menu] || "";
       megaHolder.classList.add("is-open");
     });
+    // Items that name a landing page (data-href) navigate on click,
+    // in addition to previewing their mega menu on hover.
+    if (el.dataset.href) {
+      el.addEventListener("click", function () { window.location.href = el.dataset.href; });
+    }
   });
 
   navZone.addEventListener("mouseleave", closeMenu);
@@ -790,6 +1067,7 @@
       var i = wishlist.indexOf(id);
       if (i === -1) wishlist.push(id); else wishlist.splice(i, 1);
       renderTrending();
+      bsToast(i === -1 ? "Added to wishlist" : "Removed from wishlist");
     });
     renderTrending();
   }
@@ -877,14 +1155,12 @@
     syncLangSwitch();
   })();
 
-  /* ── Bag icon → shopping bag page ──────────────────────────
+  /* ── Bag icon → mini-bag drawer ────────────────────────────
      Shared across every page's header, so the same click handler
      works whether the icon lives on the home, PLP or PDP shell. */
   (function setupBagLink() {
-    var isCartPage = /(^|\/)cart\.html$/.test(window.location.pathname);
     document.querySelectorAll('.bs-utils .bs-util-wrap .bs-iconbtn[aria-label="Bag"]').forEach(function (btn) {
-      if (isCartPage) return;
-      btn.addEventListener("click", function () { window.location.href = "cart.html"; });
+      btn.addEventListener("click", function (e) { e.preventDefault(); openCartDrawer(btn); });
     });
   })();
 

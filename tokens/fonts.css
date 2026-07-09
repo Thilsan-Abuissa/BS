@@ -1,9 +1,15 @@
 /* ============================================================
    BLUE SALON — FONTS
    "Qatar" is the brand typeface (supplied by the client) — a
-   humanist sans carrying both Latin and Arabic, used across the
-   entire system for display and UI alike. Weights: 300/400/500/700.
+   humanist sans carrying both Latin and Arabic. It's defined here
+   but no longer applied anywhere (see tokens/typography.css).
+
+   Site typeface (Google Fonts): "Bodoni Moda" for display/editorial
+   copy (headings, hero titles, product names), "Jost" for UI/body
+   (nav, buttons, prices, paragraphs) — see tokens/typography.css.
    ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;6..96,400;6..96,500;6..96,600;6..96,700&family=Jost:wght@300;400;500;600;700&display=swap');
+
 @font-face {
   font-family: "Qatar";
   src: url("../assets/fonts/Qatar-Light.ttf") format("truetype");

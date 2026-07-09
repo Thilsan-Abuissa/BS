@@ -829,7 +829,7 @@ a.plp-card-name:hover {
 .plp-size.is-soldout:hover { color: var(--text-disabled); }
 
 /* ── Match the header/nav typeface across the listing surface ──
-   The header sets font-family: 'Jost', sans-serif on
+   The header sets font-family: 'Helvetica Neue', sans-serif on
    .bs-nav-root; mirror it here so the collection page reads with
    the same type as the top navigation. (.plp-title is deliberately
    excluded — it keeps the display font for an editorial headline.) */
@@ -842,7 +842,7 @@ a.plp-card-name:hover {
 .plp-size, .plp-quickadd button, .plp-tag, .plp-empty,
 .plp-cart-modal-head, .plp-cart-modal-brand, .plp-cart-modal-name, .plp-cart-modal-variant,
 .plp-cart-modal-price, .plp-cart-modal-continue, .plp-cart-modal-viewbag {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
 }
 
 /* Empty state (when a filter matches nothing) */

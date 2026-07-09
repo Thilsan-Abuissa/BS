@@ -4,11 +4,14 @@
    humanist sans carrying both Latin and Arabic. It's defined here
    but no longer applied anywhere (see tokens/typography.css).
 
-   Site typeface (Google Fonts): "Bodoni Moda" for display/editorial
-   copy (headings, hero titles, product names), "Jost" for UI/body
-   (nav, buttons, prices, paragraphs) — see tokens/typography.css.
+   Site typeface: "Cormorant Garamond" (Google Fonts) for
+   display/editorial copy (headings, hero titles, product names);
+   "Helvetica Neue" for UI/body (nav, buttons, prices, paragraphs)
+   — a system font (not on Google Fonts), so it renders wherever
+   it's locally installed and falls back to Arial elsewhere. See
+   tokens/typography.css.
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;6..96,400;6..96,500;6..96,600;6..96,700&family=Jost:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
 
 @font-face {
   font-family: "Qatar";

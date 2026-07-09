@@ -340,7 +340,7 @@ html, body { margin: 0; background: var(--paper); }
 .bs-btn-gold:hover { background: var(--gold-600); }
 
 /* ── Nav bar + mega menu ──────────────────────────────────── */
-.bs-nav-root { font-family: 'Jost', sans-serif; }
+.bs-nav-root { font-family: 'Helvetica Neue', sans-serif; }
 
 .bs-nav-root .bs-nav { background: var(--paper); }
 .bs-nav-root .bs-nav-inner { display: flex; align-items: stretch; justify-content: center; padding: 0 24px; max-width: var(--container-max); margin: 0 auto; position: relative; border-bottom: 1px solid var(--border-subtle); }
@@ -648,7 +648,7 @@ html, body { margin: 0; background: var(--paper); }
 .cat-fashion-inner {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 24px;
+  /* padding: 0 24px; */
 }
 .cat-fashion-head { text-align: center; margin-bottom: 34px; }
 .cat-fashion-title {
@@ -1265,7 +1265,7 @@ html, body { margin: 0; background: var(--paper); }
   background: none;
   border: 0;
   cursor: pointer;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 1px;

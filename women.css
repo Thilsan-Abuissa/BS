@@ -6,32 +6,6 @@
    only the hero and the New Arrivals product cards are bespoke.
    ============================================================ */
 
-/* ── Font trial (this page only) ─────────────────────────────
-   Inter (UI/body) + Cormorant Garamond (headlines) — overrides the
-   site-wide --font-sans/--font-display tokens just for this
-   document, as a preview before rolling it out everywhere. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
-:root {
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
-}
-
-/* app.css/listing.css hardcode 'Jost' on these (rather than reading
-   the token above) for the shared header and the reused PLP card
-   styles this page borrows — override them too so the trial reads
-   consistently across the whole page, not just the bespoke bits. */
-.bs-nav-root,
-.plp-head, .plp-crumbs, .plp-crumbs a, .plp-intro,
-.plp-toolbar, .plp-count, .plp-filter-toggle, .plp-filter-collapse,
-.plp-sort, .plp-sort-btn, .plp-sort-value, .plp-sort-opt,
-.plp-filters, .plp-filters-head, .plp-filter-hide, .plp-facet-head, .plp-facet-size, .plp-facet-opt,
-.plp-subcat, .plp-subcat-toggle,
-.plp-card, .plp-card-brand, .plp-card-name, .plp-card-price, .plp-swatch-more,
-.plp-size, .plp-quickadd button, .plp-tag, .plp-empty,
-.plp-cart-modal-head, .plp-cart-modal-brand, .plp-cart-modal-name, .plp-cart-modal-variant,
-.plp-cart-modal-price, .plp-cart-modal-continue, .plp-cart-modal-viewbag {
-  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
-}
 
 /* ── Hero — full-bleed editorial banner, bottom-left caption ── */
 .women-hero {
@@ -163,11 +137,14 @@
   margin: 18px auto 22px;
 }
 
+/* Grid (not a centered flex row) so the outer circles' edges land
+   exactly on the same edges as the hero banner/header, at any
+   viewport width — sizing the circles by hand to "look about right"
+   left a visible gap on both sides that the banner doesn't have. */
 .women-dept-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 48px 42px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 48px 24px;
 }
 
 .women-dept-circle {
@@ -175,7 +152,6 @@
   flex-direction: column;
   align-items: center;
   gap: 18px;
-  width: 176px;
   text-decoration: none;
 }
 
@@ -184,9 +160,9 @@
 }
 
 .women-dept-circle-frame {
-  width: 176px;
-  height: 176px;
-  border-radius: 50%;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 4%;
   overflow: hidden;
   position: relative;
   border: 1px solid var(--border-subtle);
@@ -230,31 +206,15 @@
 
 @media (max-width: 900px) {
   .women-dept-row {
+    grid-template-columns: repeat(4, 1fr);
     gap: 34px 26px;
-  }
-
-  .women-dept-circle {
-    width: 132px;
-  }
-
-  .women-dept-circle-frame {
-    width: 132px;
-    height: 132px;
   }
 }
 
 @media (max-width: 560px) {
   .women-dept-row {
+    grid-template-columns: repeat(3, 1fr);
     gap: 26px 18px;
-  }
-
-  .women-dept-circle {
-    width: 104px;
-  }
-
-  .women-dept-circle-frame {
-    width: 104px;
-    height: 104px;
   }
 
   .women-dept-circle-label {
@@ -325,13 +285,14 @@
   font-size: 19px;
   color: var(--ink-900);
   margin: 0 0 6px;
+  font-weight: 700;
 }
 
 .women-notes-desc {
   font-family: var(--font-sans);
-  font-size: 11.5px;
+  font-size: 12px;
   letter-spacing: .02em;
-  color: var(--text-subtle);
+  color: #000;
   margin: 0;
   line-height: 1.5;
 }
@@ -382,8 +343,10 @@
   display: block;
   font-family: var(--font-display);
   font-size: 20px;
-  color: var(--text-muted);
   transition: color .25s var(--ease-standard);
+  font-weight: 600;
+  color: #000000;
+
 }
 
 .women-focus-item:hover .women-focus-name,
@@ -503,7 +466,7 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: var(--gold-500);
+  background: #003976;
   margin: 18px auto 10px;
 }
 

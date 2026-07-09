@@ -26,14 +26,14 @@
 }
 
 /* ── Match the header/nav typeface across the detail surface ──
-   The header sets font-family: 'Jost', sans-serif on
+   The header sets font-family: 'Helvetica Neue', sans-serif on
    .bs-nav-root, and the listing page mirrors it. Do the same here
    so the product page reads with the same type as the rest of the
    store (the .pdp container cascades to every child; .pdp-eyebrow
    is called out because .bs-eyebrow sets its own family). */
 .pdp,
 .pdp-eyebrow {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
 }
 
 /* ── Breadcrumb (matches the listing crumbs) ──────────────── */
@@ -171,7 +171,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 
 .pdp-name {
   margin: 10px 0 0;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: var(--fw-light);
   font-size: 20px;
   line-height: 1.12;
@@ -314,7 +314,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-size {
   height: var(--control-md);
   padding: 0 8px;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-size: 13px;
   color: var(--ink-800);
   background: #fff;
@@ -367,7 +367,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-addbag {
   flex: 1 1 auto;
   height: var(--control-lg);
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-size: 12px;
   font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-wider);
@@ -474,7 +474,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   justify-content: space-between;
   gap: 12px;
   padding: 18px 0;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-size: 12px;
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-wide);
@@ -557,7 +557,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-review-btn {
   height: var(--control-lg);
   padding: 0 40px;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-size: 13px;
   font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-wider);
@@ -735,7 +735,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   flex: none;
   height: 44px;
   padding: 0 34px;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-size: 12px;
   font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-wider);
@@ -819,7 +819,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   width: 100%;
   height: var(--control-md);
   padding: 0 14px;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-size: 14px;
   color: var(--ink-900);
   background: #fff;
@@ -836,7 +836,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-btn-ghost, .pdp-btn-solid {
   flex: 1 1 auto;
   height: var(--control-md);
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-size: 12px;
   font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-wider);
@@ -858,7 +858,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-related { margin-top: 88px; }
 .pdp-related-head { text-align: center; margin-bottom: 36px; }
 .pdp-related-head h2 {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: var(--fw-light);
   font-size: 26px;
   letter-spacing: var(--ls-tight);

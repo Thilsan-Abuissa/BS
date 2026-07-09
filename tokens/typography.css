@@ -1,13 +1,15 @@
 /* ============================================================
    BLUE SALON — TYPOGRAPHY TOKENS
-   Display: Bodoni Moda  (editorial, high-contrast, fashion)
-   UI/Body: Jost         (geometric grotesque, clean, luxury)
+   Display: Cormorant Garamond  (Google Font, classic & editorial)
+   UI/Body: Helvetica Neue      (system font, clean & neutral)
    ============================================================ */
 :root {
   /* ---- Families ---- */
-  /* Both loaded via Google Fonts in tokens/fonts.css. */
-  --font-display: "Bodoni Moda", "Times New Roman", serif;
-  --font-sans:    "Jost", "Helvetica Neue", Arial, sans-serif;
+  /* Display loaded via Google Fonts in tokens/fonts.css; Helvetica
+     Neue is a system font — no web-font load, renders wherever it's
+     locally installed and falls back to Arial elsewhere. */
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans:    "Helvetica Neue", Arial, sans-serif;
   --font-body:    var(--font-sans);
 
   /* ---- Weights ---- */

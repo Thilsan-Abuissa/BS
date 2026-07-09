@@ -340,7 +340,7 @@ html, body { margin: 0; background: var(--paper); }
 .bs-btn-gold:hover { background: var(--gold-600); }
 
 /* ── Nav bar + mega menu ──────────────────────────────────── */
-.bs-nav-root { font-family: 'Helvetica Neue', sans-serif; }
+.bs-nav-root { font-family: 'Helvetica Neue', sans-serif; letter-spacing: 1.4px !important; }
 
 .bs-nav-root .bs-nav { background: var(--paper); }
 .bs-nav-root .bs-nav-inner { display: flex; align-items: stretch; justify-content: center; padding: 0 24px; max-width: var(--container-max); margin: 0 auto; position: relative; border-bottom: 1px solid var(--border-subtle); }
@@ -1266,6 +1266,7 @@ html, body { margin: 0; background: var(--paper); }
   border: 0;
   cursor: pointer;
   font-family: 'Helvetica Neue', sans-serif;
+  letter-spacing: 1.4px !important;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 1px;

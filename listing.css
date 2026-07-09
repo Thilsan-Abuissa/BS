@@ -704,8 +704,11 @@ a.plp-card-brand:hover {
 }
 
 .plp-card-name {
-  display: flex;
-  align-items: center;        /* when a row reserves 2 lines, a 1-line title centres (gap splits evenly) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;      /* never wrap past 2 lines — truncates with an ellipsis instead */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   max-width: 60%;
   margin-top: 8px;
   font-family: var(--font-sans);
@@ -843,6 +846,7 @@ a.plp-card-name:hover {
 .plp-cart-modal-head, .plp-cart-modal-brand, .plp-cart-modal-name, .plp-cart-modal-variant,
 .plp-cart-modal-price, .plp-cart-modal-continue, .plp-cart-modal-viewbag {
   font-family: 'Helvetica Neue', sans-serif;
+  letter-spacing: 1.4px !important;
 }
 
 /* Empty state (when a filter matches nothing) */

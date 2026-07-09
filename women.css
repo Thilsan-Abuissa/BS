@@ -7,6 +7,80 @@
    ============================================================ */
 
 
+/* ── Quick-shop shortcuts — a compact "stories" strip sitting above
+   the hero, scrollable if it overflows rather than wrapping. Same
+   max-width/padding as every other section so its edges line up
+   with the hero and header. ───────────────────────────────────── */
+.women-quicknav {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+
+.women-quicknav-row {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+.women-quicknav-row::-webkit-scrollbar { display: none; }
+
+.women-quicknav-item {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 76px;
+  text-decoration: none;
+}
+.women-quicknav-item:hover { text-decoration: none; }
+
+.women-quicknav-circle {
+  display: block;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  transition: border-color var(--dur-base) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard);
+}
+.women-quicknav-item:hover .women-quicknav-circle {
+  border-color: var(--gold-500);
+  box-shadow: 0 8px 20px rgba(14, 23, 34, 0.12);
+}
+
+.women-quicknav-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow, .6s) var(--ease-standard, ease);
+}
+.women-quicknav-item:hover .women-quicknav-circle img { transform: scale(1.08); }
+
+.women-quicknav-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wide);
+  color: var(--text-strong);
+  text-align: center;
+  line-height: 1.3;
+  transition: color var(--dur-base) var(--ease-standard);
+}
+.women-quicknav-item:hover .women-quicknav-label { color: var(--gold-600); }
+
+@media (max-width: 560px) {
+  .women-quicknav { padding: 16px 16px; }
+  .women-quicknav-row { gap: 20px; }
+  .women-quicknav-item { width: 62px; }
+  .women-quicknav-circle { width: 62px; height: 62px; }
+  .women-quicknav-label { font-size: 10px; }
+}
+
 /* ── Hero — full-bleed editorial banner, bottom-left caption ── */
 .women-hero {
   position: relative;

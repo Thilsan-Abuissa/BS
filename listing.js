@@ -1053,8 +1053,7 @@
     if (cartCloseBtn) cartCloseBtn.addEventListener("click", closeCartModal);
     if (cartContinueBtn) cartContinueBtn.addEventListener("click", closeCartModal);
     if (cartScrim) cartScrim.addEventListener("click", closeCartModal);
-    // No real bag page in this demo — "View bag" just closes for now.
-    if (cartViewBagBtn) cartViewBagBtn.addEventListener("click", closeCartModal);
+    if (cartViewBagBtn) cartViewBagBtn.addEventListener("click", function () { window.location.href = "cart.html"; });
 
     // Colour / size selection inside the modal — updates the shared state,
     // refreshes the modal body and keeps the grid card behind it in sync.

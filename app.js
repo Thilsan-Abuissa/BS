@@ -877,6 +877,17 @@
     syncLangSwitch();
   })();
 
+  /* ── Bag icon → shopping bag page ──────────────────────────
+     Shared across every page's header, so the same click handler
+     works whether the icon lives on the home, PLP or PDP shell. */
+  (function setupBagLink() {
+    var isCartPage = /(^|\/)cart\.html$/.test(window.location.pathname);
+    document.querySelectorAll('.bs-utils .bs-util-wrap .bs-iconbtn[aria-label="Bag"]').forEach(function (btn) {
+      if (isCartPage) return;
+      btn.addEventListener("click", function () { window.location.href = "cart.html"; });
+    });
+  })();
+
   /* Keep placeholder links from jumping the page */
   document.addEventListener("click", function (e) {
     var a = e.target.closest('a[href="#"]');

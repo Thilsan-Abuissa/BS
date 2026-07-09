@@ -1,14 +1,14 @@
-<!-- @dsCard group="Website" viewport="1320x900" name="Storefront — Product Detail" subtitle="bluesalon.com PDP: editorial gallery + minimal product panel" -->
+<!-- @dsCard group="Website" viewport="1320x900" name="Storefront — Cart" subtitle="bluesalon.com shopping bag: line items, order summary, promo code" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blue Salon — Product</title>
+<title>Blue Salon — Shopping Bag</title>
 <link rel="icon" href="assets/app-icon.png">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="app.css">
-<link rel="stylesheet" href="product.css">
+<link rel="stylesheet" href="cart.css">
 </head>
 <body>
 
@@ -72,7 +72,7 @@
       <nav class="bs-nav">
         <div class="bs-nav-inner" id="navInner">
           <div class="bs-nav-item" data-menu="new">New In</div>
-          <div class="bs-nav-item is-current" data-menu="women">Women</div>
+          <div class="bs-nav-item" data-menu="women">Women</div>
           <div class="bs-nav-item" data-menu="men">Men</div>
           <div class="bs-nav-item" data-menu="kids">Kids &amp; Baby</div>
           <div class="bs-nav-item" data-menu="beauty">Beauty</div>
@@ -102,8 +102,8 @@
   </aside>
 
   <main>
-    <!-- ════════════════ Product detail (rendered by product.js) ════════════════ -->
-    <section class="pdp" id="pdp"><!-- rendered by product.js --></section>
+    <!-- ════════════════ Shopping bag (rendered by cart.js) ════════════════ -->
+    <section class="cart-page" id="cartPage"><!-- rendered by cart.js --></section>
   </main>
 
   <!-- ════════════════ Footer ════════════════ -->
@@ -197,6 +197,6 @@
 
   <script src="data.js"></script>
   <script src="app.js"></script>
-  <script src="product.js"></script>
+  <script src="cart.js"></script>
 </body>
 </html>

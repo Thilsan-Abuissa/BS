@@ -968,7 +968,7 @@ a.plp-card-name:hover {
   height: 30px;
   padding: 6px;
   color: #fff;
-  background: var(--success, #1f8a5b);
+  background: var(--success, #000000);
   border-radius: var(--radius-circle);
   flex: none;
 }

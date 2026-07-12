@@ -97,17 +97,7 @@
         { color: "Taupe", hex: "#b8a582" }
       ]
     },
-    {
-      id: "oversized-shirt", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Oversized Cotton Shirt", cat: "readytowear",
-      price: 2600, tag: "New", order: 9,
-      sizes: ["XS","S","M","L","XL"],
-      variants: [
-        { color: "White", hex: "#f5f4f0", image: "images/women.png" },
-        { color: "Black", hex: "#191919" },
-        { color: "Ivory", hex: "#efece3" }
-      ]
-    },
-    {
+{
       id: "crystal-drop-earrings", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Crystal Drop Earrings", cat: "jewelry",
       price: 1650, order: 10,
       variants: [
@@ -115,48 +105,12 @@
         { color: "Gold", hex: "#c2a25e" }
       ]
     },
-    {
-      id: "leopard-print-vest", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Leopard-Print Satin Vest", cat: "beauty",
-      price: 1980, order: 11,
-      sizes: ["XS","S","M","L","XL"],
-      variants: [
-        { color: "Leopard", hex: "#a9873f", image: "images/setsi.png" },
-        { color: "Black", hex: "#191919" }
-      ]
-    },
-    {
+{
       id: "cuff-watch", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Crystal-Embellished Cuff Watch", cat: "watches",
       price: 5200, order: 12,
       variants: [
         { color: "Gold", hex: "#c2a25e", image: "images/products.png" },
         { color: "Silver", hex: "#c9cdd1" }
-      ]
-    },
-    {
-      id: "silk-gown", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Draped Silk Evening Gown", cat: "eveningwear",
-      price: 7400, tag: "New", order: 13,
-      sizes: ["XS","S","M","L","XL"],
-      variants: [
-        { color: "Midnight", hex: "#1c2333", image: "images/dress.webp" },
-        { color: "Black", hex: "#191919" }
-      ]
-    },
-    {
-      id: "wool-blazer", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Tailored Wool Blazer", cat: "outerwear",
-      price: 4800, order: 14,
-      sizes: ["XS","S","M","L","XL"],
-      variants: [
-        { color: "Olive", hex: "#4b4a2f", image: "images/jacket.webp" },
-        { color: "Black", hex: "#191919" }
-      ]
-    },
-    {
-      id: "resort-swimsuit", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Resort One-Piece Swimsuit", cat: "swimwear",
-      price: 1450, order: 15,
-      sizes: ["XS","S","M","L"],
-      variants: [
-        { color: "Ivory", hex: "#efece3", image: "images/swim.webp" },
-        { color: "Black", hex: "#191919" }
       ]
     }
   ];

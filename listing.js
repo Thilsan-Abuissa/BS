@@ -27,7 +27,7 @@
     },
     {
       id: "miriam-leather", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Patchwork Leather Chain‑Handle Tote Bag", cat: "shoes",
-      price: 4500, tag: "New", legacyActions: true, order: 2,
+      price: 4500, tag: "New", order: 2,
       sizes: ["36","37","38","39","40","41"],
       variants: [
         { color: "Chocolate", hex: "#4a3626", image: "images/product2.png" },
@@ -123,6 +123,41 @@
         { color: "Leopard", hex: "#a9873f", image: "images/setsi.png" },
         { color: "Black", hex: "#191919" }
       ]
+    },
+    {
+      id: "cuff-watch", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Crystal-Embellished Cuff Watch", cat: "watches",
+      price: 5200, order: 12,
+      variants: [
+        { color: "Gold", hex: "#c2a25e", image: "images/products.png" },
+        { color: "Silver", hex: "#c9cdd1" }
+      ]
+    },
+    {
+      id: "silk-gown", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Draped Silk Evening Gown", cat: "eveningwear",
+      price: 7400, tag: "New", order: 13,
+      sizes: ["XS","S","M","L","XL"],
+      variants: [
+        { color: "Midnight", hex: "#1c2333", image: "images/dress.webp" },
+        { color: "Black", hex: "#191919" }
+      ]
+    },
+    {
+      id: "wool-blazer", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Tailored Wool Blazer", cat: "outerwear",
+      price: 4800, order: 14,
+      sizes: ["XS","S","M","L","XL"],
+      variants: [
+        { color: "Olive", hex: "#4b4a2f", image: "images/jacket.webp" },
+        { color: "Black", hex: "#191919" }
+      ]
+    },
+    {
+      id: "resort-swimsuit", vendor: "ZUHAIR MURAD", name: "Zuhair Murad Women's Resort One-Piece Swimsuit", cat: "swimwear",
+      price: 1450, order: 15,
+      sizes: ["XS","S","M","L"],
+      variants: [
+        { color: "Ivory", hex: "#efece3", image: "images/swim.webp" },
+        { color: "Black", hex: "#191919" }
+      ]
     }
   ];
 
@@ -143,6 +178,7 @@
   PRODUCTS.forEach(function (p) { if (!p.material && MATERIALS[p.id]) p.material = MATERIALS[p.id]; });
 
   var MAX_SWATCHES = 3; // show up to 3 inline, rest as "+N"
+  var MAX_SIZES = 5;    // show up to 5 size chips inline, rest as "+N"
   var PAGE_SIZE = 9;    // products per infinite-scroll batch
 
   /* ── State ────────────────────────────────────────────────── */
@@ -173,11 +209,6 @@
     '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
     'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
     '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
-
-  var BAG =
-    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
-    'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
-    '<path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>';
 
   function displayImage(p) {
     var idx = state.selected[p.id] || 0;
@@ -275,39 +306,33 @@
 
     // Size chips — shown under the colour swatches. The container is
     // always rendered (empty for one-size items) so every card keeps
-    // the same height and the rows line up.
+    // the same height and the rows line up. Same "+N" treatment as
+    // the colour swatches once a product has more than MAX_SIZES.
     var sizeSel = state.size[p.id];
     var sizeChips = "";
     if (p.sizes && p.sizes.length) {
-      sizeChips = p.sizes.map(function (s) {
+      var shownSizes = p.sizes.slice(0, MAX_SIZES);
+      var extraSizes = p.sizes.length - shownSizes.length;
+      sizeChips = shownSizes.map(function (s) {
         var soldOut = p.soldOutSizes && p.soldOutSizes.indexOf(s) !== -1;
         return '<button type="button" class="plp-size' +
           (soldOut ? " is-soldout" : "") + (s === sizeSel ? " is-active" : "") + '" ' +
           (soldOut ? 'disabled aria-disabled="true" ' : "") +
           'data-size="' + s + '">' + s + "</button>";
       }).join("");
+      if (extraSizes > 0) sizeChips += '<span class="plp-size-more">+' + extraSizes + "</span>";
     }
     var sizes = '<div class="plp-sizes">' + sizeChips + "</div>";
 
-    // Hover actions. Default: stacked white square buttons (wishlist + bag).
-    // legacyActions keeps the old circular heart + "Add to bag" bar.
-    var actions;
-    if (p.legacyActions) {
-      actions =
-        '<button type="button" class="plp-wish' + (wished ? " is-active" : "") + '" ' +
-          'data-wish aria-label="' + wishLabel + '">' + HEART + "</button>" +
-        '<span class="plp-quickadd"><button type="button" data-quickadd>Add to bag</button></span>';
-    } else {
-      actions =
-        '<div class="plp-actions">' +
-          '<button type="button" class="plp-action' + (wished ? " is-active" : "") + '" ' +
-            'data-wish aria-label="' + wishLabel + '">' + HEART + "</button>" +
-          '<button type="button" class="plp-action" data-quickadd aria-label="Add to bag">' + BAG + "</button>" +
-        "</div>";
-    }
+    // Hover actions: circular wishlist heart (top-right) + a full-width
+    // "Add to bag" bar that slides up from the bottom of the image.
+    var actions =
+      '<button type="button" class="plp-wish' + (wished ? " is-active" : "") + '" ' +
+        'data-wish aria-label="' + wishLabel + '">' + HEART + "</button>" +
+      '<span class="plp-quickadd"><button type="button" data-quickadd>Add to bag</button></span>';
 
     return (
-      '<article class="plp-card' + (p.legacyActions ? " plp-card--legacy" : "") + '" data-id="' + p.id + '">' +
+      '<article class="plp-card plp-card--legacy" data-id="' + p.id + '">' +
         '<a class="plp-card-media" href="' + href + '" aria-label="' + p.name + '">' +
           '<img class="plp-card-mainimg" src="' + current + '" alt="' + p.name + '" loading="lazy">' +
           hoverImg +
@@ -605,8 +630,11 @@
   /* ── Filter sidebar (accordion facets) ────────────────────── */
   var filtersEl = document.getElementById("plpFilters");
 
-  var CAT_LABELS = { shoes: "Shoes", bags: "Bags", clothing: "Clothing", accessories: "Accessories", readytowear: "Ready-to-Wear", jewelry: "Jewelry", beauty: "Beauty" };
-  var SUBCAT_VISIBLE_COUNT = 5; // categories shown before the "Show more" link kicks in
+  var CAT_LABELS = {
+    shoes: "Shoes", bags: "Bags", clothing: "Clothing", accessories: "Accessories",
+    readytowear: "Shirts", jewelry: "Jewelry", beauty: "Beauty",
+    watches: "Watches", eveningwear: "Eveningwear", outerwear: "Outerwear", swimwear: "Swimwear"
+  };
   var GENDER_OPTIONS = ["Women", "Men", "Kids"];   // fixed list — not derived from products
   var PRICE_BUCKETS = [
     { v: "0-2000", label: "Under QAR 2,000" },
@@ -614,12 +642,22 @@
     { v: "5000-", label: "QAR 5,000 +" }
   ];
 
+  // First variant image on a product — used as its category's thumbnail.
+  function firstImage(p) {
+    for (var i = 0; i < p.variants.length; i++) {
+      if (p.variants[i].image) return p.variants[i].image;
+    }
+    return null;
+  }
+
   // Collect facet options from the product data.
   function collectFacets() {
-    var cats = [], brands = [], brandSeen = {}, materials = [], matSeen = {}, colours = [], colourSeen = {}, numeric = {}, letters = {};
+    var cats = [], catImages = {}, newInImage = null, brands = [], brandSeen = {}, materials = [], matSeen = {}, colours = [], colourSeen = {}, numeric = {}, letters = {};
     var LETTER_ORDER = ["XS", "S", "M", "L", "XL"];
     PRODUCTS.forEach(function (p) {
       if (cats.indexOf(p.cat) === -1) cats.push(p.cat);
+      if (!newInImage) newInImage = firstImage(p);
+      if (!catImages[p.cat]) catImages[p.cat] = firstImage(p);
       if (p.vendor && !brandSeen[p.vendor]) { brandSeen[p.vendor] = 1; brands.push(p.vendor); }
       if (p.material && !matSeen[p.material]) { matSeen[p.material] = 1; materials.push(p.material); }
       p.variants.forEach(function (v) {
@@ -633,7 +671,7 @@
     var letSizes = LETTER_ORDER.filter(function (s) { return letters[s]; });
     brands.sort();
     materials.sort();
-    return { cats: cats, brands: brands, materials: materials, colours: colours, numSizes: numSizes, letSizes: letSizes };
+    return { cats: cats, catImages: catImages, newInImage: newInImage, brands: brands, materials: materials, colours: colours, numSizes: numSizes, letSizes: letSizes };
   }
 
   var CHEV = '<svg class="plp-facet-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
@@ -697,7 +735,7 @@
       // Desktop: "Hide filters" bar (aligns with the toolbar line)
       '<div class="plp-filters-bar">' +
         '<button type="button" class="plp-filter-hide" id="plpHideFilters" aria-controls="plpFilters">' +
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="#fff"/><circle cx="15" cy="12" r="2" fill="#fff"/><circle cx="9" cy="18" r="2" fill="#fff"/></svg>' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18l-7 8v6l-4 2v-8L3 4z"/></svg>' +
           "<span>Hide filters</span>" +
         "</button>" +
       "</div>" +
@@ -728,8 +766,15 @@
     buildFilters();
 
     filtersEl.addEventListener("click", function (e) {
-      // Hide filters (collapse sidebar → grid full width)
-      if (e.target.closest("#plpHideFilters")) { setFiltersHidden(true); return; }
+      // "Hide filters" — closes the drawer if it's open as a floating
+      // overlay, otherwise collapses the inline sidebar (grid full width).
+      if (e.target.closest("#plpHideFilters")) {
+        if (filtersEl.classList.contains("is-drawer-open")) closeFiltersDrawer();
+        else setFiltersHidden(true);
+        return;
+      }
+      // Drawer close (×) — mobile header, and desktop when opened via "Show filters"
+      if (e.target.closest("#plpFiltersClose")) { closeFiltersDrawer(); return; }
       // Accordion toggle
       var head = e.target.closest(".plp-facet-head");
       if (head) {
@@ -778,17 +823,49 @@
     });
   }
 
-  /* ── Collapse / expand the filter sidebar ─────────────────────
-     "Hide filters" sits atop the sidebar; "Show filters" appears in
-     the toolbar only while the sidebar is collapsed. */
+  /* ── Collapse the filter sidebar ───────────────────────────────
+     "Hide filters" collapses the inline sidebar and hands the grid
+     full width. Re-opening (mobile "Filters" pill, or the desktop
+     "Show filters" toolbar button) doesn't restore the two-column
+     layout — it floats the same panel in as a drawer, like the cart
+     flyout, over the full-width grid. */
   function setFiltersHidden(hidden) {
     var shell = document.querySelector(".plp-shell");
     if (shell) shell.classList.toggle("filters-hidden", hidden);
     equalizeTitles();  // grid width changed → recompute per-row title reservations
   }
+
+  var filtersScrimEl = document.getElementById("plpFiltersScrim");
+
+  function openFiltersDrawer() {
+    if (!filtersEl) return;
+    filtersEl.classList.add("is-drawer-mode");
+    if (filtersScrimEl) filtersScrimEl.hidden = false;
+    void filtersEl.offsetWidth; // commit the off-canvas/scrim-hidden state so both animate in
+    filtersEl.classList.add("is-drawer-open");
+    if (filtersScrimEl) filtersScrimEl.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeFiltersDrawer() {
+    if (!filtersEl || !filtersEl.classList.contains("is-drawer-open")) return;
+    filtersEl.classList.remove("is-drawer-open");
+    if (filtersScrimEl) filtersScrimEl.classList.remove("is-open");
+    document.body.style.overflow = "";
+    filtersEl.addEventListener("transitionend", function onEnd(e) {
+      if (e.target !== filtersEl) return;
+      filtersEl.classList.remove("is-drawer-mode"); // no-op on mobile; there it's always drawer-mode
+      if (filtersScrimEl) filtersScrimEl.hidden = true;
+      filtersEl.removeEventListener("transitionend", onEnd);
+    });
+  }
+
   (function () {
-    var showBtn = document.getElementById("plpFilterCollapse"); // toolbar "Show filters"
-    if (showBtn) showBtn.addEventListener("click", function () { setFiltersHidden(false); });
+    var showBtn = document.getElementById("plpFilterCollapse"); // toolbar "Show filters" (desktop)
+    var toggleBtn = document.getElementById("plpFilterToggle");  // "Filters" pill (mobile)
+    if (showBtn) showBtn.addEventListener("click", openFiltersDrawer);
+    if (toggleBtn) toggleBtn.addEventListener("click", openFiltersDrawer);
+    if (filtersScrimEl) filtersScrimEl.addEventListener("click", closeFiltersDrawer);
   })();
 
   /* ── Sub-category links (toolbar, only while the sidebar is collapsed).
@@ -800,32 +877,19 @@
   // it's the default selected tab, matching the page title/breadcrumb.
   function noCategoryActive() { return Object.keys(state.facets.category).length === 0; }
 
-  function subcatTab(c, label) {
+  function subcatTab(c, label, img) {
     var active = c === "" ? noCategoryActive() : !!state.facets.category[c];
     return '<button type="button" class="plp-subcat' + (active ? " is-active" : "") +
-      '" data-subcat="' + c + '">' + label + "</button>";
+      '" data-subcat="' + c + '">' +
+      (img ? '<span class="plp-subcat-thumb"><img src="' + img + '" alt="" loading="lazy"></span>' : "") +
+      "<span>" + label + "</span></button>";
   }
-
-  var subcatsExpanded = false;
 
   function buildQuickFilters() {
     if (!quickEl) return;
     var f = collectFacets();
-    var visible = f.cats.slice(0, SUBCAT_VISIBLE_COUNT);
-    var extra = f.cats.slice(SUBCAT_VISIBLE_COUNT);
-
-    var html = subcatTab("", "New In") +
-      visible.map(function (c) { return subcatTab(c, CAT_LABELS[c] || c); }).join("");
-
-    if (extra.length) {
-      html += '<span class="plp-subcat-more' + (subcatsExpanded ? " is-expanded" : "") + '" id="plpSubcatMore">' +
-        extra.map(function (c) { return subcatTab(c, CAT_LABELS[c] || c); }).join("") +
-      "</span>" +
-      '<button type="button" class="plp-subcat-toggle" id="plpSubcatToggle">' +
-        (subcatsExpanded ? "Show less" : "Show more") +
-      "</button>";
-    }
-    quickEl.innerHTML = html;
+    quickEl.innerHTML = subcatTab("", "New In", f.newInImage) +
+      f.cats.map(function (c) { return subcatTab(c, CAT_LABELS[c] || c, f.catImages[c]); }).join("");
   }
 
   function syncSubcats() {
@@ -839,16 +903,6 @@
   if (quickEl) {
     buildQuickFilters();
     quickEl.addEventListener("click", function (e) {
-      var toggle = e.target.closest("#plpSubcatToggle");
-      if (toggle) {
-        subcatsExpanded = !subcatsExpanded;
-        buildQuickFilters();
-        // The expanded tab list can crowd the sort/density controls —
-        // hide them while expanded; "Show less" brings them back.
-        var toolbar = document.querySelector(".plp-toolbar");
-        if (toolbar) toolbar.classList.toggle("subcats-expanded", subcatsExpanded);
-        return;
-      }
       var b = e.target.closest("[data-subcat]");
       if (!b) return;
       var c = b.dataset.subcat;
@@ -864,26 +918,31 @@
     });
   }
 
-  /* ── Mobile filter drawer ─────────────────────────────────── */
+  /* ── Sticky toolbar: swap category tabs in/out on scroll ──────
+     Default: the tabs sit in their own row (#plpSubcatsBar) above the
+     toolbar. Once the toolbar scrolls up and sticks to the top, move the
+     same element into the toolbar (compact, next to "Show filters") and
+     hide density/sort so the pinned row stays a single condensed line;
+     moving back out restores the original layout. Desktop-only — below
+     901px the tabs are hidden entirely (mobile uses the filter drawer). */
   (function () {
-    var toggle = document.getElementById("plpFilterToggle");
-    var scrim = document.getElementById("plpFiltersScrim");
-    if (!toggle || !filtersEl || !scrim) return;
-    function open() {
-      filtersEl.classList.add("is-drawer-open");
-      scrim.hidden = false;
-      document.body.style.overflow = "hidden";
+    var toolbar = document.getElementById("plpToolbar");
+    var sentinel = document.getElementById("plpToolbarSentinel");
+    var subcatsBar = document.getElementById("plpSubcatsBar");
+    var toolbarLeft = toolbar && toolbar.querySelector(".plp-toolbar-left");
+    if (!toolbar || !sentinel || !subcatsBar || !toolbarLeft || !quickEl || !("IntersectionObserver" in window)) return;
+
+    function setStuck(stuck) {
+      toolbar.classList.toggle("is-stuck", stuck);
+      if (!window.matchMedia("(min-width: 901px)").matches) return; // mobile: tabs never move
+      if (stuck && quickEl.parentNode !== toolbarLeft) toolbarLeft.appendChild(quickEl);
+      else if (!stuck && quickEl.parentNode !== subcatsBar) subcatsBar.appendChild(quickEl);
     }
-    function close() {
-      filtersEl.classList.remove("is-drawer-open");
-      scrim.hidden = true;
-      document.body.style.overflow = "";
-    }
-    toggle.addEventListener("click", open);
-    scrim.addEventListener("click", close);
-    filtersEl.addEventListener("click", function (e) {
-      if (e.target.closest("#plpFiltersClose")) close();
-    });
+
+    new IntersectionObserver(function (entries) {
+      var e = entries[entries.length - 1];
+      setStuck(!e.isIntersecting && e.boundingClientRect.top < 0);
+    }, { threshold: 0 }).observe(sentinel);
   })();
 
   /* ── Sort (custom dropdown) ───────────────────────────────── */

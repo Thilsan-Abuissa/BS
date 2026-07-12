@@ -102,6 +102,9 @@
 .plp-main { min-width: 0; }
 
 /* ── Toolbar (top of the product column) ──────────────────── */
+/* Zero-height scroll sentinel — see listing.js for how it drives .is-stuck */
+.plp-toolbar-sentinel { height: 1px; margin-bottom: -1px; }
+
 .plp-toolbar {
   position: sticky;
   top: 0;
@@ -120,16 +123,50 @@
 }
 .plp-toolbar-left { display: flex; align-items: center; gap: 24px; min-width: 0; flex-wrap: wrap; }
 .plp-tools-right { flex: none; display: flex; align-items: center; gap: 20px; }
-/* The expanded sub-category list can crowd the sort/density controls —
-   hide them while "Show more" is expanded; "Show less" restores them. */
-.plp-toolbar.subcats-expanded .plp-tools-right { display: none; }
 
-/* Sub-category links (toolbar) — always visible on desktop, whether the
-   sidebar is shown or hidden */
-.plp-quickfilters { display: inline-flex; align-items: center; gap: 24px; }
+/* Once the toolbar is stuck to the top, listing.js moves the category tabs
+   into .plp-toolbar-left (compact, alongside "Show filters") and this rule
+   hides density/sort so the sticky row stays a single condensed line.
+   Desktop-only: below 901px the tabs never move (see listing.js), and
+   sort must stay visible in the mobile toolbar regardless of scroll. */
+@media (min-width: 901px) {
+  .plp-toolbar.is-stuck .plp-tools-right { display: none; }
+  /* Compact sticky row: text labels only, no thumbnails */
+  .plp-toolbar.is-stuck .plp-subcat-thumb { display: none; }
+  /* Divider between "Show filters" and the category tabs */
+  .plp-toolbar.is-stuck .plp-toolbar-left .plp-quickfilters {
+    padding-left: 20px;
+    border-left: 1px solid var(--border-default);
+  }
+}
+
+/* Category quick-nav — its own row above the toolbar by default; a
+   horizontally-scrolling slider so it never wraps, however many
+   categories the collection has. */
+.plp-subcats-bar {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 24px 14px;
+}
+.plp-quickfilters {
+  display: flex;
+  align-items: flex-end;
+  gap: 30px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  padding-top: 20px;
+}
+.plp-toolbar .plp-quickfilters { padding-top: 0; } /* no title above it to clear once inside the toolbar */
+.plp-quickfilters::-webkit-scrollbar { display: none; }
 .plp-subcat {
-  height: 34px;
-  padding: 0;
+  flex: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 2px 10px;
   background: none;
   border: 0;
   cursor: pointer;
@@ -138,6 +175,8 @@
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--text-muted);
+  text-align: center;
+  white-space: nowrap;
   border-bottom: 2px solid transparent;
   transition: color var(--dur-base) var(--ease-standard),
               border-color var(--dur-base) var(--ease-standard);
@@ -145,28 +184,16 @@
 .plp-subcat:hover { color: var(--ink-900); }
 .plp-subcat.is-active { color: var(--ink-900); border-bottom-color: var(--ink-900); }
 
-/* Extra sub-category links revealed by "Show more" */
-.plp-subcat-more {
-  display: none;
-  align-items: center;
-  gap: 24px;
+.plp-subcat-thumb {
+  flex: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
 }
-.plp-subcat-more.is-expanded { display: inline-flex; }
-.plp-subcat-toggle {
-  height: 34px;
-  padding: 0;
-  background: none;
-  border: 0;
-  cursor: pointer;
-  font-size: 11.5px;
-  font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-wide);
-  text-transform: uppercase;
-  color: var(--text-subtle);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.plp-subcat-toggle:hover { color: var(--ink-900); }
+.plp-subcat-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.plp-subcat.is-active .plp-subcat-thumb { border-color: var(--ink-900); }
 
 /* Toolbar "Show filters" — visible only while the sidebar is collapsed */
 .plp-filter-collapse {
@@ -209,6 +236,34 @@
 /* Collapsed sidebar → grid spans full width */
 .plp-shell.filters-hidden { grid-template-columns: 1fr; }
 .plp-shell.filters-hidden .plp-filters { display: none; }
+
+/* Desktop "Show filters" drawer — re-opens the collapsed sidebar as a
+   floating overlay (like the cart flyout) rather than restoring the
+   two-column layout. Only engages once JS opts it in via .is-drawer-mode;
+   the ≤900px block below covers the mobile off-canvas drawer instead. */
+@media (min-width: 901px) {
+  .plp-shell.filters-hidden .plp-filters.is-drawer-mode {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 500;
+    width: min(90vw, 360px);
+    height: 100%;
+    max-height: none;
+    padding: 20px 20px 48px;
+    background: #fff;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: translateX(-100%);
+    transition: transform var(--dur-slow, .3s) var(--ease-standard);
+    box-shadow: var(--shadow-lg);
+  }
+  .plp-shell.filters-hidden .plp-filters.is-drawer-mode.is-drawer-open { transform: translateX(0); }
+  .plp-filters.is-drawer-mode .plp-filters-bar { border-bottom: 1px solid var(--ink-900); }
+  [dir="rtl"] .plp-shell.filters-hidden .plp-filters.is-drawer-mode { left: auto; right: 0; transform: translateX(100%); }
+  [dir="rtl"] .plp-shell.filters-hidden .plp-filters.is-drawer-mode.is-drawer-open { transform: translateX(0); }
+}
 
 /* ── Filter sidebar ───────────────────────────────────────── */
 .plp-filters {
@@ -334,13 +389,19 @@
   flex: none;
 }
 
-/* Scrim behind the mobile filter drawer */
+/* Scrim behind the filter drawer (mobile off-canvas, and desktop "Show filters") —
+   a soft frosted blur over the page, rather than a flat colour tint. */
 .plp-filters-scrim {
   position: fixed;
   inset: 0;
   z-index: 490;
-  background: rgba(0, 42, 87, 0.42);
+  background: rgba(9, 17, 32, 0.28);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity var(--dur-base, .28s) var(--ease-standard, ease);
 }
+.plp-filters-scrim.is-open { opacity: 1; }
 .plp-filters-scrim[hidden] { display: none; }
 
 .plp-count {
@@ -454,7 +515,7 @@
 /* ── Product grid ─────────────────────────────────────────── */
 .plp-grid {
   display: grid;
-  grid-template-columns: repeat(var(--plp-cols, 3), 1fr);
+  grid-template-columns: repeat(var(--plp-cols, 4), 1fr);
   gap: 44px 28px;
   padding-top: 30px;
 }
@@ -542,47 +603,6 @@
   stroke: var(--ink-900);
 }
 
-/* Stacked hover actions (wishlist + add to bag) — default style.
-   Two white square buttons on the right edge, revealed on hover. */
-.plp-actions {
-  position: absolute;
-  top: 86%;
-  inset-inline-end: 14px;
-  z-index: 2;                 /* above the hover-swap image */
-  transform: translateY(-50%) translateX(8px);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--dur-base) var(--ease-standard),
-              transform var(--dur-base) var(--ease-standard);
-}
-.plp-card:hover .plp-actions,
-.plp-actions:focus-within {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-  pointer-events: auto;
-}
-.plp-action {
-  width: 38px;
-  height: 38px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  border: 0;
-  border-radius: 3px;
-  color: var(--ink-900);
-  cursor: pointer;
-  box-shadow: 0 2px 12px rgba(14, 23, 34, 0.12);
-  transition: color var(--dur-base) var(--ease-standard),
-              background var(--dur-base) var(--ease-standard);
-}
-.plp-action:hover { color: var(--color-primary); background: #fff; }
-.plp-action.is-active { color: var(--ink-900); }
-.plp-action.is-active svg { fill: var(--ink-900); stroke: var(--ink-900); }
-
 /* Image gallery dots — browse a product's photos, revealed on hover */
 .plp-dots {
   position: absolute;
@@ -616,17 +636,19 @@
 /* "New" / status tag — top-left, used sparingly */
 .plp-tag {
   position: absolute;
-  top: 14px;
+  bottom: 0;                   /* fades out on hover, so no need to clear the bar */
   inset-inline-start: 0;
   z-index: 2;                 /* above the hover-swap image */
-  padding: 4px 10px;
-  font-size: 10px;
+  padding: 3px 8px;
+  font-size: 9px;
   font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-wider);
+  letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--ink-900);
   background: #fff;
+  transition: opacity var(--dur-base) var(--ease-standard);
 }
+.plp-card:hover .plp-tag { opacity: 0; }
 
 .plp-tag.sale {
   color: #fff;
@@ -725,6 +747,7 @@ a.plp-card-name:hover {
 }
 
 .plp-card-price {
+  position: relative;         /* anchors the absolutely-positioned .was below */
   flex: 0 0 auto;
   /* never shrink; stays pinned right */
   font-family: var(--font-sans);
@@ -734,10 +757,18 @@ a.plp-card-name:hover {
   white-space: nowrap;
 }
 
+/* Absolutely positioned so it never adds to .plp-card-row's height —
+   otherwise a sale card's row grows taller than its neighbours' and
+   throws off the whole grid row's alignment (everything below shifts
+   down only on sale cards). */
 .plp-card-price .was {
+  position: absolute;
+  top: 100%;
+  inset-inline-end: 0;
+  margin-top: 2px;
   color: var(--text-subtle);
   text-decoration: line-through;
-  margin-inline-end: 8px;
+  font-size: 11px;
   font-weight: var(--fw-regular);
 }
 
@@ -830,6 +861,7 @@ a.plp-card-name:hover {
   text-decoration: line-through;
 }
 .plp-size.is-soldout:hover { color: var(--text-disabled); }
+.plp-size-more { font-size: 13px; color: var(--text-subtle); }
 
 /* ── Match the header/nav typeface across the listing surface ──
    The header sets font-family: 'Helvetica Neue', sans-serif on
@@ -840,9 +872,9 @@ a.plp-card-name:hover {
 .plp-toolbar, .plp-count, .plp-filter-toggle, .plp-filter-collapse,
 .plp-sort, .plp-sort-btn, .plp-sort-value, .plp-sort-opt,
 .plp-filters, .plp-filters-head, .plp-filter-hide, .plp-facet-head, .plp-facet-size, .plp-facet-opt,
-.plp-subcat, .plp-subcat-toggle,
+.plp-subcat,
 .plp-card, .plp-card-brand, .plp-card-name, .plp-card-price, .plp-swatch-more,
-.plp-size, .plp-quickadd button, .plp-tag, .plp-empty,
+.plp-size, .plp-size-more, .plp-quickadd button, .plp-tag, .plp-empty,
 .plp-cart-modal-head, .plp-cart-modal-brand, .plp-cart-modal-name, .plp-cart-modal-variant,
 .plp-cart-modal-price, .plp-cart-modal-continue, .plp-cart-modal-viewbag {
   font-family: 'Helvetica Neue', sans-serif;
@@ -1041,8 +1073,8 @@ a.plp-card-name:hover {
   .plp-shell.filters-hidden { grid-template-columns: 1fr; gap: 0; }
   .plp-filter-collapse,
   .plp-shell.filters-hidden .plp-filter-collapse { display: none; }   /* desktop-only */
-  .plp-quickfilters,
-  .plp-shell.filters-hidden .plp-quickfilters { display: none; }      /* desktop-only */
+  .plp-subcats-bar,
+  .plp-quickfilters { display: none; }      /* desktop-only */
   .plp-filters-bar { display: none; }        /* "Hide filters" bar is desktop-only */
   .plp-filter-toggle { display: inline-flex; }
   .plp-filters-head {                        /* drawer title + close */
@@ -1087,7 +1119,6 @@ a.plp-card-name:hover {
   /* Touch has no hover — keep controls visible */
   .plp-wish { opacity: 1; transform: none; }
   .plp-quickadd { display: none; }
-  .plp-actions { opacity: 1; transform: translateY(-50%); pointer-events: auto; }
   .plp-dots { opacity: 1; }
   .plp-sizes { opacity: 1; }
 }

@@ -26,7 +26,10 @@
   -ms-overflow-style: none;
   -webkit-overflow-scrolling: touch;
 }
-.women-quicknav-row::-webkit-scrollbar { display: none; }
+
+.women-quicknav-row::-webkit-scrollbar {
+  display: none;
+}
 
 .women-quicknav-item {
   flex: none;
@@ -37,7 +40,10 @@
   width: 76px;
   text-decoration: none;
 }
-.women-quicknav-item:hover { text-decoration: none; }
+
+.women-quicknav-item:hover {
+  text-decoration: none;
+}
 
 .women-quicknav-circle {
   display: block;
@@ -49,6 +55,7 @@
   transition: border-color var(--dur-base) var(--ease-standard),
     box-shadow var(--dur-base) var(--ease-standard);
 }
+
 .women-quicknav-item:hover .women-quicknav-circle {
   border-color: var(--gold-500);
   box-shadow: 0 8px 20px rgba(14, 23, 34, 0.12);
@@ -60,7 +67,10 @@
   object-fit: cover;
   transition: transform var(--dur-slow, .6s) var(--ease-standard, ease);
 }
-.women-quicknav-item:hover .women-quicknav-circle img { transform: scale(1.08); }
+
+.women-quicknav-item:hover .women-quicknav-circle img {
+  transform: scale(1.08);
+}
 
 .women-quicknav-label {
   font-family: var(--font-sans);
@@ -72,14 +82,32 @@
   line-height: 1.3;
   transition: color var(--dur-base) var(--ease-standard);
 }
-.women-quicknav-item:hover .women-quicknav-label { color: var(--gold-600); }
+
+.women-quicknav-item:hover .women-quicknav-label {
+  color: var(--gold-600);
+}
 
 @media (max-width: 560px) {
-  .women-quicknav { padding: 16px 16px; }
-  .women-quicknav-row { gap: 20px; }
-  .women-quicknav-item { width: 62px; }
-  .women-quicknav-circle { width: 62px; height: 62px; }
-  .women-quicknav-label { font-size: 10px; }
+  .women-quicknav {
+    padding: 16px 16px;
+  }
+
+  .women-quicknav-row {
+    gap: 20px;
+  }
+
+  .women-quicknav-item {
+    width: 62px;
+  }
+
+  .women-quicknav-circle {
+    width: 62px;
+    height: 62px;
+  }
+
+  .women-quicknav-label {
+    font-size: 10px;
+  }
 }
 
 /* ── Hero — full-bleed editorial banner, bottom-left caption ── */
@@ -200,6 +228,155 @@
   .women-hero-sub {
     font-size: 14px;
     margin-bottom: 22px;
+  }
+}
+
+/* ── Editorial mosaic — one large hero (left) + a 2-up-plus-wide
+   grid of captioned tiles (right), each tile a plain photo with a
+   floating white pill caption bottom-left. ────────────────────── */
+.women-mosaic {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-top: 40px;
+  /* padding: 40px 24px; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* gap: 16px; */
+}
+
+.women-mosaic-hero,
+.women-mosaic-tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.women-mosaic-hero:hover,
+.women-mosaic-tile:hover {
+  text-decoration: none;
+}
+
+/* No fixed aspect-ratio here on desktop — .women-mosaic's default
+   grid stretch makes it match .women-mosaic-grid's own height
+   (driven by the tiles' aspect ratios) instead of the two columns
+   computing independent, mismatched heights. */
+
+.women-mosaic-hero img,
+.women-mosaic-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow, .6s) var(--ease-standard, ease);
+}
+
+.women-mosaic-hero:hover img,
+.women-mosaic-tile:hover img {
+  transform: scale(1.04);
+}
+
+.women-mosaic-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(14, 23, 34, 0.5) 0%, rgba(14, 23, 34, 0) 40%);
+}
+
+.women-mosaic-hero-caption {
+  position: absolute;
+  z-index: 2;
+  left: 32px;
+  bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  color: #fff;
+}
+
+.women-mosaic-hero-title {
+  font-size: 36px;
+  font-weight: var(--fw-regular);
+  color: #fff;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.3);
+}
+
+.women-mosaic-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  background: #fff;
+  padding: 10px 16px;
+}
+
+.women-mosaic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* grid-template-rows: 1fr 1fr; */
+  /* gap: 16px; */
+}
+
+.women-mosaic-tile {
+  aspect-ratio: 4 / 5;
+}
+
+.women-mosaic-tile-wide {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 7;
+}
+
+.women-mosaic-tag {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+  color: var(--ink-900);
+  background: #fff;
+  padding: 9px 14px;
+}
+
+@media (max-width: 900px) {
+  .women-mosaic {
+    grid-template-columns: 1fr;
+  }
+
+  .women-mosaic-hero {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 560px) {
+  .women-mosaic {
+    padding: 28px 16px;
+    gap: 12px;
+  }
+
+  .women-mosaic-grid {
+    gap: 12px;
+  }
+
+  .women-mosaic-hero-caption {
+    left: 20px;
+    bottom: 20px;
+  }
+
+  .women-mosaic-hero-title {
+    font-size: 28px;
   }
 }
 

@@ -1083,18 +1083,21 @@
     { heading: "Gourmet",      links: ["Chocolates", "Arabic sweets", "Coffee & tea", "Hampers", "Brands A–Z"] },
   ];
 
-  document.getElementById("shopMoreGrid").innerHTML = SHOP_COLS.map(function (col) {
-    return (
-      "<div>" +
-        '<div class="bs-shopmore-col-h">' + col.heading + "</div>" +
-        "<ul>" +
-          col.links.map(function (link) {
-            return '<li><a href="#"' + (link === "Brands A–Z" ? ' class="is-strong"' : "") + ">" + link + "</a></li>";
-          }).join("") +
-        "</ul>" +
-      "</div>"
-    );
-  }).join("");
+  var shopMoreGrid = document.getElementById("shopMoreGrid");
+  if (shopMoreGrid) {
+    shopMoreGrid.innerHTML = SHOP_COLS.map(function (col) {
+      return (
+        "<div>" +
+          '<div class="bs-shopmore-col-h">' + col.heading + "</div>" +
+          "<ul>" +
+            col.links.map(function (link) {
+              return '<li><a href="#"' + (link === "Brands A–Z" ? ' class="is-strong"' : "") + ">" + link + "</a></li>";
+            }).join("") +
+          "</ul>" +
+        "</div>"
+      );
+    }).join("");
+  }
 
   var SOCIAL_HTML =
     '<ul class="social-icons">' +

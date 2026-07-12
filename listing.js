@@ -563,22 +563,12 @@
     { v: "5000-", label: "QAR 5,000 +" }
   ];
 
-  // First variant image on a product — used as its category's thumbnail.
-  function firstImage(p) {
-    for (var i = 0; i < p.variants.length; i++) {
-      if (p.variants[i].image) return p.variants[i].image;
-    }
-    return null;
-  }
-
   // Collect facet options from the product data.
   function collectFacets() {
-    var cats = [], catImages = {}, newInImage = null, brands = [], brandSeen = {}, materials = [], matSeen = {}, colours = [], colourSeen = {}, numeric = {}, letters = {};
+    var cats = [], brands = [], brandSeen = {}, materials = [], matSeen = {}, colours = [], colourSeen = {}, numeric = {}, letters = {};
     var LETTER_ORDER = ["XS", "S", "M", "L", "XL"];
     PRODUCTS.forEach(function (p) {
       if (cats.indexOf(p.cat) === -1) cats.push(p.cat);
-      if (!newInImage) newInImage = firstImage(p);
-      if (!catImages[p.cat]) catImages[p.cat] = firstImage(p);
       if (p.vendor && !brandSeen[p.vendor]) { brandSeen[p.vendor] = 1; brands.push(p.vendor); }
       if (p.material && !matSeen[p.material]) { matSeen[p.material] = 1; materials.push(p.material); }
       p.variants.forEach(function (v) {
@@ -592,7 +582,7 @@
     var letSizes = LETTER_ORDER.filter(function (s) { return letters[s]; });
     brands.sort();
     materials.sort();
-    return { cats: cats, catImages: catImages, newInImage: newInImage, brands: brands, materials: materials, colours: colours, numSizes: numSizes, letSizes: letSizes };
+    return { cats: cats, brands: brands, materials: materials, colours: colours, numSizes: numSizes, letSizes: letSizes };
   }
 
   var CHEV = '<svg class="plp-facet-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
@@ -798,19 +788,17 @@
   // it's the default selected tab, matching the page title/breadcrumb.
   function noCategoryActive() { return Object.keys(state.facets.category).length === 0; }
 
-  function subcatTab(c, label, img) {
+  function subcatTab(c, label) {
     var active = c === "" ? noCategoryActive() : !!state.facets.category[c];
     return '<button type="button" class="plp-subcat' + (active ? " is-active" : "") +
-      '" data-subcat="' + c + '">' +
-      (img ? '<span class="plp-subcat-thumb"><img src="' + img + '" alt="" loading="lazy"></span>' : "") +
-      "<span>" + label + "</span></button>";
+      '" data-subcat="' + c + '"><span>' + label + "</span></button>";
   }
 
   function buildQuickFilters() {
     if (!quickEl) return;
     var f = collectFacets();
-    quickEl.innerHTML = subcatTab("", "New In", f.newInImage) +
-      f.cats.map(function (c) { return subcatTab(c, CAT_LABELS[c] || c, f.catImages[c]); }).join("");
+    quickEl.innerHTML = subcatTab("", "New In") +
+      f.cats.map(function (c) { return subcatTab(c, CAT_LABELS[c] || c); }).join("");
   }
 
   function syncSubcats() {

@@ -178,7 +178,6 @@
   PRODUCTS.forEach(function (p) { if (!p.material && MATERIALS[p.id]) p.material = MATERIALS[p.id]; });
 
   var MAX_SWATCHES = 3; // show up to 3 inline, rest as "+N"
-  var MAX_SIZES = 5;    // show up to 5 size chips inline, rest as "+N"
   var PAGE_SIZE = 9;    // products per infinite-scroll batch
 
   /* ── State ────────────────────────────────────────────────── */
@@ -304,32 +303,12 @@
       }).join("") + "</div>";
     }
 
-    // Size chips — shown under the colour swatches. The container is
-    // always rendered (empty for one-size items) so every card keeps
-    // the same height and the rows line up. Same "+N" treatment as
-    // the colour swatches once a product has more than MAX_SIZES.
-    var sizeSel = state.size[p.id];
-    var sizeChips = "";
-    if (p.sizes && p.sizes.length) {
-      var shownSizes = p.sizes.slice(0, MAX_SIZES);
-      var extraSizes = p.sizes.length - shownSizes.length;
-      sizeChips = shownSizes.map(function (s) {
-        var soldOut = p.soldOutSizes && p.soldOutSizes.indexOf(s) !== -1;
-        return '<button type="button" class="plp-size' +
-          (soldOut ? " is-soldout" : "") + (s === sizeSel ? " is-active" : "") + '" ' +
-          (soldOut ? 'disabled aria-disabled="true" ' : "") +
-          'data-size="' + s + '">' + s + "</button>";
-      }).join("");
-      if (extraSizes > 0) sizeChips += '<span class="plp-size-more">+' + extraSizes + "</span>";
-    }
-    var sizes = '<div class="plp-sizes">' + sizeChips + "</div>";
-
     // Hover actions: circular wishlist heart (top-right) + a full-width
-    // "Add to bag" bar that slides up from the bottom of the image.
+    // "Add to cart" bar that slides up from the bottom of the image.
     var actions =
       '<button type="button" class="plp-wish' + (wished ? " is-active" : "") + '" ' +
         'data-wish aria-label="' + wishLabel + '">' + HEART + "</button>" +
-      '<span class="plp-quickadd"><button type="button" data-quickadd>Add to bag</button></span>';
+      '<span class="plp-quickadd"><button type="button" data-quickadd>Add to cart</button></span>';
 
     return (
       '<article class="plp-card plp-card--legacy" data-id="' + p.id + '">' +
@@ -347,7 +326,6 @@
           "</div>" +
           '<a class="plp-card-name" href="' + href + '">' + p.name + "</a>" +
           '<div class="plp-swatches">' + swatches + "</div>" +
-          sizes +
         "</div>" +
       "</article>"
     );
@@ -540,17 +518,6 @@
             el.classList.toggle("is-active", i === vIdx);
           });
         }
-        return;
-      }
-
-      // Size chip → select (single per card)
-      var sizeBtn = e.target.closest("[data-size]");
-      if (sizeBtn && !sizeBtn.disabled) {
-        e.preventDefault();
-        state.size[id] = sizeBtn.dataset.size;
-        card.querySelectorAll(".plp-size").forEach(function (el) {
-          el.classList.toggle("is-active", el === sizeBtn);
-        });
         return;
       }
 
@@ -1029,13 +996,34 @@
 
   var cartModalProduct = null; // product currently shown in the modal
 
+  /* Buy-now-pay-later line — splits the current selling price into 4,
+     mirroring the same reassurance line shown on the detail page. */
+  function payLaterHTML(product) {
+    var amt = (product.price / 4).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return '<p class="plp-cart-modal-paylater">or 4 interest-free payments of <b>QAR ' + amt + '</b> with <b>PayLater</b></p>';
+  }
+
+  /* Loyalty earn banner — MOZOON points (1 point per QAR spent), same
+     copy/badge as the detail page panel. */
+  function loyaltyHTML(product) {
+    var pts = Math.round(product.price);
+    return '<div class="plp-cart-modal-loyalty">' +
+        '<span class="plp-cart-modal-loyalty-badge" aria-hidden="true">' +
+          '<span class="plp-cart-modal-loyalty-ar">مزون</span>' +
+          '<span class="plp-cart-modal-loyalty-en">MOZOON</span>' +
+        "</span>" +
+        '<span class="plp-cart-modal-loyalty-text">Earn <strong>' + pts.toLocaleString("en-US") + "</strong> Mozoon Points</span>" +
+      "</div>";
+  }
+
   /* Modal body — same swatch chips and size text-chips as the listing
      cards (shared .plp-swatch / .plp-size styles), selectable in-place. */
   function cartModalBodyHTML(product) {
     var img = displayImage(product);
     var onSale = product.compareAt && product.compareAt > product.price;
     var price = onSale
-      ? '<span class="was">' + money(product.compareAt) + '</span><span class="now">' + money(product.price) + "</span>"
+      ? '<span class="was">' + money(product.compareAt) + '</span><span class="now">' + money(product.price) + "</span>" +
+        '<span class="plp-cart-modal-tag">Sale</span>'
       : money(product.price);
 
     var selIdx = state.selected[product.id] || 0;
@@ -1076,9 +1064,12 @@
       '<div class="plp-cart-modal-info">' +
         '<span class="plp-cart-modal-brand">' + product.vendor + "</span>" +
         '<span class="plp-cart-modal-name">' + product.name + "</span>" +
+        '<div class="plp-cart-modal-price' + (onSale ? " is-sale" : "") + '">' + price + "</div>" +
+        payLaterHTML(product) +
+        loyaltyHTML(product) +
+        '<hr class="bs-rule-gold plp-cart-modal-rule">' +
         colourRow +
         sizeRow +
-        '<span class="plp-cart-modal-price">' + price + "</span>" +
       "</div>"
     );
   }
@@ -1093,10 +1084,6 @@
     });
     var img = card.querySelector(".plp-card-mainimg");
     if (img) img.src = displayImage(product);
-    var sizeSel = state.size[product.id];
-    card.querySelectorAll(".plp-size").forEach(function (el) {
-      el.classList.toggle("is-active", el.dataset.size === sizeSel);
-    });
   }
 
   function openCartModal(product) {

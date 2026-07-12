@@ -271,7 +271,12 @@
   var ICON_CLOSE = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   var ICON_PREV = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>';
   var ICON_NEXT = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
-  var ICON_TRUCK = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>';
+  var ICON_RULER = '<svg width="18" height="14" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="22" height="10" rx="1"/><path d="M5 3v3M9 3v5M13 3v3M17 3v5M21 3v3"/></svg>';
+
+  /* Mozoon tier-card watermarks — pick up the card's text colour via currentColor. */
+  var ICON_MZ_DROPLET = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3.5 4 6 7.4 6 10.5a6 6 0 1 1-12 0C6 10.4 8.5 7 12 3z"/></svg>';
+  var ICON_MZ_WAVE = '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0"/><path d="M2 15c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0"/></svg>';
+  var ICON_MZ_GEM = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9 8 4h8l4 5-8 11z"/><path d="M4 9h16M9 9 12 4l3 5M9 9l3 11 3-11"/></svg>';
 
   /* One star glyph; `on` fills it, otherwise it reads as an outline. */
   function starSVG(on) {
@@ -284,13 +289,6 @@
     for (var i = 1; i <= 5; i++) s += starSVG(i <= full);
     return '<span class="pdp-stars' + (cls ? " " + cls : "") + '" role="img" aria-label="' +
       rating + ' out of 5 stars">' + s + "</span>";
-  }
-
-  /* Estimated delivery window (2–4 business-ish days from today). */
-  function deliveryWindow() {
-    function add(days) { var d = new Date(); d.setDate(d.getDate() + days); return d; }
-    function fmt(d) { return d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" }); }
-    return fmt(add(2)) + " – " + fmt(add(4));
   }
 
   /* Seed reviews — a small, believable set so the block reads complete.
@@ -319,9 +317,7 @@
         '<figure class="pdp-main" data-zoom tabindex="0" role="button" aria-label="Zoom image">' +
           '<img id="pdpMainImg" src="' + state.photo + '" alt="' + esc(product.name) + '">' +
           (product.tag ? '<span class="pdp-tag' + (product.tag === "New" ? " dark" : "") + '">' + esc(product.tag) + "</span>" : "") +
-          '<span class="pdp-zoom-hint" aria-hidden="true">' +
-            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg>' +
-          "</span>" +
+          '<button type="button" class="pdp-wish" id="pdpWish" aria-label="Add to wishlist" aria-pressed="false">' + HEART + "</button>" +
         "</figure>" +
       "</div>";
   }
@@ -349,10 +345,10 @@
           '<span class="pdp-colour-label" id="pdpSizeLabel">' +
             (state.size ? 'Size: <span class="pdp-colour-name">' + esc(state.size) + "</span>" : "Size") +
           "</span>" +
-          '<button type="button" class="pdp-link" data-guide>Size guide</button>' +
         "</div>" +
         '<div class="pdp-sizes">' + chips + "</div>" +
         '<p class="pdp-size-hint" id="pdpSizeHint" hidden>Please select a size.</p>' +
+        '<button type="button" class="pdp-link pdp-guide-link" data-guide>' + ICON_RULER + "Size guide</button>" +
       "</div>"
     );
   }
@@ -413,8 +409,7 @@
           '<span class="pdp-loyalty-en">MOZOON</span>' +
         "</span>" +
         '<span class="pdp-loyalty-text">Earn <strong>' + pts.toLocaleString("en-US") + "</strong> Mozoon Points</span>" +
-        '<button type="button" class="pdp-loyalty-help" aria-label="About Mozoon points" ' +
-          'title="Mozoon is Blue Salon’s loyalty programme — earn points on every purchase and redeem them in-store and online.">?</button>' +
+        '<button type="button" class="pdp-loyalty-help" data-mozoon-open aria-label="About Mozoon points">?</button>' +
       "</div>";
   }
 
@@ -434,7 +429,6 @@
         payLaterHTML() +
         loyaltyHTML() +
         '<hr class="bs-rule-gold pdp-rule">' +
-        '<p class="pdp-desc">' + esc(product.desc) + "</p>" +
 
         '<div class="pdp-block">' +
           '<div class="pdp-block-head">' +
@@ -446,14 +440,11 @@
         sizesHTML() +
 
         '<div class="pdp-buy">' +
-          '<button type="button" class="pdp-addbag" id="pdpAddBag">Add to bag</button>' +
-          '<button type="button" class="pdp-wish" id="pdpWish" aria-label="Add to wishlist" aria-pressed="false">' + HEART + "</button>" +
+          '<button type="button" class="pdp-addbag" id="pdpAddBag">Add to cart</button>' +
+          '<button type="button" class="pdp-buynow" id="pdpBuyNow">Buy now</button>' +
         "</div>" +
 
         shareHTML() +
-
-        '<p class="pdp-delivery">' + ICON_TRUCK +
-          '<span>Order now for estimated delivery to Qatar <strong>' + deliveryWindow() + "</strong></span></p>" +
 
         '<ul class="pdp-service">' + SVC.map(function (s) {
           return "<li>" + svcIcon(s.icon) + "<span>" + s.label + "</span></li>";
@@ -573,7 +564,7 @@
             '<span class="pdp-sb-name">' + esc(product.name) + "</span>" +
           "</div>" +
           '<span class="pdp-sb-price">' + price + "</span>" +
-          '<button type="button" class="pdp-sb-add" id="pdpSbAdd">Add to bag</button>' +
+          '<button type="button" class="pdp-sb-add" id="pdpSbAdd">Add to cart</button>' +
         "</div>" +
       "</div>";
   }
@@ -612,6 +603,91 @@
       "</div>";
   }
 
+  /* Mozoon loyalty side panel — a rewards-card summary plus the real
+     three-tier programme (Aqua/Azure/Sapphire). All account figures
+     (balance, card number, spend-to-next-tier) are illustrative — the
+     site has no real login/account state to read them from. */
+  var MZ_TIERS = [
+    { key: "aqua", label: "Aqua", icon: ICON_MZ_DROPLET,
+      desc: "Aqua is the entry level in the unique Mozoon programme. It's an open invitation to all customers to join Mozoon." },
+    { key: "azure", label: "Azure", icon: ICON_MZ_WAVE,
+      desc: "Azure is the next level, specially designed for our frequent shoppers who spend more than QAR 25,000 in 12 months." },
+    { key: "sapphire", label: "Sapphire", icon: ICON_MZ_GEM,
+      desc: "Sapphire is the highest level, awarded to our most loyal members who spend more than QAR 50,000 in 12 months." }
+  ];
+
+  function mzTierCardsHTML() {
+    return MZ_TIERS.map(function (t) {
+      return '<div class="pdp-mz-tiercard-row">' +
+          '<div class="pdp-mz-tiercard pdp-mz-tiercard-' + t.key + '">' +
+            '<span class="pdp-mz-tiercard-icon" aria-hidden="true">' + t.icon + "</span>" +
+            '<span class="pdp-mz-tiercard-name">' + esc(t.label) + "</span>" +
+          "</div>" +
+          '<h4 class="pdp-mz-tier-title">' + esc(t.label) + "</h4>" +
+          '<p class="pdp-mz-tier-desc">' + esc(t.desc) + "</p>" +
+        "</div>";
+    }).join("");
+  }
+
+  /* Demo account state — the member's current tier, driving the card
+     colour, the tier-row label and the progress dots together. */
+  var MZ_CURRENT_TIER = "aqua";
+
+  /* Last 5 online purchases — amounts sum to the QAR 6,400 already
+     shown against the tier progress bar above. */
+  var MZ_ACTIVITY = [
+    { desc: "Online purchase — Zuhair Murad", date: "5 Jul 2026", amount: 1800 },
+    { desc: "Online purchase — Zuhair Murad", date: "20 Jun 2026", amount: 1600 },
+    { desc: "Online purchase — Zuhair Murad", date: "2 Jun 2026", amount: 1400 },
+    { desc: "Online purchase — Zuhair Murad", date: "14 May 2026", amount: 900 },
+    { desc: "Online purchase — Zuhair Murad", date: "28 Apr 2026", amount: 700 }
+  ];
+
+  function mzActivityHTML() {
+    return MZ_ACTIVITY.map(function (a) {
+      return '<li>' +
+          '<div><p class="pdp-mz-activity-desc">' + esc(a.desc) + '</p><p class="pdp-mz-activity-date">' + esc(a.date) + "</p></div>" +
+          '<span class="pdp-mz-activity-amt">' + money(a.amount) + "</span>" +
+        "</li>";
+    }).join("");
+  }
+
+  function mozoonDrawerHTML() {
+    return (
+      '<div class="pdp-mz-scrim" id="pdpMzScrim" hidden></div>' +
+      '<aside class="pdp-mz-drawer" id="pdpMzDrawer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Mozoon loyalty programme" hidden>' +
+        '<button type="button" class="pdp-mz-close" data-mozoon-close aria-label="Close">' + ICON_CLOSE + "</button>" +
+        '<div class="pdp-mz-body">' +
+
+          '<div class="pdp-mz-card pdp-mz-card-' + MZ_CURRENT_TIER + '">' +
+            '<div class="pdp-mz-card-top">' +
+              '<span class="pdp-mz-card-label">Mozoon</span>' +
+              '<span class="pdp-mz-coin" aria-hidden="true">M</span>' +
+            "</div>" +
+            '<p class="pdp-mz-balance">420 <span>= QAR 21.00</span></p>' +
+            '<p class="pdp-mz-cardnum">5217&nbsp;&nbsp;0043&nbsp;&nbsp;8821&nbsp;&nbsp;9034</p>' +
+            '<div class="pdp-mz-barcode" aria-hidden="true"></div>' +
+          "</div>" +
+
+          '<div class="pdp-mz-tier-row">' +
+            '<span class="pdp-mz-tier-name">Aqua</span>' +
+            '<span class="pdp-mz-tier-next">QAR 18,600 to <strong>Azure</strong><br><span class="pdp-mz-tier-date">QAR 6,400 spent in the last 12 months</span></span>' +
+          "</div>" +
+          '<div class="pdp-mz-progress"><span class="pdp-mz-progress-fill" style="width:26%"></span><span class="pdp-mz-progress-thumb pdp-mz-dot-' + MZ_CURRENT_TIER + '" style="left:26%"></span><span class="pdp-mz-progress-end pdp-mz-dot-azure"></span></div>' +
+
+          '<h3 class="pdp-mz-heading">Last 5 Purchases</h3>' +
+          '<p class="pdp-mz-activity-note">For more information, visit Mozoon — <button type="button" class="pdp-link" data-mz-info>click here</button></p>' +
+          '<ul class="pdp-mz-activity-list">' + mzActivityHTML() + "</ul>" +
+
+          '<h3 class="pdp-mz-heading">Programme Tiers</h3>' +
+          '<div class="pdp-mz-tiercards">' + mzTierCardsHTML() + "</div>" +
+
+          '<p class="pdp-mz-fine">Applicable on purchases from Blue Salon, with spend measured over a rolling 12-month period.</p>' +
+        "</div>" +
+      "</aside>"
+    );
+  }
+
   /* ── Related ("You may also like") — same card style as the
      listing grid: tag badge, hover wishlist/bag actions, brand+price
      row, name, colour swatches. ─────────────────────────────── */
@@ -648,7 +724,7 @@
           tag +
           '<div class="pdp-rel-actions">' +
             '<button type="button" class="pdp-rel-action" data-rel-wish="' + p.id + '" aria-label="Add to wishlist">' + HEART + "</button>" +
-            '<button type="button" class="pdp-rel-action" data-rel-add="' + p.id + '" aria-label="Add to bag">' + BAG + "</button>" +
+            '<button type="button" class="pdp-rel-action" data-rel-add="' + p.id + '" aria-label="Add to cart">' + BAG + "</button>" +
           "</div>" +
         "</a>" +
         '<div class="pdp-rel-info">' +
@@ -688,10 +764,12 @@
     relatedHTML() +
     lightboxHTML() +
     stickyBarHTML() +
-    reviewModalHTML();
+    reviewModalHTML() +
+    mozoonDrawerHTML();
 
   /* ── Shared helpers ───────────────────────────────────────── */
   var mainImg = document.getElementById("pdpMainImg");
+  var hoverZoomCapable = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   function setPhoto(src) {
     if (!src) return;
@@ -753,7 +831,7 @@
     bumpCart();
     if (btn) {
       btn.classList.add("is-added");
-      btn.textContent = "Added to bag ✓";
+      btn.textContent = "Added to cart ✓";
       setTimeout(function () {
         btn.classList.remove("is-added");
         btn.textContent = resetLabel;
@@ -804,6 +882,31 @@
     modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
   }
+
+  /* ── Mozoon loyalty side panel ────────────────────────────── */
+  var mzDrawer = document.getElementById("pdpMzDrawer");
+  var mzScrim = document.getElementById("pdpMzScrim");
+  function openMozoon() {
+    mzDrawer.hidden = false;
+    mzScrim.hidden = false;
+    void mzDrawer.offsetWidth;  // commit the off-canvas state so the slide animates
+    mzDrawer.classList.add("is-open");
+    mzScrim.classList.add("is-open");
+    mzDrawer.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+  function closeMozoon() {
+    mzDrawer.classList.remove("is-open");
+    mzScrim.classList.remove("is-open");
+    mzDrawer.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    var onEnd = function () {
+      mzDrawer.hidden = true;
+      mzScrim.hidden = true;
+      mzDrawer.removeEventListener("transitionend", onEnd);
+    };
+    mzDrawer.addEventListener("transitionend", onEnd);
+  }
   function submitReview() {
     var rating = state.formRating;
     var name = (document.getElementById("pdpRvName").value || "").trim();
@@ -829,8 +932,28 @@
 
   /* ── Delegated clicks ─────────────────────────────────────── */
   root.addEventListener("click", function (e) {
-    /* Zoom → open the lightbox */
-    if (e.target.closest("[data-zoom]")) { openLightbox(); return; }
+    /* Wishlist toggle — checked before the zoom handler below since the
+       button now sits inside the zoomable [data-zoom] figure. */
+    var wish = e.target.closest("#pdpWish");
+    if (wish) {
+      state.wished = !state.wished;
+      wish.classList.toggle("is-active", state.wished);
+      wish.setAttribute("aria-pressed", state.wished);
+      wish.setAttribute("aria-label", state.wished ? "Remove from wishlist" : "Add to wishlist");
+      var wEl = document.getElementById("wishCount");
+      if (wEl) {
+        var wn = Math.max(0, (parseInt(wEl.textContent, 10) || 0) + (state.wished ? 1 : -1));
+        wEl.textContent = wn;
+        wEl.hidden = wn === 0;
+      }
+      if (window.bsToast) window.bsToast(state.wished ? "Added to wishlist" : "Removed from wishlist");
+      return;
+    }
+
+    /* Zoom → open the lightbox. Skipped on mouse/hover-capable devices,
+       where hovering the image already zooms it in place; touch devices
+       (no hover) still tap to open it. */
+    if (e.target.closest("[data-zoom]")) { if (!hoverZoomCapable) openLightbox(); return; }
 
     /* Lightbox controls */
     if (e.target.closest("[data-lbclose]")) { closeLightbox(); return; }
@@ -844,6 +967,12 @@
     if (e.target.closest("[data-review-open]")) { openReview(); return; }
     if (e.target.closest("[data-review-close]")) { closeReview(); return; }
     if (e.target === modal) { closeReview(); return; }        // backdrop
+
+    /* Mozoon loyalty side panel */
+    if (e.target.closest("[data-mozoon-open]")) { openMozoon(); return; }
+    if (e.target.closest("[data-mozoon-close]")) { closeMozoon(); return; }
+    if (e.target === mzScrim) { closeMozoon(); return; }  // backdrop
+
     var starBtn = e.target.closest("[data-star]");
     if (starBtn) { state.formRating = Number(starBtn.dataset.star); paintFormStars(); return; }
     if (e.target.closest("#pdpRvSubmit")) { submitReview(); return; }
@@ -895,6 +1024,9 @@
     /* Size-guide link (placeholder) */
     if (e.target.closest("[data-guide]")) { e.preventDefault(); return; }
 
+    /* Mozoon "visit for more information" link (placeholder) */
+    if (e.target.closest("[data-mz-info]")) { e.preventDefault(); return; }
+
     /* Share on Instagram — no web share URL scheme exists, so copy
        the link instead and let the shopper paste it in. */
     if (e.target.closest("[data-share-instagram]")) {
@@ -912,26 +1044,17 @@
       return;
     }
 
-    /* Wishlist toggle */
-    var wish = e.target.closest("#pdpWish");
-    if (wish) {
-      state.wished = !state.wished;
-      wish.classList.toggle("is-active", state.wished);
-      wish.setAttribute("aria-pressed", state.wished);
-      wish.setAttribute("aria-label", state.wished ? "Remove from wishlist" : "Add to wishlist");
-      var wEl = document.getElementById("wishCount");
-      if (wEl) {
-        var wn = Math.max(0, (parseInt(wEl.textContent, 10) || 0) + (state.wished ? 1 : -1));
-        wEl.textContent = wn;
-        wEl.hidden = wn === 0;
-      }
-      if (window.bsToast) window.bsToast(state.wished ? "Added to wishlist" : "Removed from wishlist");
+    /* Add to bag (main + sticky bar) */
+    if (e.target.closest("#pdpAddBag")) { addToBag(document.getElementById("pdpAddBag"), "Add to cart"); return; }
+    if (e.target.closest("#pdpSbAdd")) { addToBag(document.getElementById("pdpSbAdd"), "Add to cart"); return; }
+
+    /* Buy now — skip the bag, go straight to checkout */
+    if (e.target.closest("#pdpBuyNow")) {
+      if (needsSize()) { flagSize(); return; }
+      bumpCart();
+      window.location.href = "cart.html";
       return;
     }
-
-    /* Add to bag (main + sticky bar) */
-    if (e.target.closest("#pdpAddBag")) { addToBag(document.getElementById("pdpAddBag"), "Add to bag"); return; }
-    if (e.target.closest("#pdpSbAdd")) { addToBag(document.getElementById("pdpSbAdd"), "Add to bag"); return; }
 
     /* Related card: colour swatch → swap that card's photo only */
     var relSw = e.target.closest("[data-rel-swatch]");
@@ -990,7 +1113,7 @@
           qty: 1
         });
       }
-      if (window.bsToast) window.bsToast("Added to bag");
+      if (window.bsToast) window.bsToast("Added to cart");
       return;
     }
   });
@@ -1000,6 +1123,7 @@
     if (e.key === "Escape") {
       if (!lightbox.hidden) closeLightbox();
       if (!modal.hidden) closeReview();
+      if (!mzDrawer.hidden) closeMozoon();
       return;
     }
     if (!lightbox.hidden && gallery.length > 1) {
@@ -1009,8 +1133,26 @@
   });
   var mainFig = root.querySelector("[data-zoom]");
   if (mainFig) mainFig.addEventListener("keydown", function (e) {
+    if (e.target.closest("#pdpWish")) return;  // let the wish button handle its own Enter/Space
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(); }
   });
+
+  /* Hover-to-zoom (mouse/trackpad only): the image scales up and pans to
+     track the cursor, so the click-to-open-lightbox flow above is skipped
+     on these devices — hovering already reveals the detail. */
+  if (mainFig && hoverZoomCapable) {
+    mainFig.addEventListener("mousemove", function (e) {
+      var rect = mainFig.getBoundingClientRect();
+      var x = ((e.clientX - rect.left) / rect.width) * 100;
+      var y = ((e.clientY - rect.top) / rect.height) * 100;
+      mainImg.style.transformOrigin = x + "% " + y + "%";
+    });
+    mainFig.addEventListener("mouseenter", function () { mainImg.classList.add("is-zoomed"); });
+    mainFig.addEventListener("mouseleave", function () {
+      mainImg.classList.remove("is-zoomed");
+      mainImg.style.transformOrigin = "";
+    });
+  }
 
   /* ── Sticky bar: reveal once the buy panel scrolls out of view ── */
   var stickyBar = document.getElementById("pdpStickyBar");

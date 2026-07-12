@@ -63,7 +63,7 @@
 /* ── Two-column layout: gallery · panel ───────────────────── */
 .pdp-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(440px, 620px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 40px;
   align-items: start;
 }
@@ -100,6 +100,7 @@
 
 .pdp-main {
   position: relative;
+  width: 100%;
   margin: 0;
   aspect-ratio: 4 / 5;
   max-height: min(680px, 74vh);
@@ -116,26 +117,9 @@
   transition: transform var(--dur-slow) var(--ease-standard),
               opacity var(--dur-base) var(--ease-standard);
 }
-.pdp-main:hover img { transform: scale(1.03); }
-
-/* Zoom affordance — a small glass chip, revealed on hover */
-.pdp-zoom-hint {
-  position: absolute;
-  bottom: 14px; inset-inline-end: 14px;
-  width: 38px; height: 38px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--ink-900);
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: var(--radius-circle);
-  box-shadow: var(--shadow-sm);
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity var(--dur-base) var(--ease-standard),
-              transform var(--dur-base) var(--ease-standard);
-  pointer-events: none;
-}
-.pdp-main:hover .pdp-zoom-hint,
-.pdp-main:focus-visible .pdp-zoom-hint { opacity: 1; transform: translateY(0); }
+/* Hover-to-zoom: JS sets transform-origin to the cursor position and
+   toggles .is-zoomed on mouseenter/mouseleave (see product.js). */
+.pdp-main img.is-zoomed { transform: scale(2.2); }
 
 /* Status tag — mirrors the listing card tag */
 .pdp-tag {
@@ -250,16 +234,9 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
               border-color var(--dur-base) var(--ease-standard);
 }
 .pdp-loyalty-help:hover { color: var(--color-primary); border-color: var(--color-primary); }
+.pdp-loyalty-help { cursor: pointer; }
 
 .pdp-rule { margin: 24px 0; }
-
-.pdp-desc {
-  margin: 0 0 28px;
-  font-size: 14px;
-  line-height: 1.75;
-  color: var(--text-muted);
-  max-width: 46ch;
-}
 
 /* ── Blocks: colour + size ────────────────────────────────── */
 .pdp-block { margin-bottom: 26px; }
@@ -292,6 +269,7 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   transition: color var(--dur-base) var(--ease-standard);
 }
 .pdp-link:hover { color: var(--color-primary); border-color: var(--color-primary); }
+.pdp-guide-link { display: flex; align-items: center; gap: 6px; margin-top: 12px; }
 
 /* Colour swatches — same shape as the listing, sized up a touch */
 .pdp-swatches { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
@@ -385,35 +363,46 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-addbag:hover { background: var(--color-primary); border-color: var(--color-primary); }
 .pdp-addbag.is-added { background: var(--success); border-color: var(--success); }
 
-.pdp-wish {
-  flex: 0 0 auto;
-  width: var(--control-lg);
+.pdp-buynow {
+  flex: 1 1 auto;
   height: var(--control-lg);
+  font-family: 'Helvetica Neue', sans-serif;
+  letter-spacing: 1.4px !important;
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  background: #fff;
+  border: 1px solid var(--ink-900);
+  cursor: pointer;
+  transition: background var(--dur-base) var(--ease-standard),
+              color var(--dur-base) var(--ease-standard);
+}
+.pdp-buynow:hover { background: var(--ink-900); color: #fff; }
+
+.pdp-wish {
+  position: absolute;
+  top: 16px;
+  inset-inline-end: 16px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--ink-800);
-  background: #fff;
-  border: 1px solid var(--border-default);
+  color: var(--ink-900);
+  background: rgba(255, 255, 255, 0.9);
+  border: 0;
+  border-radius: var(--radius-circle);
+  box-shadow: var(--shadow-sm);
   cursor: pointer;
   transition: color var(--dur-base) var(--ease-standard),
-              border-color var(--dur-base) var(--ease-standard);
+              background var(--dur-base) var(--ease-standard);
 }
-.pdp-wish:hover { border-color: var(--ink-700); }
-.pdp-wish.is-active { color: var(--sale); border-color: var(--sale); }
+.pdp-wish:hover { background: #fff; }
+.pdp-wish.is-active { color: var(--sale); }
 .pdp-wish.is-active svg { fill: var(--sale); }
-
-/* Estimated delivery line */
-.pdp-delivery {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 26px;
-  font-size: 13px;
-  color: var(--text-muted);
-}
-.pdp-delivery svg { flex: none; color: var(--color-primary); }
-.pdp-delivery strong { color: var(--ink-900); font-weight: var(--fw-medium); white-space: nowrap; }
 
 /* ── Service reassurance ──────────────────────────────────── */
 .pdp-service {
@@ -807,6 +796,239 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   color: var(--ink-900);
 }
 .pdp-modal-sub { margin: 0 0 22px; font-size: 13px; color: var(--text-muted); }
+
+/* ── Mozoon loyalty side panel ────────────────────────────── */
+.pdp-mz-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: rgba(14, 23, 34, 0.5);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-standard);
+}
+.pdp-mz-scrim.is-open { opacity: 1; }
+.pdp-mz-scrim[hidden] { display: none; }
+
+.pdp-mz-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: calc(var(--z-modal) + 1);
+  width: min(92vw, 420px);
+  height: 100%;
+  background: var(--surface-card);
+  box-shadow: var(--shadow-lg);
+  transform: translateX(100%);
+  transition: transform var(--dur-slow) var(--ease-standard);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.pdp-mz-drawer.is-open { transform: translateX(0); }
+.pdp-mz-drawer[hidden] { display: none; }
+
+.pdp-mz-close {
+  position: absolute;
+  top: 16px;
+  inset-inline-end: 16px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-700);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  border-radius: var(--radius-circle);
+  transition: background var(--dur-base) var(--ease-standard);
+}
+.pdp-mz-close:hover { background: var(--ink-100); }
+
+.pdp-mz-body { padding: 64px 24px 44px; }
+
+/* Rewards card — colour follows the member's current tier */
+.pdp-mz-card {
+  --mz-card-ink: var(--ink-900);
+  padding: 18px;
+  margin-bottom: 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.pdp-mz-card-aqua { background: linear-gradient(135deg, #eef8fc, #cfe9f6); }
+.pdp-mz-card-azure { background: linear-gradient(135deg, #5f89c9, #3f6bb0); --mz-card-ink: #fff; }
+.pdp-mz-card-sapphire { background: linear-gradient(135deg, #16295c, #0a1638); --mz-card-ink: #fff; }
+.pdp-mz-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px 4px;
+  background: #fff;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.pdp-mz-card-label {
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.pdp-mz-coin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-circle);
+  background: var(--ink-900);
+  color: #fff;
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+}
+.pdp-mz-balance {
+  margin: 0;
+  padding: 0 18px 16px;
+  background: #fff;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  font-size: 30px;
+  font-weight: var(--fw-bold);
+  color: var(--ink-900);
+}
+.pdp-mz-balance span { margin-left: 8px; font-size: 13px; font-weight: var(--fw-regular); color: var(--text-muted); }
+.pdp-mz-cardnum {
+  margin: 14px 4px 8px;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--mz-card-ink);
+}
+.pdp-mz-barcode {
+  height: 28px;
+  margin: 0 4px;
+  opacity: 0.82;
+  background: repeating-linear-gradient(90deg,
+    var(--mz-card-ink) 0 2px, transparent 2px 5px,
+    var(--mz-card-ink) 5px 6px, transparent 6px 12px,
+    var(--mz-card-ink) 12px 15px, transparent 15px 18px,
+    var(--mz-card-ink) 18px 19px, transparent 19px 24px,
+    var(--mz-card-ink) 24px 27px, transparent 27px 30px);
+}
+
+/* Tier progress */
+.pdp-mz-tier-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 2px 12px;
+}
+.pdp-mz-tier-name {
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--ink-900);
+}
+.pdp-mz-tier-next { font-size: 12px; line-height: 1.6; color: var(--text-muted); text-align: right; }
+.pdp-mz-tier-next strong { color: var(--ink-900); font-weight: var(--fw-semibold); }
+.pdp-mz-tier-date { font-size: 11px; color: var(--text-subtle); }
+.pdp-mz-progress {
+  position: relative;
+  height: 4px;
+  margin: 0 2px 34px;
+  background: var(--border-subtle);
+  border-radius: 2px;
+}
+.pdp-mz-progress-fill {
+  position: absolute;
+  top: 0; left: 0; height: 100%;
+  background: var(--gold-500);
+  border-radius: 2px;
+}
+.pdp-mz-progress-thumb,
+.pdp-mz-progress-end {
+  position: absolute;
+  top: 50%;
+  width: 14px; height: 14px;
+  border-radius: var(--radius-circle);
+  border: 2px solid #fff;
+  box-shadow: var(--shadow-sm);
+}
+.pdp-mz-progress-thumb { transform: translate(-50%, -50%); }
+.pdp-mz-progress-end { right: 0; transform: translate(50%, -50%); }
+.pdp-mz-dot-aqua { background: #bfe3f2; }
+.pdp-mz-dot-azure { background: #4f7fc4; }
+.pdp-mz-dot-sapphire { background: #0d1f4d; }
+
+.pdp-mz-activity-note { margin: -8px 2px 16px; font-size: 12px; color: var(--text-muted); }
+.pdp-mz-activity-note .pdp-link { font-size: 12px; }
+.pdp-mz-activity-list { margin: 0 2px 30px; padding: 0; list-style: none; }
+.pdp-mz-activity-list li {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.pdp-mz-activity-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.pdp-mz-activity-desc { margin: 0; font-size: 13px; font-weight: var(--fw-medium); color: var(--ink-900); }
+.pdp-mz-activity-date { margin: 2px 0 0; font-size: 11px; color: var(--text-subtle); }
+.pdp-mz-activity-amt { flex: 0 0 auto; font-size: 13px; font-weight: var(--fw-semibold); color: var(--ink-900); }
+
+.pdp-mz-heading {
+  margin: 0 2px 16px;
+  font-size: 15px;
+  font-weight: var(--fw-bold);
+  color: var(--ink-900);
+}
+
+/* Programme Tiers — one card per tier, stacked to fit the drawer width */
+.pdp-mz-tiercards { display: flex; flex-direction: column; }
+.pdp-mz-tiercard-row { margin-bottom: 28px; }
+.pdp-mz-tiercard-row:last-child { margin-bottom: 0; }
+.pdp-mz-tiercard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 132px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px -10px rgba(14, 23, 34, 0.3);
+}
+.pdp-mz-tiercard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 88% 14%, rgba(255, 255, 255, 0.5), transparent 55%);
+  pointer-events: none;
+}
+.pdp-mz-tiercard-icon {
+  position: absolute;
+  top: 16px;
+  inset-inline-end: 16px;
+  opacity: 0.55;
+}
+.pdp-mz-tiercard-name {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pdp-mz-tiercard-aqua { background: linear-gradient(135deg, #eef8fc, #cfe9f6); color: var(--blue-800); }
+.pdp-mz-tiercard-azure { background: linear-gradient(135deg, #5f89c9, #3f6bb0); color: #fff; }
+.pdp-mz-tiercard-sapphire { background: linear-gradient(135deg, #16295c, #0a1638); color: #fff; }
+
+.pdp-mz-tier-title { margin: 12px 2px 4px; font-size: 15px; font-weight: var(--fw-bold); color: var(--ink-900); }
+.pdp-mz-tier-desc { margin: 0 2px; font-size: 12.5px; line-height: 1.55; color: var(--text-muted); }
+
+.pdp-mz-fine { margin: 26px 2px 0; font-size: 11px; line-height: 1.6; color: var(--text-subtle); }
+
 .pdp-field-label {
   display: block;
   margin: 18px 0 8px;
@@ -1001,7 +1223,7 @@ a.pdp-rel-name:hover { color: var(--color-primary); text-decoration: none; }
 
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 1080px) {
-  .pdp-layout { grid-template-columns: minmax(0, 1fr) minmax(320px, 400px); gap: 40px; }
+  .pdp-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
 }
 
 @media (max-width: 900px) {

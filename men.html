@@ -1,0 +1,1010 @@
+<!-- @dsCard group="Website" viewport="1320x900" name="Storefront — Men Landing" subtitle="bluesalon.com Men hub: hero, shop-by-department, new arrivals, edit, brands" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blue Salon — Men</title>
+<link rel="icon" href="assets/app-icon.png">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="listing.css">
+<link rel="stylesheet" href="men.css">
+</head>
+<body>
+
+  <!-- ════════════════ Header ════════════════ -->
+  <header class="bs-nav-root bs-header">
+
+    <!-- Announcement -->
+    <div class="bs-announce">
+      <div class="bs-announce-inner">
+      <span class="bs-announce-msg">Complimentary shipping on orders over QAR 499 &nbsp;·&nbsp; Split your payment into 4 installments</span>
+      <div class="bs-announce-utils">
+        <span class="bs-util-wrap bs-locale">
+          <button class="bs-iconbtn bs-locale-btn" type="button" id="localeBtn" aria-label="Switch language" title="Switch language">
+            <span class="bs-lang-switch is-ar" id="localeLangSwitch" aria-hidden="true">ع</span>
+          </button>
+        </span>
+        <button class="bs-iconbtn bs-locale-btn" type="button" aria-label="Store locator" title="Store locator">
+          <span class="bs-lang-switch">Store</span>
+        </button>
+      </div>
+      </div>
+    </div>
+
+    <!-- Main bar -->
+    <div class="bs-topbar">
+      <!-- Hamburger (mobile only) -->
+      <button class="bs-iconbtn bs-hamburger" type="button" id="hamburgerBtn" aria-label="Menu" aria-expanded="false" aria-controls="mobileDrawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <!-- Search -->
+      <div class="bs-search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="7"/></svg>
+        <input type="search" placeholder="Search 500+ luxury brands">
+      </div>
+      <!-- Logo -->
+      <a class="bs-logo" href="index.html">
+        <img src="assets/logo-horizontal.svg" alt="Blue Salon">
+      </a>
+      <!-- Utilities -->
+      <div class="bs-utils">
+        <button class="bs-iconbtn" type="button" aria-label="Account" title="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        </button>
+        <span class="bs-util-wrap">
+          <button class="bs-iconbtn" type="button" aria-label="Wishlist" title="Wishlist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l9 9 8.8-8.6a5.5 5.5 0 0 0-.2-7.8z"/></svg>
+          </button>
+          <span class="bs-count" id="wishCount" hidden>0</span>
+        </span>
+        <span class="bs-util-wrap">
+          <button class="bs-iconbtn" type="button" aria-label="Bag" title="Bag">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+          </button>
+          <span class="bs-count" id="cartCount" hidden>0</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Nav + mega menu hover zone -->
+    <div id="navZone">
+      <nav class="bs-nav">
+        <div class="bs-nav-inner" id="navInner">
+          <div class="bs-nav-item" data-menu="new" data-href="listing.html">New In</div>
+          <div class="bs-nav-item" data-menu="women" data-href="women.html">Women</div>
+          <div class="bs-nav-item is-current" data-menu="men">Men</div>
+          <div class="bs-nav-item" data-menu="kids">Kids &amp; Baby</div>
+          <div class="bs-nav-item" data-menu="beauty">Beauty</div>
+          <div class="bs-nav-item" data-menu="luggage">Luggage</div>
+          <div class="bs-nav-item" data-menu="home">Home &amp; Linen</div>
+          <div class="bs-nav-item" data-menu="gourmet">Gourmet</div>
+          <div class="bs-nav-item" data-menu="brands">Brands</div>
+          <div class="bs-nav-item" data-menu="gift">Gift</div>
+          <div class="bs-nav-item sale" data-menu="sale">Sale</div>
+          <div class="bs-mega-holder" id="megaHolder"></div>
+        </div>
+      </nav>
+    </div>
+
+  </header>
+
+  <!-- ════════════════ Mobile drawer (built by app.js) ════════════════ -->
+  <div class="bs-drawer-scrim" id="drawerScrim" hidden></div>
+  <aside class="bs-drawer" id="mobileDrawer" aria-hidden="true" hidden>
+    <div class="bs-drawer-head">
+      <img class="bs-drawer-logo" src="assets/logo-horizontal.svg" alt="Blue Salon">
+      <button class="bs-iconbtn bs-drawer-close" type="button" id="drawerClose" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <nav class="bs-drawer-nav" id="drawerNav"></nav>
+  </aside>
+
+  <main>
+
+    <!-- ════════════════ Quick-shop shortcuts ════════════════ -->
+    <section class="men-quicknav">
+      <h2 class="bs-display men-quicknav-title">Men</h2>
+      <div class="men-quicknav-row">
+
+        <a href="listing.html" class="men-quicknav-item">
+          <span class="men-quicknav-circle"><img src="https://bluesalon-new-simple.vercel.app/assets/fashion-belt.jpg" alt="New In"></span>
+          <span class="men-quicknav-label">New In</span>
+        </a>
+
+        <a href="listing.html" class="men-quicknav-item">
+          <span class="men-quicknav-circle"><img src="https://www.bluesalon.com/cdn/shop/files/Tshirt_600x.jpg?v=1771757883" alt="T-Shirts"></span>
+          <span class="men-quicknav-label">T-Shirts</span>
+        </a>
+
+        <a href="listing.html" class="men-quicknav-item">
+          <span class="men-quicknav-circle"><img src="https://www.bluesalon.com/cdn/shop/files/jackets_600x.jpg?v=1771758064" alt="Jackets"></span>
+          <span class="men-quicknav-label">Jackets</span>
+        </a>
+
+        <a href="listing.html" class="men-quicknav-item">
+          <span class="men-quicknav-circle"><img src="https://www.bluesalon.com/cdn/shop/files/Bottoms_600x.jpg?v=1771758080" alt="Trousers &amp; Shorts"></span>
+          <span class="men-quicknav-label">Trousers &amp; Shorts</span>
+        </a>
+
+        <a href="listing.html" class="men-quicknav-item">
+          <span class="men-quicknav-circle"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_3_4d986f89-cdda-4581-9205-e8df028f8930_600x.jpg?v=1778140893" alt="Watches"></span>
+          <span class="men-quicknav-label">Watches</span>
+        </a>
+
+        <a href="listing.html" class="men-quicknav-item">
+          <span class="men-quicknav-circle"><img src="https://www.bluesalon.com/cdn/shop/files/Cole_Haan-_SHOES_600x.jpg?v=1771757631" alt="Footwear"></span>
+          <span class="men-quicknav-label">Footwear</span>
+        </a>
+
+        <a href="listing.html" class="men-quicknav-item">
+          <span class="men-quicknav-circle"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_8_7748af8b-f11e-4762-9b26-309fa3381940_600x.jpg?v=1778152597" alt="Fragrance"></span>
+          <span class="men-quicknav-label">Fragrance</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Hero ════════════════ -->
+    <section class="men-hero" hidden>
+      <img class="men-hero-img" src="https://bluesalon-new-simple.vercel.app/assets/fashion-belt.jpg" alt="">
+      <div class="men-hero-panel">
+        <span class="men-hero-kicker">SS26 Edit</span>
+        <h1 class="bs-display men-hero-title">Men</h1>
+        <p class="men-hero-sub">Sharp tailoring, everyday essentials and the season's finest timepieces — curated from Corneliani, Jacob Cohen and 500 more maisons.</p>
+        <div class="men-hero-ctas">
+          <a class="bs-btn bs-btn-primary" href="listing.html">Shop New In</a>
+          <a class="men-hero-link" href="#menDepts">Explore departments</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Editorial mosaic ════════════════ -->
+    <section class="men-mosaic">
+      <a class="men-mosaic-hero" href="listing.html">
+        <img src="https://bluesalon-new-simple.vercel.app/assets/fashion-belt.jpg" alt="">
+        <span class="men-mosaic-hero-caption">
+          <span class="bs-display men-mosaic-hero-title">The Tailoring Edit</span>
+          <span class="men-mosaic-link">Shop the edit <svg width="18" height="10" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h23M19 1l5 5-5 5"/></svg></span>
+        </span>
+      </a>
+
+      <div class="men-mosaic-grid">
+        <a class="men-mosaic-tile" href="listing.html">
+          <img src="https://www.bluesalon.com/cdn/shop/files/Cole_Haan-_SHOES_600x.jpg?v=1771757631" alt="">
+          <span class="men-mosaic-tag">Footwear <svg width="14" height="8" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h23M19 1l5 5-5 5"/></svg></span>
+        </a>
+        <a class="men-mosaic-tile" href="listing.html">
+          <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_3_4d986f89-cdda-4581-9205-e8df028f8930_600x.jpg?v=1778140893" alt="">
+          <span class="men-mosaic-tag">Watches <svg width="14" height="8" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h23M19 1l5 5-5 5"/></svg></span>
+        </a>
+        <a class="men-mosaic-tile men-mosaic-tile-wide" href="listing.html">
+          <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_8_7748af8b-f11e-4762-9b26-309fa3381940_600x.jpg?v=1778152597" alt="">
+          <span class="men-mosaic-tag">Fragrance <svg width="14" height="8" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h23M19 1l5 5-5 5"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ════════════════ More to Explore ════════════════ -->
+    <section class="men-explore">
+      <div class="men-explore-inner">
+        <div class="men-explore-text">
+          <h2 class="bs-display men-explore-title">More to Explore</h2>
+          <p class="men-explore-sub">Discover our curated edits and seasonal collections</p>
+        </div>
+
+        <div class="explore-collection-home-grid-wrapper men-explore-slider-wrap">
+          <button class="explore-slider-arrow explore-slider-arrow-left" aria-label="Previous" type="button" disabled>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <div class="explore-collection-home-grid" data-explore-slider>
+
+            <a href="listing.html" class="explore-collection-home-card">
+              <div class="explore-collection-home-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?auto=format&fit=crop&w=900&q=80" alt="Shirts" class="explore-collection-home-image">
+              </div>
+              <div class="explore-collection-home-title">Shirts</div>
+            </a>
+
+            <a href="listing.html" class="explore-collection-home-card">
+              <div class="explore-collection-home-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1485742217969-f1e4cd444fe8?auto=format&fit=crop&w=900&q=80" alt="Jackets" class="explore-collection-home-image">
+              </div>
+              <div class="explore-collection-home-title">Jackets</div>
+            </a>
+
+            <a href="listing.html" class="explore-collection-home-card">
+              <div class="explore-collection-home-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80" alt="T-Shirts" class="explore-collection-home-image">
+              </div>
+              <div class="explore-collection-home-title">T-Shirts</div>
+            </a>
+
+            <a href="listing.html" class="explore-collection-home-card">
+              <div class="explore-collection-home-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1568690697109-c87d0f9a7539?auto=format&fit=crop&w=900&q=80" alt="Blazers" class="explore-collection-home-image">
+              </div>
+              <div class="explore-collection-home-title">Blazers</div>
+            </a>
+
+            <a href="listing.html" class="explore-collection-home-card">
+              <div class="explore-collection-home-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1564631299952-425f0dff92ee?auto=format&fit=crop&w=900&q=80" alt="Jeans" class="explore-collection-home-image">
+              </div>
+              <div class="explore-collection-home-title">Jeans</div>
+            </a>
+
+          </div>
+          <button class="explore-slider-arrow explore-slider-arrow-right" aria-label="Next" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Men's Categories ════════════════ -->
+    <section class="men-categories">
+      <h2 class="bs-display men-categories-title">Men&rsquo;s Categories</h2>
+      <hr class="bs-rule-gold men-categories-rule">
+
+      <div class="men-categories-grid">
+
+        <a href="listing.html" class="men-categories-card men-categories-card-1">
+          <img src="https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=900&q=80" alt="Casual Shirts">
+          <span class="men-categories-tag">Casual Shirts</span>
+        </a>
+
+        <a href="listing.html" class="men-categories-card men-categories-card-2">
+          <img src="https://images.unsplash.com/photo-1614890085618-0e1054da74f8?auto=format&fit=crop&w=900&q=80" alt="Polo Shirts">
+          <span class="men-categories-tag">Polo Shirts</span>
+        </a>
+
+        <a href="listing.html" class="men-categories-card men-categories-card-3">
+          <img src="https://images.unsplash.com/photo-1611374243147-44a702c2d44c?auto=format&fit=crop&w=900&q=80" alt="Shorts">
+          <span class="men-categories-tag">Shorts</span>
+        </a>
+
+        <a href="listing.html" class="men-categories-card men-categories-card-4">
+          <img src="https://images.unsplash.com/photo-1495681796091-d84e65e2ad51?auto=format&fit=crop&w=900&q=80" alt="Jumpers &amp; Cardigans">
+          <span class="men-categories-tag">Jumpers &amp; Cardigans</span>
+        </a>
+
+        <a href="listing.html" class="men-categories-card men-categories-card-5">
+          <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=900&q=80" alt="Trainers">
+          <span class="men-categories-tag">Trainers</span>
+        </a>
+
+        <a href="listing.html" class="men-categories-card men-categories-card-6">
+          <img src="https://images.unsplash.com/photo-1593046584198-ed785e8bf3a6?auto=format&fit=crop&w=900&q=80" alt="Swimwear">
+          <span class="men-categories-tag">Swimwear</span>
+        </a>
+
+      </div>
+    </section>
+    </section>
+
+    <!-- ════════════════ The Stories ════════════════ -->
+    <section class="men-stories">
+      <div class="men-stories-row">
+
+        <div class="men-stories-video-card">
+          <video class="men-stories-video" id="storiesVideo" autoplay muted loop playsinline
+                 poster="https://bluesalon-new-simple.vercel.app/assets/fashion-belt.jpg">
+            <source src="https://videos.pexels.com/video-files/9303875/9303875-uhd_2732_1440_30fps.mp4" type="video/mp4">
+          </video>
+          <button class="men-stories-playtoggle" id="storiesPlayToggle" type="button" aria-label="Pause video" aria-pressed="false">
+            <svg class="men-stories-icon-pause" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16"/><rect x="14" y="4" width="5" height="16"/></svg>
+            <svg class="men-stories-icon-play" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" hidden><path d="M6 4l15 8-15 8V4z"/></svg>
+          </button>
+          <span class="men-stories-video-caption">
+            <span class="men-stories-eyebrow">Corneliani</span>
+            <span class="bs-display men-stories-video-title">Spring 2027 Runway</span>
+          </span>
+        </div>
+
+        <div class="men-stories-right">
+          <div class="men-stories-text">
+            <h2 class="bs-display men-stories-title">The Stories</h2>
+            <p class="men-stories-sub">Seasonal collections and curated edits from Blue Salon&rsquo;s wide-reaching world of menswear brands.</p>
+          </div>
+
+          <div class="stories-collection-home-grid-wrapper men-stories-slider-wrap">
+            <button class="stories-slider-arrow stories-slider-arrow-left" aria-label="Previous" type="button" disabled>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <div class="stories-collection-home-grid" data-stories-slider>
+
+              <a href="listing.html" class="stories-collection-home-card">
+                <div class="stories-collection-home-image-wrapper">
+                  <img src="https://images.unsplash.com/photo-1568690697109-c87d0f9a7539?auto=format&fit=crop&w=900&q=80" alt="The Tailoring Edit" class="stories-collection-home-image">
+                </div>
+                <span class="men-stories-card-eyebrow">Corneliani</span>
+                <div class="stories-collection-home-title">The Tailoring Edit</div>
+              </a>
+
+              <a href="listing.html" class="stories-collection-home-card">
+                <div class="stories-collection-home-image-wrapper">
+                  <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_8_7748af8b-f11e-4762-9b26-309fa3381940_600x.jpg?v=1778152597" alt="Aventus Renewed" class="stories-collection-home-image">
+                </div>
+                <span class="men-stories-card-eyebrow">Creed</span>
+                <div class="stories-collection-home-title">Aventus Renewed</div>
+              </a>
+
+              <a href="listing.html" class="stories-collection-home-card">
+                <div class="stories-collection-home-image-wrapper">
+                  <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_3_4d986f89-cdda-4581-9205-e8df028f8930_600x.jpg?v=1778140893" alt="Navitimer Heritage" class="stories-collection-home-image">
+                </div>
+                <span class="men-stories-card-eyebrow">Breitling</span>
+                <div class="stories-collection-home-title">Navitimer Heritage</div>
+              </a>
+
+            </div>
+            <button class="stories-slider-arrow stories-slider-arrow-right" aria-label="Next" type="button">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ New Arrivals ════════════════ -->
+    <section class="cat-fashion">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">New Arrivals</h2>
+          <a class="cat-fashion-sub-link" href="listing.html">Shop all new in →</a>
+        </div>
+
+        <div class="plp-grid" id="menNewArrivalsGrid" style="--plp-cols:4">
+
+          <!-- Cards mirror listing.js's cardHTML() exactly — same
+               markup/classes as the New In grid, so a shopper sees
+               one consistent product-card design everywhere. -->
+
+          <article class="plp-card plp-card--legacy" data-id="colehaan-oxford">
+            <a class="plp-card-media" href="product.html?id=colehaan-oxford" aria-label="GrandPrő Leather Oxford Shoes">
+              <img class="plp-card-mainimg" src="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=900&q=80" alt="GrandPrő Leather Oxford Shoes" loading="lazy">
+              <img class="plp-card-hoverimg" src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=900&q=80" alt="" aria-hidden="true" loading="lazy">
+              <span class="plp-tag dark">Exclusive</span>
+              <button type="button" class="plp-wish" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <span class="plp-quickadd"><button type="button">Add to cart</button></span>
+              <div class="plp-dots">
+                <button type="button" class="plp-dot is-active" aria-label="View image 1"></button>
+                <button type="button" class="plp-dot" aria-label="View image 2"></button>
+              </div>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=colehaan-oxford">COLE HAAN</a>
+                <span class="plp-card-price">QAR 890</span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=colehaan-oxford">GrandPrő Leather Oxford Shoes</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch" style="background:#b08d5b" aria-label="Tan" title="Tan"></button>
+                <button type="button" class="plp-swatch" style="background:#191919" aria-label="Black" title="Black"></button>
+                <button type="button" class="plp-swatch" style="background:#4b3a2c" aria-label="Chocolate" title="Chocolate"></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="plp-card plp-card--legacy" data-id="breitling-navitimer">
+            <a class="plp-card-media" href="product.html?id=breitling-navitimer" aria-label="Navitimer Automatic 41 Steel Watch">
+              <img class="plp-card-mainimg" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80" alt="Navitimer Automatic 41 Steel Watch" loading="lazy">
+              <img class="plp-card-hoverimg" src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=900&q=80" alt="" aria-hidden="true" loading="lazy">
+              <span class="plp-tag sale">-30%</span>
+              <button type="button" class="plp-wish" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <span class="plp-quickadd"><button type="button">Add to cart</button></span>
+              <div class="plp-dots">
+                <button type="button" class="plp-dot is-active" aria-label="View image 1"></button>
+                <button type="button" class="plp-dot" aria-label="View image 2"></button>
+              </div>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=breitling-navitimer">BREITLING</a>
+                <span class="plp-card-price"><span class="was">QAR 29,900</span><span class="now">QAR 20,930</span></span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=breitling-navitimer">Navitimer Automatic 41 Steel Watch</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch" style="background:#c7ccd1" aria-label="Steel" title="Steel"></button>
+                <button type="button" class="plp-swatch" style="background:#191919" aria-label="Black dial" title="Black dial"></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="plp-card plp-card--legacy" data-id="corneliani-blazer">
+            <a class="plp-card-media" href="product.html?id=corneliani-blazer" aria-label="Wool-Blend Tailored Blazer">
+              <img class="plp-card-mainimg" src="https://www.bluesalon.com/cdn/shop/files/jackets_600x.jpg?v=1771758064" alt="Wool-Blend Tailored Blazer" loading="lazy">
+              <span class="plp-tag">New</span>
+              <button type="button" class="plp-wish" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <span class="plp-quickadd"><button type="button">Add to cart</button></span>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=corneliani-blazer">CORNELIANI</a>
+                <span class="plp-card-price">QAR 3,450</span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=corneliani-blazer">Wool-Blend Tailored Blazer</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch" style="background:#191919" aria-label="Black" title="Black"></button>
+                <button type="button" class="plp-swatch" style="background:#2b3648" aria-label="Navy" title="Navy"></button>
+                <button type="button" class="plp-swatch" style="background:#6b6459" aria-label="Grey" title="Grey"></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="plp-card plp-card--legacy" data-id="jacobcohen-trousers">
+            <a class="plp-card-media" href="product.html?id=jacobcohen-trousers" aria-label="Slim-Fit Tailored Trousers">
+              <img class="plp-card-mainimg" src="https://www.bluesalon.com/cdn/shop/files/Bottoms_600x.jpg?v=1771758080" alt="Slim-Fit Tailored Trousers" loading="lazy">
+              <button type="button" class="plp-wish" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <span class="plp-quickadd"><button type="button">Add to cart</button></span>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=jacobcohen-trousers">JACOB COHEN</a>
+                <span class="plp-card-price">QAR 1,650</span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=jacobcohen-trousers">Slim-Fit Tailored Trousers</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch" style="background:#4b4a2f" aria-label="Dark Olive" title="Dark Olive"></button>
+                <button type="button" class="plp-swatch" style="background:#191919" aria-label="Black" title="Black"></button>
+                <button type="button" class="plp-swatch" style="background:#cbb997" aria-label="Sand" title="Sand"></button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Runway Looks (auto-scrolling marquee) ════════════════ -->
+    <section class="men-runway">
+      <div class="men-runway-viewport" id="menRunwayViewport">
+        <div class="men-runway-track" id="menRunwayTrack">
+
+          <div class="men-runway-item">
+            <img src="https://images.unsplash.com/photo-1546572797-e8c933a75a1f?auto=format&fit=crop&w=900&q=80" alt="">
+            <div class="men-runway-overlay">
+              <span class="men-runway-name">Tailoring</span>
+              <a href="listing.html" class="men-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="men-runway-item">
+            <video autoplay muted loop playsinline
+                   poster="https://images.unsplash.com/photo-1611171711960-cc3da04c95bf?auto=format&fit=crop&w=900&q=80">
+              <source src="https://videos.pexels.com/video-files/6766323/6766323-uhd_2560_1440_25fps.mp4" type="video/mp4">
+            </video>
+            <div class="men-runway-overlay">
+              <span class="men-runway-name">Made to Measure</span>
+              <a href="listing.html" class="men-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="men-runway-item">
+            <img src="https://images.unsplash.com/photo-1608796764104-6648756a3b1d?auto=format&fit=crop&w=900&q=80" alt="">
+            <div class="men-runway-overlay">
+              <span class="men-runway-name">Accessories</span>
+              <a href="listing.html" class="men-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="men-runway-item">
+            <img src="https://images.unsplash.com/photo-1633655442432-620aa55d7ac1?auto=format&fit=crop&w=900&q=80" alt="">
+            <div class="men-runway-overlay">
+              <span class="men-runway-name">Blazers</span>
+              <a href="listing.html" class="men-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="men-runway-item">
+            <video autoplay muted loop playsinline
+                   poster="https://images.unsplash.com/photo-1559582798-678dfc71ccd8?auto=format&fit=crop&w=900&q=80">
+              <source src="https://videos.pexels.com/video-files/9303875/9303875-uhd_2732_1440_30fps.mp4" type="video/mp4">
+            </video>
+            <div class="men-runway-overlay">
+              <span class="men-runway-name">Spring Runway</span>
+              <a href="listing.html" class="men-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="men-runway-item">
+            <img src="https://images.unsplash.com/photo-1559582798-678dfc71ccd8?auto=format&fit=crop&w=900&q=80" alt="">
+            <div class="men-runway-overlay">
+              <span class="men-runway-name">Outerwear</span>
+              <a href="listing.html" class="men-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="men-runway-item">
+            <img src="https://images.unsplash.com/photo-1630173250799-2813d34ed14b?auto=format&fit=crop&w=900&q=80" alt="">
+            <div class="men-runway-overlay">
+              <span class="men-runway-name">Smart Casual</span>
+              <a href="listing.html" class="men-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Shoppable Editorial ════════════════ -->
+    <section class="men-shopedit">
+      <div class="men-shopedit-card">
+        <img src="images/men111.jpg" alt="">
+        <div class="men-shopedit-cta">
+          <a href="listing.html" class="men-shopedit-shopbtn">
+            Shop Now
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </a>
+          <span class="men-shopedit-audio" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="10" x2="4" y2="14"/><line x1="9" y1="6" x2="9" y2="18"/><line x1="14" y1="3" x2="14" y2="21"/><line x1="19" y1="8" x2="19" y2="16"/></svg>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Editorial Spotlight ════════════════ -->
+    <section class="men-spotlight">
+      <div class="men-spotlight-grid">
+
+        <a href="listing.html" class="men-spotlight-hero">
+          <img src="https://images.unsplash.com/photo-1517101552363-df64abce174a?auto=format&fit=crop&w=1200&q=80" alt="">
+          <span class="men-spotlight-hero-overlay"></span>
+          <span class="men-spotlight-hero-caption">
+            <span class="bs-display men-spotlight-hero-brand">Corneliani</span>
+            <span class="men-spotlight-hero-line">Sartoriale</span>
+            <span class="men-spotlight-hero-desc">The ultimate expression of luxury for the modern gentleman — hand-tailored from the world&rsquo;s finest fabrics.</span>
+            <span class="men-spotlight-ctas">
+              <span class="men-spotlight-btn">Explore Now</span>
+              <span class="men-spotlight-btn">Shop Now</span>
+            </span>
+          </span>
+        </a>
+
+        <div class="men-spotlight-shop">
+          <div class="men-spotlight-shop-stage">
+            <button class="men-spotlight-arrow men-spotlight-arrow-left" aria-label="Previous" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <a href="listing.html" class="men-spotlight-shop-frame">
+              <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1200&q=80" alt="">
+            </a>
+            <button class="men-spotlight-arrow men-spotlight-arrow-right" aria-label="Next" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div class="men-spotlight-shop-cap">
+            <a href="listing.html" class="men-spotlight-shop-title">The Resort Shop</a>
+            <a href="listing.html" class="men-spotlight-shop-link">Shop Now</a>
+            <span class="men-spotlight-dots"><span class="is-active"></span><span></span></span>
+          </div>
+        </div>
+
+        <div class="men-spotlight-shop">
+          <div class="men-spotlight-shop-stage">
+            <button class="men-spotlight-arrow men-spotlight-arrow-left" aria-label="Previous" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <a href="listing.html" class="men-spotlight-shop-frame">
+              <img src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?auto=format&fit=crop&w=1200&q=80" alt="">
+            </a>
+            <button class="men-spotlight-arrow men-spotlight-arrow-right" aria-label="Next" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div class="men-spotlight-shop-cap">
+            <a href="listing.html" class="men-spotlight-shop-title">Linen Shop</a>
+            <a href="listing.html" class="men-spotlight-shop-link">Shop Now</a>
+            <span class="men-spotlight-dots"><span class="is-active"></span><span></span></span>
+          </div>
+        </div>
+
+        <a href="listing.html" class="men-spotlight-hero">
+          <img src="https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=1200&q=80" alt="">
+          <span class="men-spotlight-hero-overlay"></span>
+          <span class="men-spotlight-hero-caption">
+            <span class="men-spotlight-hero-logobox">Jacob Cohen</span>
+            <span class="men-spotlight-hero-desc">Defining timeless Italian denim — Jacob Cohen blends heritage craft, refined tailoring and sporting heritage for every occasion.</span>
+            <span class="men-spotlight-ctas">
+              <span class="men-spotlight-btn">Explore Now</span>
+              <span class="men-spotlight-btn">Shop Now</span>
+            </span>
+          </span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Brands loved by him ════════════════ -->
+    <section class="cat-fashion cat-fashion-brands">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">Brands Loved By Him</h2>
+          <a class="cat-fashion-sub-link" href="/collections">All Brands →</a>
+        </div>
+
+        <div class="brands-collection-home-grid-wrapper">
+          <div class="brands-collection-home-grid">
+
+            <a title="Tom Ford" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/tomford_250x_5d1e944a-5c1b-4604-b294-ab9ff1bb8351_250x.avif?v=1771402650" alt="Tom Ford" loading="lazy"></span>
+            </a>
+
+            <a title="Creed" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/creed_250x_868053a3-0460-4a8d-9f00-9b2df02d3474_250x.avif?v=1771916863" alt="Creed" loading="lazy"></span>
+            </a>
+
+            <a title="MCM" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/mcm_logo_250x_1_250x.avif?v=1771916863" alt="MCM" loading="lazy"></span>
+            </a>
+
+            <a title="Aigner" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/aigner_250x_65346155-e057-4adb-aae5-ddc4a61f9a72_250x.webp?v=1771916863" alt="Aigner" loading="lazy"></span>
+            </a>
+
+            <a title="Swarovski" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/swarovski_250x_8ae97c0e-56d0-4cfb-b2e2-70120be6819e_250x.avif?v=1771916863" alt="Swarovski" loading="lazy"></span>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════ Quick Add drawer ════════════════ -->
+  <div class="men-quickadd-scrim" id="menQuickaddScrim" hidden></div>
+  <aside class="men-quickadd-drawer" id="menQuickaddDrawer" role="dialog" aria-modal="true" aria-labelledby="menQuickaddName" aria-hidden="true" hidden>
+    <button type="button" class="men-quickadd-close" id="menQuickaddClose" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="men-quickadd-body" id="menQuickaddBody"><!-- rendered by JS --></div>
+  </aside>
+
+  <!-- ════════════════ Footer ════════════════ -->
+  <footer class="bs-footer">
+
+    <!-- Shop more -->
+    <div class="bs-shopmore">
+      <div class="bs-shopmore-inner">
+        <h2>Shop more</h2>
+        <div class="bs-shopmore-grid" id="shopMoreGrid"></div>
+      </div>
+    </div>
+
+    <!-- Newsletter / App download -->
+    <div class="bs-appband">
+      <div class="bs-appband-inner">
+
+        <!-- Newsletter -->
+        <div>
+          <h3>Never miss a thing</h3>
+          <p class="bs-appband-copy">Sign up for exclusive launches, offers, and in-store events.</p>
+          <form class="bs-newsletter-form" onsubmit="return false;">
+            <input type="email" placeholder="Your email address">
+            <button type="submit">Sign up</button>
+          </form>
+          <p class="bs-newsletter-fine">By subscribing you agree to our privacy policy. Unsubscribe anytime.</p>
+        </div>
+
+        <!-- App download -->
+        <div>
+          <h3>Download our App</h3>
+          <p class="bs-app-sub">Your pocket-sized Blue Salon</p>
+          <p class="bs-appband-copy bs-app-copy">
+            The iOS and Android app puts the extraordinary world of Blue Salon at your fingertips — with personalised style inspiration from the brands you love.
+          </p>
+        </div>
+
+        <!-- QR code -->
+        <div class="bs-qr">
+          <div class="bs-qr-label">Scan to download</div>
+           <div class="foot-qr-code">
+            <a href="https://apps.apple.com/qa/app/blue-salon-%D8%A7%D9%84%D8%B5%D8%A7%D9%84%D9%88%D9%86-%D8%A7%D9%84%D8%A7%D8%B2%D8%B1%D9%82/id1512188214" target="_blank" rel="noopener">
+              <img src="https://cdn.shopify.com/s/files/1/0370/6444/1991/files/qrapp-01.svg?v=1632989194" alt="App Store" width="98">
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=co.shopney.bluesaloncom&amp;hl=en&amp;gl=US" target="_blank" rel="noopener">
+              <img src="https://cdn.shopify.com/s/files/1/0370/6444/1991/files/qrapp-02.svg?v=1632667366" alt="Play Store" width="120">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Original footer -->
+    <div class="bs-mainfooter">
+      <div class="bs-mainfooter-inner">
+        <div class="bs-mainfooter-about">
+          <img src="https://www.bluesalon.com/cdn/shop/files/BS_Logo_horizontal-01-white1.png?v=1644232279" alt="Blue Salon">
+          <p>Qatar's first and foremost luxury department store since 1981. Over 500 international and niche brands, curated for you.</p>
+
+          <ul class="bs-contact">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Suhaim Bin Hamad Street, Doha, Qatar</span>
+            </li>
+          </ul>
+
+        </div>
+        <div id="footerCols" class="bs-mainfooter-cols"></div>
+      </div>
+      <div class="bs-bottomstrip">
+        <div class="bs-bottomstrip-inner">
+          <span class="bs-copyright">Ⓒ Copyright 2026
+            <a class="bs-copyright-aih" href="https://www.abuissa.com" target="_blank" rel="noopener">
+              <img src="https://www.abuissa.com/wp-content/uploads/2024/09/cropped-aih-favicon-192x192.png" alt="AbuIssa Holding" width="16" height="16" loading="lazy">
+              AbuIssa Holding
+            </a>
+            all rights reserved.</span>
+          <ul class="payment-methods">
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/Visa_Inverted_x32_5700ab8c-cb49-4355-83c3-4d1146a8076c_x32.png?v=1644226717" alt="Visa" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/mastercard-logo-design-history-1979_x32.jpg?v=1644232735" alt="Mastercard" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/Group_1_x32.jpg?v=1660140162" alt="Apple Pay" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/21Google_Pay9bc22ee1-7e10-4d6f-b0ec-57672824e23d_x32_1_x32.png?v=1709793011" alt="Google Pay" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/unnamed_1_x32.webp?v=1776589537" alt="Western Union" loading="lazy"></li>
+            <li><img src="https://colehaan.qa/cdn/shop/files/Theqa-01.svg?v=1726476176&width=540" alt="Theqa" loading="lazy"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // "The Stories" — play/pause toggle for the featured runway video.
+    (function () {
+      "use strict";
+      var video = document.getElementById("storiesVideo");
+      var btn = document.getElementById("storiesPlayToggle");
+      if (!video || !btn) return;
+      var pauseIcon = btn.querySelector(".men-stories-icon-pause");
+      var playIcon = btn.querySelector(".men-stories-icon-play");
+      btn.addEventListener("click", function () {
+        if (video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+      function sync() {
+        var playing = !video.paused;
+        pauseIcon.hidden = !playing;
+        playIcon.hidden = playing;
+        btn.setAttribute("aria-pressed", String(!playing));
+        btn.setAttribute("aria-label", playing ? "Pause video" : "Play video");
+      }
+      video.addEventListener("play", sync);
+      video.addEventListener("pause", sync);
+      sync();
+    })();
+
+    // "Runway Looks" — duplicate the strip so the auto-scroll
+    // (translateX(-50%) in men.css) loops without a visible jump.
+    (function () {
+      "use strict";
+      var track = document.getElementById("menRunwayTrack");
+      if (!track) return;
+      var items = Array.prototype.slice.call(track.querySelectorAll(".men-runway-item"));
+      if (!items.length) return;
+      items.forEach(function (item) {
+        var clone = item.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        track.appendChild(clone);
+      });
+    })();
+
+    // "Runway Looks" — the strip is also natively scrollable (drag,
+    // swipe or wheel). Interacting pauses the marquee (.is-interacting,
+    // see men.css); it resumes automatically after a short idle delay.
+    (function () {
+      "use strict";
+      var viewport = document.getElementById("menRunwayViewport");
+      if (!viewport) return;
+      var isDown = false;
+      var startX = 0;
+      var scrollStart = 0;
+      var resumeTimer = null;
+
+      function pause() {
+        viewport.classList.add("is-interacting");
+      }
+      function scheduleResume() {
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(function () {
+          viewport.classList.remove("is-interacting");
+        }, 2500);
+      }
+
+      viewport.addEventListener("mousedown", function (e) {
+        isDown = true;
+        viewport.classList.add("is-dragging");
+        pause();
+        startX = e.pageX - viewport.offsetLeft;
+        scrollStart = viewport.scrollLeft;
+      });
+      window.addEventListener("mouseup", function () {
+        if (!isDown) return;
+        isDown = false;
+        viewport.classList.remove("is-dragging");
+        scheduleResume();
+      });
+      window.addEventListener("mousemove", function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        var x = e.pageX - viewport.offsetLeft;
+        viewport.scrollLeft = scrollStart - (x - startX);
+      });
+
+      viewport.addEventListener("touchstart", function () {
+        pause();
+      }, { passive: true });
+      viewport.addEventListener("touchend", function () {
+        scheduleResume();
+      }, { passive: true });
+
+      viewport.addEventListener("wheel", function (e) {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          viewport.scrollLeft += e.deltaY;
+          e.preventDefault();
+        }
+        pause();
+        scheduleResume();
+      }, { passive: false });
+    })();
+
+    // "New Arrivals" — clicking a card's "Add to cart" opens a
+    // right-side Quick Add drawer (colour/size, then adds to the
+    // shared cart store) instead of adding silently.
+    (function () {
+      "use strict";
+      var grid = document.getElementById("menNewArrivalsGrid");
+      var scrim = document.getElementById("menQuickaddScrim");
+      var drawer = document.getElementById("menQuickaddDrawer");
+      var closeBtn = document.getElementById("menQuickaddClose");
+      var body = document.getElementById("menQuickaddBody");
+      if (!grid || !scrim || !drawer || !body) return;
+
+      // Sizing isn't in the shared product data, so it's mapped here
+      // per card — shoe/case sizes for footwear & watches, apparel
+      // sizes (+ a length row) for tailoring.
+      var OPTIONS = {
+        "colehaan-oxford": { sizes: ["40", "41", "42", "43", "44"] },
+        "breitling-navitimer": { sizes: ["38mm", "41mm", "46mm"] },
+        "corneliani-blazer": { sizes: ["46", "48", "50", "52", "54"], lengths: ["Short", "Regular", "Long"] },
+        "jacobcohen-trousers": { sizes: ["30", "32", "34", "36", "38"], lengths: ["Short", "Regular", "Long"] }
+      };
+
+      var current = null; // { card, swatchIdx, size, length }
+
+      function chipsHTML(kind, values, active) {
+        return values.map(function (v) {
+          return '<button type="button" class="men-quickadd-chip' + (v === active ? " is-active" : "") +
+            '" data-quickadd-' + kind + '="' + v + '">' + v + "</button>";
+        }).join("");
+      }
+
+      function render() {
+        if (!current) return;
+        var card = current.card;
+        var id = card.dataset.id;
+        var opts = OPTIONS[id] || { sizes: [] };
+        var img = card.querySelector(".plp-card-mainimg");
+        var brand = card.querySelector(".plp-card-brand");
+        var name = card.querySelector(".plp-card-name");
+        var price = card.querySelector(".plp-card-price");
+        var swatches = Array.prototype.slice.call(card.querySelectorAll(".plp-swatch"));
+        var activeSwatch = swatches[current.swatchIdx] || swatches[0];
+
+        var html = "";
+        html += '<img class="men-quickadd-img" src="' + (img ? img.src : "") + '" alt="">';
+        html += '<div><span class="men-quickadd-brand">' + (brand ? brand.textContent : "") + "</span>" +
+          '<h3 class="men-quickadd-name" id="menQuickaddName">' + (name ? name.textContent : "") + "</h3></div>";
+        html += '<div class="men-quickadd-price">' + (price ? price.innerHTML : "") + "</div>";
+
+        if (swatches.length) {
+          html += '<div><span class="men-quickadd-label">Colour: <b>' + (activeSwatch ? activeSwatch.title : "") + "</b></span>" +
+            '<div class="men-quickadd-swatches">' +
+            swatches.map(function (sw, i) {
+              return '<button type="button" class="men-quickadd-swatch' + (i === current.swatchIdx ? " is-active" : "") +
+                '" style="background:' + sw.style.background + '" title="' + sw.title + '" data-quickadd-swatch="' + i + '"></button>';
+            }).join("") +
+            "</div></div>";
+        }
+
+        if (opts.sizes.length) {
+          html += '<div><span class="men-quickadd-label">Size' + (current.size ? ": <b>" + current.size + "</b>" : "") + "</span>" +
+            '<div class="men-quickadd-grid">' + chipsHTML("size", opts.sizes, current.size) + "</div></div>";
+        }
+
+        if (opts.lengths && opts.lengths.length) {
+          html += '<div><span class="men-quickadd-label">Length' + (current.length ? ": <b>" + current.length + "</b>" : "") + "</span>" +
+            '<div class="men-quickadd-grid">' + chipsHTML("length", opts.lengths, current.length) + "</div></div>";
+        }
+
+        html += '<button type="button" class="men-quickadd-cta" id="menQuickaddAdd">Add to Bag</button>';
+        html += '<a class="men-quickadd-fulldetails" href="product.html?id=' + id + '">Full details</a>';
+
+        body.innerHTML = html;
+      }
+
+      function open(card) {
+        var opts = OPTIONS[card.dataset.id] || { sizes: [] };
+        current = {
+          card: card,
+          swatchIdx: 0,
+          size: opts.sizes[0] || null,
+          length: opts.lengths ? opts.lengths[1] || opts.lengths[0] : null
+        };
+        render();
+        drawer.hidden = false;
+        scrim.hidden = false;
+        void drawer.offsetWidth;
+        drawer.classList.add("is-open");
+        scrim.classList.add("is-open");
+        drawer.setAttribute("aria-hidden", "false");
+      }
+
+      function close() {
+        drawer.classList.remove("is-open");
+        scrim.classList.remove("is-open");
+        drawer.setAttribute("aria-hidden", "true");
+        setTimeout(function () {
+          drawer.hidden = true;
+          scrim.hidden = true;
+        }, 320);
+      }
+
+      grid.addEventListener("click", function (e) {
+        var addBtn = e.target.closest(".plp-quickadd button");
+        if (!addBtn) return;
+        e.preventDefault();
+        var card = addBtn.closest(".plp-card");
+        if (card) open(card);
+      });
+
+      closeBtn.addEventListener("click", close);
+      scrim.addEventListener("click", close);
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && drawer.classList.contains("is-open")) close();
+      });
+
+      body.addEventListener("click", function (e) {
+        if (!current) return;
+        var sw = e.target.closest("[data-quickadd-swatch]");
+        if (sw) { current.swatchIdx = Number(sw.dataset.quickaddSwatch); render(); return; }
+        var sz = e.target.closest("[data-quickadd-size]");
+        if (sz) { current.size = sz.dataset.quickaddSize; render(); return; }
+        var ln = e.target.closest("[data-quickadd-length]");
+        if (ln) { current.length = ln.dataset.quickaddLength; render(); return; }
+
+        if (e.target.closest("#menQuickaddAdd")) {
+          var card = current.card;
+          var id = card.dataset.id;
+          var swatches = card.querySelectorAll(".plp-swatch");
+          var activeSwatch = swatches[current.swatchIdx];
+          var priceEl = card.querySelector(".plp-card-price .now") || card.querySelector(".plp-card-price");
+          var priceNum = Number((priceEl.textContent || "").replace(/[^\d.]/g, "")) || 0;
+          var sizeLabel = current.length ? current.size + " / " + current.length : current.size;
+
+          if (window.BS_CART) {
+            window.BS_CART.add({
+              id: id,
+              vendor: card.querySelector(".plp-card-brand").textContent,
+              name: card.querySelector(".plp-card-name").textContent,
+              image: card.querySelector(".plp-card-mainimg").src,
+              price: priceNum,
+              color: activeSwatch ? activeSwatch.title : null,
+              colorHex: activeSwatch ? activeSwatch.style.background : null,
+              size: sizeLabel,
+              qty: 1
+            });
+          }
+          if (window.bsToast) window.bsToast("Added to bag");
+          close();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

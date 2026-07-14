@@ -1,0 +1,1836 @@
+/* ============================================================
+   BLUE SALON — MEN LANDING PAGE
+   Department hub that sits between the homepage and the New In
+   PLP. Reuses app.css primitives (cat-fashion headers, the
+   collection-home slider system, edit-duo, brand marquee) —
+   only the hero and the New Arrivals product cards are bespoke.
+   ============================================================ */
+
+
+/* ── Quick-shop shortcuts — a compact "stories" strip sitting above
+   the hero, scrollable if it overflows rather than wrapping. Same
+   max-width/padding as every other section so its edges line up
+   with the hero and header. ───────────────────────────────────── */
+.men-quicknav {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+
+.men-quicknav-title {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: var(--text-display-m);
+  letter-spacing: var(--ls-wide);
+  margin: 0 0 28px;
+}
+
+@media (max-width: 560px) {
+  .men-quicknav-title {
+    font-size: var(--text-display-s);
+    margin-bottom: 20px;
+  }
+}
+
+/* ── More to Explore — a fixed text column beside a horizontal
+   slider of tall category cards. The card/arrow/title internals
+   are the site's generic [class*="-collection-home-*"] system
+   (see app.css); only this two-column shell is bespoke. ──────── */
+.men-explore {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-7) 24px;
+}
+
+.men-explore-inner {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+}
+
+.men-explore-text {
+  flex: 0 0 360px;
+}
+
+.men-explore-title {
+  font-size: var(--text-display-l);
+  margin: 0 0 18px;
+}
+
+.men-explore-sub {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 320px;
+}
+
+.men-explore-slider-wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media (max-width: 1000px) {
+  .men-explore-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .men-explore-text {
+    flex-basis: auto;
+  }
+
+  .men-explore-slider-wrap {
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .men-explore {
+    padding: 40px 16px;
+  }
+
+  .men-explore-title {
+    font-size: var(--text-display-m);
+  }
+}
+
+/* ── Men's Categories — an asymmetric 4-column bento grid: the
+   outer columns each stack two cards, the inner two columns each
+   run a single card the full height. ─────────────────────────── */
+.men-categories {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-7) 24px;
+}
+
+.men-categories-title {
+  text-align: center;
+  color: #000;
+  font-size: var(--text-display-l);
+  margin: 0 0 16px;
+}
+
+.men-categories-rule {
+  margin: 0 auto 40px;
+}
+
+.men-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 16px;
+  height: 640px;
+}
+
+.men-categories-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.men-categories-card:hover {
+  text-decoration: none;
+}
+
+.men-categories-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow, .6s) var(--ease-standard, ease);
+}
+
+.men-categories-card:hover img {
+  transform: scale(1.04);
+}
+
+.men-categories-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+.men-categories-tag {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  bottom: 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.men-categories-card-1 { grid-column: 1; grid-row: 1; }
+.men-categories-card-2 { grid-column: 1; grid-row: 2; }
+.men-categories-card-3 { grid-column: 2; grid-row: 1 / span 2; }
+.men-categories-card-4 { grid-column: 3; grid-row: 1 / span 2; }
+.men-categories-card-5 { grid-column: 4; grid-row: 1; }
+.men-categories-card-6 { grid-column: 4; grid-row: 2; }
+
+@media (max-width: 900px) {
+  .men-categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 200px);
+    height: auto;
+  }
+
+  .men-categories-card-1 { grid-column: 1; grid-row: 1; }
+  .men-categories-card-2 { grid-column: 1; grid-row: 2; }
+  .men-categories-card-3 { grid-column: 2; grid-row: 1 / span 2; }
+  .men-categories-card-4 { grid-column: 1; grid-row: 3 / span 2; }
+  .men-categories-card-5 { grid-column: 2; grid-row: 3; }
+  .men-categories-card-6 { grid-column: 2; grid-row: 4; }
+}
+
+@media (max-width: 560px) {
+  .men-categories {
+    padding: 40px 16px;
+  }
+
+  .men-categories-title {
+    font-size: var(--text-display-m);
+    margin-bottom: 24px;
+  }
+
+  .men-categories-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    height: auto;
+    gap: 12px;
+  }
+
+  .men-categories-grid .men-categories-card {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    aspect-ratio: 4 / 5;
+  }
+}
+
+/* ── The Stories — an autoplaying video card beside a text +
+   slider column. Slider card/arrow internals reuse the site's
+   generic [class*="-collection-home-*"] system (see app.css). ─── */
+.men-stories {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-7) 24px;
+}
+
+.men-stories-row {
+  display: flex;
+  align-items: stretch;
+  gap: 48px;
+  height: 640px;
+}
+
+.men-stories-video-card {
+  position: relative;
+  flex: 0 0 420px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.men-stories-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.men-stories-video-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.men-stories-playtoggle {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  left: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-circle);
+  border: 0;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--dur-base) var(--ease-standard);
+}
+
+.men-stories-playtoggle:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.men-stories-video-caption {
+  position: absolute;
+  z-index: 2;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #fff;
+}
+
+.men-stories-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+}
+
+.men-stories-video-title {
+  font-size: 32px;
+  color: #fff;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.32);
+}
+
+.men-stories-right {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.men-stories-text {
+  margin-bottom: 24px;
+}
+
+.men-stories-title {
+  font-size: var(--text-display-l);
+  margin: 0 0 14px;
+}
+
+.men-stories-sub {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: var(--lh-relaxed);
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0;
+}
+
+.men-stories-slider-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.men-stories-slider-wrap [class*="-collection-home-grid"]:not([class*="-wrapper"]) {
+  height: 100%;
+}
+
+.men-stories-slider-wrap [class*="-collection-home-card"] {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.men-stories-card-eyebrow {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  bottom: 88px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/* Generic collection-home-title is centered for the site's other
+   sliders — left-align it here to match the eyebrow above it. */
+.men-stories-slider-wrap [class*="-collection-home-title"] {
+  left: 16px;
+  right: auto;
+  text-align: left;
+}
+
+@media (max-width: 1000px) {
+  .men-stories-row {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .men-stories-video-card {
+    flex-basis: auto;
+    aspect-ratio: 16 / 10;
+  }
+
+  .men-stories-right {
+    height: auto;
+  }
+
+  .men-stories-slider-wrap {
+    flex: none;
+  }
+
+  .men-stories-slider-wrap [class*="-collection-home-grid"]:not([class*="-wrapper"]) {
+    height: auto;
+  }
+
+  .men-stories-slider-wrap [class*="-collection-home-card"] {
+    height: auto;
+    aspect-ratio: 7 / 10;
+  }
+}
+
+@media (max-width: 560px) {
+  .men-stories {
+    padding: 40px 16px;
+  }
+
+  .men-stories-title {
+    font-size: var(--text-display-m);
+  }
+
+  .men-stories-video-title {
+    font-size: 24px;
+  }
+}
+
+.men-quicknav-row {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.men-quicknav-row::-webkit-scrollbar {
+  display: none;
+}
+
+.men-quicknav-item {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 76px;
+  text-decoration: none;
+}
+
+.men-quicknav-item:hover {
+  text-decoration: none;
+}
+
+.men-quicknav-circle {
+  display: block;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  transition: border-color var(--dur-base) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard);
+}
+
+.men-quicknav-item:hover .men-quicknav-circle {
+  border-color: var(--gold-500);
+  box-shadow: 0 8px 20px rgba(14, 23, 34, 0.12);
+}
+
+.men-quicknav-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow, .6s) var(--ease-standard, ease);
+}
+
+.men-quicknav-item:hover .men-quicknav-circle img {
+  transform: scale(1.08);
+}
+
+.men-quicknav-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wide);
+  color: var(--text-strong);
+  text-align: center;
+  line-height: 1.3;
+  transition: color var(--dur-base) var(--ease-standard);
+}
+
+.men-quicknav-item:hover .men-quicknav-label {
+  color: var(--gold-600);
+}
+
+@media (max-width: 560px) {
+  .men-quicknav {
+    padding: 16px 16px;
+  }
+
+  .men-quicknav-row {
+    gap: 20px;
+  }
+
+  .men-quicknav-item {
+    width: 62px;
+  }
+
+  .men-quicknav-circle {
+    width: 62px;
+    height: 62px;
+  }
+
+  .men-quicknav-label {
+    font-size: 10px;
+  }
+}
+
+/* ── Hero — full-bleed editorial banner, bottom-left caption ── */
+.men-hero {
+  position: relative;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  aspect-ratio: 1920 / 720;
+  overflow: hidden;
+}
+
+.men-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 12%;
+  display: block;
+}
+
+.men-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(14, 23, 34, 0.55) 0%, rgba(14, 23, 34, 0.15) 45%, rgba(14, 23, 34, 0) 65%);
+}
+
+.men-hero-panel {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 520px;
+  padding: 0 0 0 56px;
+  color: #fff;
+}
+
+.men-hero-kicker {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--gold-300);
+  margin-bottom: 14px;
+}
+
+.men-hero-title {
+  font-size: var(--text-display-xl);
+  margin: 0 0 16px;
+  color: #fff;
+}
+
+.men-hero-sub {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: var(--lh-relaxed);
+  color: rgba(255, 255, 255, 0.86);
+  margin: 0 0 30px;
+  max-width: 420px;
+}
+
+.men-hero-ctas {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.men-hero-link {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  padding-bottom: 2px;
+}
+
+.men-hero-link:hover {
+  text-decoration: none;
+  border-color: #fff;
+}
+
+@media (max-width: 900px) {
+  .men-hero {
+    aspect-ratio: 4 / 5;
+  }
+
+  .men-hero-panel {
+    padding: 0 0 0 28px;
+    max-width: 86%;
+  }
+
+  .men-hero-title {
+    font-size: var(--text-display-m);
+  }
+}
+
+@media (max-width: 560px) {
+  .men-hero::after {
+    background: linear-gradient(180deg, rgba(14, 23, 34, 0.15) 0%, rgba(14, 23, 34, 0.7) 100%);
+  }
+
+  .men-hero-panel {
+    justify-content: flex-end;
+    padding: 0 24px 32px;
+    max-width: 100%;
+  }
+
+  .men-hero-title {
+    font-size: 34px;
+  }
+
+  .men-hero-sub {
+    font-size: 14px;
+    margin-bottom: 22px;
+  }
+}
+
+/* ── Editorial mosaic — one large hero (left) + a 2-up-plus-wide
+   grid of captioned tiles (right), each tile a plain photo with a
+   floating white pill caption bottom-left. ────────────────────── */
+.men-mosaic {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-top: 40px;
+  /* padding: 40px 24px; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* gap: 16px; */
+}
+
+.men-mosaic-hero,
+.men-mosaic-tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.men-mosaic-hero:hover,
+.men-mosaic-tile:hover {
+  text-decoration: none;
+}
+
+/* No fixed aspect-ratio here on desktop — .men-mosaic's default
+   grid stretch makes it match .men-mosaic-grid's own height
+   (driven by the tiles' aspect ratios) instead of the two columns
+   computing independent, mismatched heights. */
+
+.men-mosaic-hero img,
+.men-mosaic-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow, .6s) var(--ease-standard, ease);
+}
+
+.men-mosaic-hero:hover img,
+.men-mosaic-tile:hover img {
+  transform: scale(1.04);
+}
+
+.men-mosaic-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(14, 23, 34, 0.5) 0%, rgba(14, 23, 34, 0) 40%);
+}
+
+.men-mosaic-hero-caption {
+  position: absolute;
+  z-index: 2;
+  left: 32px;
+  bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  color: #fff;
+}
+
+.men-mosaic-hero-title {
+  font-size: 36px;
+  font-weight: var(--fw-regular);
+  color: #fff;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.3);
+}
+
+.men-mosaic-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  background: #fff;
+  padding: 10px 16px;
+}
+
+.men-mosaic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* grid-template-rows: 1fr 1fr; */
+  /* gap: 16px; */
+}
+
+.men-mosaic-tile {
+  aspect-ratio: 4 / 5;
+}
+
+.men-mosaic-tile-wide {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 7;
+}
+
+.men-mosaic-tag {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+  color: var(--ink-900);
+  background: #fff;
+  padding: 9px 14px;
+}
+
+@media (max-width: 900px) {
+  .men-mosaic {
+    grid-template-columns: 1fr;
+  }
+
+  .men-mosaic-hero {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 560px) {
+  .men-mosaic {
+    padding: 28px 16px;
+    gap: 12px;
+  }
+
+  .men-mosaic-grid {
+    gap: 12px;
+  }
+
+  .men-mosaic-hero-caption {
+    left: 20px;
+    bottom: 20px;
+  }
+
+  .men-mosaic-hero-title {
+    font-size: 28px;
+  }
+}
+
+/* ── Shop by Department — a "boutique directory" row of framed
+   portrait medallions with the label set below in tracked-out
+   small caps. Deliberately not the photo+gradient-caption tile
+   used on the homepage — quieter, more jewellery-counter than
+   e-commerce grid. ─────────────────────────────────────────── */
+.men-dept-rule {
+  margin: 18px auto 22px;
+}
+
+/* Grid (not a centered flex row) so the outer circles' edges land
+   exactly on the same edges as the hero banner/header, at any
+   viewport width — sizing the circles by hand to "look about right"
+   left a visible gap on both sides that the banner doesn't have. */
+.men-dept-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 48px 24px;
+}
+
+.men-dept-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-decoration: none;
+}
+
+.men-dept-circle:hover {
+  text-decoration: none;
+}
+
+.men-dept-circle-frame {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 4%;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 2px rgba(14, 23, 34, 0.04);
+  transition: border-color var(--dur-base) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard);
+}
+
+.men-dept-circle:hover .men-dept-circle-frame {
+  border-color: var(--gold-500);
+  box-shadow: 0 10px 28px rgba(14, 23, 34, 0.14);
+}
+
+.men-dept-circle-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow, .6s) var(--ease-standard, ease);
+}
+
+.men-dept-circle:hover .men-dept-circle-frame img {
+  transform: scale(1.08);
+}
+
+.men-dept-circle-label {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--text-strong);
+  text-align: center;
+  transition: color var(--dur-base) var(--ease-standard);
+}
+
+.men-dept-circle:hover .men-dept-circle-label {
+  color: var(--gold-600);
+}
+
+@media (max-width: 900px) {
+  .men-dept-row {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 34px 26px;
+  }
+}
+
+@media (max-width: 560px) {
+  .men-dept-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px 18px;
+  }
+
+  .men-dept-circle-label {
+    font-size: 10.5px;
+    letter-spacing: var(--ls-wide);
+  }
+}
+
+/* ── New Arrivals — uses listing.css's .plp-grid/.plp-card as-is
+   (linked in <head>) so the cards are pixel-identical to the New
+   In PLP. The 4-up column count is set inline; listing.css's own
+   responsive rules (≤1024: 3-up, ≤760: 2-up) already take over via
+   !important, so no extra breakpoints are needed here. */
+
+/* ── Style Notes — a quiet editorial index. Portraits open in
+   grayscale and bloom to colour on hover; each carries a one-line
+   read of what's inside that department. ─────────────────────── */
+.men-notes-row {
+  display: flex;
+  gap: 22px;
+}
+
+.men-notes-item {
+  flex: 1;
+  display: block;
+  text-decoration: none;
+}
+
+.men-notes-item:hover {
+  text-decoration: none;
+}
+
+.men-notes-frame {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--surface-sunken);
+}
+
+.men-notes-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.02) brightness(1.02);
+  transition: filter .55s var(--ease-standard), transform .7s var(--ease-standard);
+}
+
+.men-notes-item:hover .men-notes-frame img {
+  filter: grayscale(0);
+  transform: scale(1.045);
+}
+
+.men-notes-rule {
+  width: 0;
+  height: 1px;
+  background: var(--gold-500);
+  margin: 16px 0 10px;
+  transition: width .4s var(--ease-standard);
+}
+
+.men-notes-item:hover .men-notes-rule {
+  width: 32px;
+}
+
+.men-notes-name {
+  font-family: var(--font-display);
+  font-weight: var(--fw-regular);
+  font-size: 19px;
+  color: var(--ink-900);
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.men-notes-desc {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: .02em;
+  color: #000;
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .men-notes-row {
+    flex-wrap: wrap;
+  }
+
+  .men-notes-item {
+    flex: 0 0 calc(50% - 11px);
+  }
+}
+
+/* ── In Focus — one department at a time. A name list on the
+   left swaps a single large photo on the right, the way a maison
+   would rather you look at one image than eight small ones. ──── */
+.men-focus {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  border: 1px solid var(--border-subtle);
+}
+
+.men-focus-list {
+  padding: 6px;
+}
+
+.men-focus-item {
+  display: block;
+  padding: 18px 18px 18px 20px;
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color .25s var(--ease-standard), background .25s var(--ease-standard);
+}
+
+.men-focus-item:hover {
+  text-decoration: none;
+}
+
+.men-focus-item:hover,
+.men-focus-item.is-active {
+  border-left-color: #003976;
+  background: var(--surface-page);
+}
+
+.men-focus-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 20px;
+  transition: color .25s var(--ease-standard);
+  font-weight: 600;
+  color: #000000;
+
+}
+
+.men-focus-item:hover .men-focus-name,
+.men-focus-item.is-active .men-focus-name {
+  color: var(--ink-900);
+}
+
+.men-focus-desc {
+  display: block;
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  color: var(--text-subtle);
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.men-focus-stage {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink-900);
+  aspect-ratio: 16 / 10;
+}
+
+.men-focus-stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity .45s var(--ease-standard);
+}
+
+.men-focus-stage img.is-active {
+  opacity: 1;
+}
+
+.men-focus-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, .55) 100%);
+  pointer-events: none;
+}
+
+.men-focus-caption {
+  position: absolute;
+  left: 28px;
+  bottom: 24px;
+  z-index: 3;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 25px;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, .35);
+}
+
+@media (max-width: 900px) {
+  .men-focus {
+    grid-template-columns: 1fr;
+  }
+
+  .men-focus-stage {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ── The Atelier — framed prints on a gallery wall. Matted and
+   hairlined, the name set as a placard below rather than over
+   the photo; quiet, even spacing, no colour tricks. ───────────── */
+.men-atelier-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 36px 28px;
+}
+
+.men-atelier-item {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.men-atelier-item:hover {
+  text-decoration: none;
+}
+
+.men-atelier-frame {
+  aspect-ratio: 4 / 5;
+  padding: 10px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-default);
+  transition: border-color var(--dur-base) var(--ease-standard);
+}
+
+.men-atelier-item:hover .men-atelier-frame {
+  border-color: var(--gold-500);
+}
+
+.men-atelier-frame-inner {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.men-atelier-frame-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s var(--ease-standard);
+}
+
+.men-atelier-item:hover .men-atelier-frame-inner img {
+  transform: scale(1.03);
+}
+
+.men-atelier-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #003976;
+  margin: 18px auto 10px;
+}
+
+.men-atelier-name {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-900);
+}
+
+@media (max-width: 900px) {
+  .men-atelier-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Runway Looks — full-bleed, edge-to-edge auto-scrolling
+   filmstrip. No arrows; JS wraps the items in a track and
+   duplicates them so the loop is seamless (same technique as the
+   brands marquee in app.css/app.js, kept separate so the two
+   don't collide). The viewport is also natively scrollable —
+   drag, swipe or wheel — so the auto-scroll pauses on interaction
+   and resumes after a short idle delay (see the script below). ── */
+.men-runway-viewport {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.men-runway-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.men-runway-viewport.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.men-runway-track {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  animation: men-runway-marquee 60s linear infinite;
+}
+
+.men-runway-viewport:hover .men-runway-track,
+.men-runway-viewport.is-interacting .men-runway-track {
+  animation-play-state: paused;
+}
+
+.men-runway-item {
+  position: relative;
+  isolation: isolate;
+  flex: 0 0 auto;
+  width: 25vw;
+  max-width: 480px;
+  aspect-ratio: 3 / 4;
+}
+
+.men-runway-item img,
+.men-runway-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.men-runway-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  text-align: right;
+  gap: 14px;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.45) 100%);
+  opacity: 0;
+  transition: opacity var(--dur-base, .3s) var(--ease-standard, ease);
+}
+
+.men-runway-item:hover .men-runway-overlay,
+.men-runway-item:focus-within .men-runway-overlay {
+  opacity: 1;
+}
+
+.men-runway-name {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: #fff;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+}
+
+.men-runway-shopbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(60, 60, 60, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  padding: 14px 26px;
+  border-radius: var(--radius-pill, 999px);
+  text-decoration: none;
+  transition: background var(--dur-base) var(--ease-standard);
+}
+
+.men-runway-shopbtn:hover {
+  background: rgba(60, 60, 60, 0.8);
+  text-decoration: none;
+}
+
+@keyframes men-runway-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (max-width: 900px) {
+  .men-runway-item {
+    width: 44vw;
+  }
+
+  .men-runway-name {
+    font-size: 18px;
+  }
+
+  .men-runway-shopbtn {
+    padding: 11px 20px;
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .men-runway-track { animation: none; }
+  .men-runway-viewport { overflow-x: auto; }
+}
+
+/* ── Shoppable Editorial — a single contained image (not
+   full-bleed) with a floating "Shop Now" pill anchored bottom-
+   right, plus a decorative waveform mark beside it. ────────────── */
+.men-shopedit {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-7) 0;
+}
+
+.men-shopedit-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.men-shopedit-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.men-shopedit-cta {
+  position: absolute;
+  z-index: 2;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.men-shopedit-shopbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--ink-900);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  padding: 13px 20px;
+  border-radius: var(--radius-pill, 999px);
+  text-decoration: none;
+}
+
+.men-shopedit-shopbtn:hover {
+  text-decoration: none;
+  background: var(--gold-500, #fff);
+}
+
+.men-shopedit-audio {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-circle);
+  background: rgba(255, 255, 255, 0.25);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 560px) {
+  .men-shopedit {
+    padding: 40px 0;
+  }
+
+  .men-shopedit-cta {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .men-shopedit-shopbtn {
+    padding: 11px 16px;
+    font-size: 11px;
+  }
+}
+
+/* ── Editorial Spotlight — a 2x2 grid: two full-bleed brand hero
+   cells (image + centered overlay caption + outline CTA pair) on
+   the diagonal, and two "framed shop" cells (light background,
+   a smaller inset image with slider arrows, caption set below
+   rather than over the photo) on the other diagonal. ──────────── */
+.men-spotlight {
+  padding: var(--space-7) 0;
+}
+
+.men-spotlight-grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 620px;
+  gap: 4px;
+}
+
+.men-spotlight-hero {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.men-spotlight-hero:hover {
+  text-decoration: none;
+}
+
+.men-spotlight-hero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--dur-slow, .6s) var(--ease-standard, ease);
+}
+
+.men-spotlight-hero:hover img {
+  transform: scale(1.03);
+}
+
+.men-spotlight-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.12) 45%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.men-spotlight-hero-caption {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  color: #fff;
+  padding: 0 32px;
+}
+
+.men-spotlight-hero-brand {
+  font-size: 42px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.men-spotlight-hero-line {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: #fff;
+  margin-top: -6px;
+}
+
+.men-spotlight-hero-desc {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  line-height: 1.8;
+  max-width: 420px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 8px;
+}
+
+.men-spotlight-hero-logobox {
+  display: inline-block;
+  border: 2px solid #fff;
+  padding: 8px 22px;
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.02em;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.men-spotlight-ctas {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.men-spotlight-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 22px;
+  border: 1px solid #fff;
+  border-radius: var(--radius-pill, 999px);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  transition: background var(--dur-base) var(--ease-standard),
+              color var(--dur-base) var(--ease-standard);
+}
+
+.men-spotlight-hero:hover .men-spotlight-btn {
+  background: #fff;
+  color: var(--ink-900);
+}
+
+/* Framed "shop" panel */
+.men-spotlight-shop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background: var(--surface-sunken, #f3f1ec);
+  padding: 32px;
+}
+
+.men-spotlight-shop-stage {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 4 / 5;
+}
+
+.men-spotlight-shop-frame {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.men-spotlight-shop-frame:hover {
+  text-decoration: none;
+}
+
+.men-spotlight-shop-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--dur-slow, .6s) var(--ease-standard, ease);
+}
+
+.men-spotlight-shop-frame:hover img {
+  transform: scale(1.04);
+}
+
+.men-spotlight-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-circle);
+  border: 0;
+  background: transparent;
+  color: var(--ink-900);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.men-spotlight-arrow-left {
+  left: -44px;
+}
+
+.men-spotlight-arrow-right {
+  right: -44px;
+}
+
+.men-spotlight-shop-cap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.men-spotlight-shop-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-900);
+  text-decoration: none;
+}
+
+.men-spotlight-shop-title:hover {
+  text-decoration: none;
+}
+
+.men-spotlight-shop-link {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  border-bottom: 1px solid var(--ink-900);
+  padding-bottom: 2px;
+}
+
+.men-spotlight-shop-link:hover {
+  text-decoration: none;
+}
+
+.men-spotlight-dots {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.men-spotlight-dots span {
+  width: 20px;
+  height: 2px;
+  background: var(--border-default, #ddd);
+}
+
+.men-spotlight-dots span.is-active {
+  background: var(--ink-900);
+}
+
+@media (max-width: 1000px) {
+  .men-spotlight-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .men-spotlight-hero {
+    aspect-ratio: 4 / 5;
+  }
+
+  .men-spotlight-arrow-left {
+    left: 8px;
+  }
+
+  .men-spotlight-arrow-right {
+    right: 8px;
+  }
+}
+
+@media (max-width: 560px) {
+  .men-spotlight-hero-brand {
+    font-size: 30px;
+  }
+
+  .men-spotlight-hero-logobox {
+    font-size: 24px;
+  }
+
+  .men-spotlight-shop {
+    padding: 24px 16px;
+  }
+}
+
+/* ── Quick Add drawer — a full-height panel that slides in from the
+   right when a New Arrivals card's "Add to cart" is clicked, letting
+   the shopper confirm colour/size before the item is actually added
+   (see the script at the bottom of men.html). ─────────────────────── */
+.men-quickadd-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 590;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity var(--dur-base, .25s) var(--ease-standard);
+}
+
+.men-quickadd-scrim[hidden] {
+  display: none;
+}
+
+.men-quickadd-scrim.is-open {
+  opacity: 1;
+}
+
+.men-quickadd-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 600;
+  width: min(92vw, 420px);
+  height: 100%;
+  background: #fff;
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.18);
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform var(--dur-base, .32s) var(--ease-standard);
+}
+
+.men-quickadd-drawer[hidden] {
+  display: none;
+}
+
+.men-quickadd-drawer.is-open {
+  transform: translateX(0);
+}
+
+.men-quickadd-close {
+  position: absolute;
+  z-index: 2;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: 0;
+  color: var(--ink-800);
+  cursor: pointer;
+  padding: 0;
+}
+
+.men-quickadd-close:hover {
+  color: var(--color-primary, var(--ink-900));
+}
+
+.men-quickadd-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-height: 100%;
+  padding: 64px 32px 40px;
+}
+
+.men-quickadd-img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--surface-sunken);
+}
+
+.men-quickadd-brand {
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.men-quickadd-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.3;
+  color: var(--ink-900);
+  margin: -14px 0 0;
+}
+
+.men-quickadd-price {
+  font-size: 16px;
+  color: var(--ink-900);
+}
+
+.men-quickadd-price .was {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+
+.men-quickadd-label {
+  display: block;
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  margin-bottom: 10px;
+}
+
+.men-quickadd-label b {
+  font-weight: var(--fw-medium);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted);
+}
+
+.men-quickadd-swatches {
+  display: flex;
+  gap: 10px;
+}
+
+.men-quickadd-swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-circle);
+  border: 2px solid transparent;
+  padding: 2px;
+  background-clip: content-box;
+  cursor: pointer;
+}
+
+.men-quickadd-swatch.is-active {
+  border-color: var(--ink-900);
+}
+
+.men-quickadd-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.men-quickadd-chip {
+  border: 1px solid var(--border-subtle);
+  background: #fff;
+  color: var(--ink-900);
+  padding: 11px 4px;
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--dur-base) var(--ease-standard),
+    background var(--dur-base) var(--ease-standard),
+    color var(--dur-base) var(--ease-standard);
+}
+
+.men-quickadd-chip:hover {
+  border-color: var(--ink-900);
+}
+
+.men-quickadd-chip.is-active {
+  border-color: var(--ink-900);
+  background: var(--ink-900);
+  color: #fff;
+}
+
+.men-quickadd-cta {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+  background: var(--ink-900);
+  color: #fff;
+  border: 0;
+  padding: 16px;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.men-quickadd-cta:hover {
+  background: var(--gold-500, #000);
+  text-decoration: none;
+}
+
+.men-quickadd-fulldetails {
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-800);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .men-quickadd-drawer {
+    width: 100vw;
+  }
+
+  .men-quickadd-body {
+    padding: 56px 20px 32px;
+  }
+}

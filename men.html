@@ -50,9 +50,63 @@
       </a>
       <!-- Utilities -->
       <div class="bs-utils">
-        <button class="bs-iconbtn" type="button" aria-label="Account" title="Account">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-        </button>
+        <span class="bs-util-wrap bs-account-wrap">
+          <button class="bs-iconbtn" type="button" aria-label="Account" title="Account">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          </button>
+
+          <div class="bs-account-panel">
+            <div class="bs-account-panel-head">
+              <span class="bs-account-panel-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                Sign In
+              </span>
+              <a href="#" class="bs-account-panel-create">Create Account</a>
+            </div>
+
+            <div class="bs-account-field">
+              <input type="email" placeholder="Email Address *">
+            </div>
+            <div class="bs-account-field">
+              <input type="password" placeholder="Password *">
+            </div>
+
+            <div class="bs-account-panel-row">
+              <a href="#" class="bs-account-panel-forgot">Forgot Password?</a>
+              <span class="bs-account-panel-required">* Required</span>
+            </div>
+
+            <label class="bs-account-panel-remember">
+              <input type="checkbox">
+              <span>Remember me &mdash; I want Blue Salon to personalise my shopping experience</span>
+            </label>
+
+            <button type="button" class="bs-account-panel-submit">Sign In</button>
+
+            <div class="bs-account-panel-divider"><span>or</span></div>
+
+            <div class="bs-account-panel-social">
+              <a href="#" class="bs-account-social-item">
+                <span class="bs-account-social-icon bs-account-social-fb">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.6h2.6l.4-3h-3V8.4c0-.87.24-1.46 1.5-1.46h1.6V4.24C15.9 4.16 15 4.08 13.94 4.08c-2.2 0-3.7 1.34-3.7 3.8v2.12H7.6v3h2.64V21h3.26z"/></svg>
+                </span>
+                <span class="bs-account-social-label">Facebook</span>
+              </a>
+              <a href="#" class="bs-account-social-item">
+                <span class="bs-account-social-icon bs-account-social-google">
+                  <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.25 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.3 9.14 5.38 12 5.38z"/></svg>
+                </span>
+                <span class="bs-account-social-label">Google</span>
+              </a>
+              <a href="#" class="bs-account-social-item">
+                <span class="bs-account-social-icon bs-account-social-apple">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 1.43c0 1.14-.42 2.2-1.24 3.06-.9.94-2.13 1.6-3.34 1.5a3.4 3.4 0 0 1-.03-.42c0-1.1.5-2.24 1.32-3.05.86-.85 2.24-1.47 3.24-1.52.02.14.05.29.05.43zm3.6 16.02c-.5 1.16-.74 1.68-1.38 2.7-.9 1.42-2.16 3.2-3.73 3.21-1.39.02-1.75-.9-3.64-.89-1.88.01-2.27.9-3.67.88-1.57-.02-2.76-1.6-3.66-3.02-2.5-3.9-2.77-8.48-1.22-10.92 1.1-1.75 2.83-2.78 4.45-2.78 1.65 0 2.68.9 4.05.9 1.32 0 2.13-.9 4.05-.9 1.45 0 2.98.79 4.07 2.16-3.58 1.96-3 7.06.68 8.66z"/></svg>
+                </span>
+                <span class="bs-account-social-label">Apple</span>
+              </a>
+            </div>
+          </div>
+        </span>
         <span class="bs-util-wrap">
           <button class="bs-iconbtn" type="button" aria-label="Wishlist" title="Wishlist">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l9 9 8.8-8.6a5.5 5.5 0 0 0-.2-7.8z"/></svg>
@@ -651,13 +705,13 @@
 
   </main>
 
-  <!-- ════════════════ Quick Add drawer ════════════════ -->
+  <!-- ════════════════ Quick View modal ════════════════ -->
   <div class="men-quickadd-scrim" id="menQuickaddScrim" hidden></div>
-  <aside class="men-quickadd-drawer" id="menQuickaddDrawer" role="dialog" aria-modal="true" aria-labelledby="menQuickaddName" aria-hidden="true" hidden>
-    <button type="button" class="men-quickadd-close" id="menQuickaddClose" aria-label="Close">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
+  <aside class="men-quickadd-modal" id="menQuickaddDrawer" role="dialog" aria-modal="true" aria-labelledby="menQuickaddName" aria-hidden="true" hidden>
     <div class="men-quickadd-body" id="menQuickaddBody"><!-- rendered by JS --></div>
+    <button type="button" class="men-quickadd-close" id="menQuickaddClose" aria-label="Close">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
   </aside>
 
   <!-- ════════════════ Footer ════════════════ -->
@@ -854,8 +908,8 @@
     })();
 
     // "New Arrivals" — clicking a card's "Add to cart" opens a
-    // right-side Quick Add drawer (colour/size, then adds to the
-    // shared cart store) instead of adding silently.
+    // two-column Quick View (image gallery + colour/size panel) that
+    // adds the chosen variant to the shared cart store.
     (function () {
       "use strict";
       var grid = document.getElementById("menNewArrivalsGrid");
@@ -867,20 +921,35 @@
 
       // Sizing isn't in the shared product data, so it's mapped here
       // per card — shoe/case sizes for footwear & watches, apparel
-      // sizes (+ a length row) for tailoring.
+      // sizes (+ a length row) for tailoring. `unavailable` sizes are
+      // shown struck through and can't be selected.
       var OPTIONS = {
-        "colehaan-oxford": { sizes: ["40", "41", "42", "43", "44"] },
-        "breitling-navitimer": { sizes: ["38mm", "41mm", "46mm"] },
-        "corneliani-blazer": { sizes: ["46", "48", "50", "52", "54"], lengths: ["Short", "Regular", "Long"] },
-        "jacobcohen-trousers": { sizes: ["30", "32", "34", "36", "38"], lengths: ["Short", "Regular", "Long"] }
+        "colehaan-oxford": { sizes: ["40", "41", "42", "43", "44"], unavailable: ["40"] },
+        "breitling-navitimer": { sizes: ["38mm", "41mm", "46mm"], unavailable: ["46mm"] },
+        "corneliani-blazer": { sizes: ["46", "48", "50", "52", "54"], lengths: ["Short", "Regular", "Long"], unavailable: ["46", "54"] },
+        "jacobcohen-trousers": { sizes: ["30", "32", "34", "36", "38"], lengths: ["Short", "Regular", "Long"], unavailable: ["38"] }
       };
 
-      var current = null; // { card, swatchIdx, size, length }
+      var RULER = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18v8H3z"/><path d="M7 8v3M11 8v4M15 8v3M19 8v4"/></svg>';
+      var HEART = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
 
-      function chipsHTML(kind, values, active) {
+      var wish = {};        // wishlist toggle state, keyed by product id
+      var current = null;   // { card, swatchIdx, size, length }
+
+      function firstAvailable(sizes, unavailable) {
+        for (var i = 0; i < sizes.length; i++) {
+          if (unavailable.indexOf(sizes[i]) === -1) return sizes[i];
+        }
+        return null;
+      }
+
+      function chipsHTML(kind, values, active, unavailable) {
         return values.map(function (v) {
-          return '<button type="button" class="men-quickadd-chip' + (v === active ? " is-active" : "") +
-            '" data-quickadd-' + kind + '="' + v + '">' + v + "</button>";
+          var un = unavailable.indexOf(v) !== -1;
+          return '<button type="button" class="men-quickadd-chip' +
+            (v === active ? " is-active" : "") + (un ? " is-unavailable" : "") + '"' +
+            (un ? ' disabled aria-disabled="true"' : "") +
+            ' data-quickadd-' + kind + '="' + v + '">' + v + "</button>";
         }).join("");
       }
 
@@ -888,22 +957,34 @@
         if (!current) return;
         var card = current.card;
         var id = card.dataset.id;
-        var opts = OPTIONS[id] || { sizes: [] };
-        var img = card.querySelector(".plp-card-mainimg");
+        var opts = OPTIONS[id] || { sizes: [], unavailable: [] };
+        var un = opts.unavailable || [];
+        var mainImg = card.querySelector(".plp-card-mainimg");
+        var hoverImg = card.querySelector(".plp-card-hoverimg");
         var brand = card.querySelector(".plp-card-brand");
         var name = card.querySelector(".plp-card-name");
         var price = card.querySelector(".plp-card-price");
         var swatches = Array.prototype.slice.call(card.querySelectorAll(".plp-swatch"));
         var activeSwatch = swatches[current.swatchIdx] || swatches[0];
 
-        var html = "";
-        html += '<img class="men-quickadd-img" src="' + (img ? img.src : "") + '" alt="">';
-        html += '<div><span class="men-quickadd-brand">' + (brand ? brand.textContent : "") + "</span>" +
-          '<h3 class="men-quickadd-name" id="menQuickaddName">' + (name ? name.textContent : "") + "</h3></div>";
-        html += '<div class="men-quickadd-price">' + (price ? price.innerHTML : "") + "</div>";
+        // Gallery — main image, plus the hover image when the card has one.
+        var imgs = [];
+        if (mainImg) imgs.push(mainImg.src);
+        if (hoverImg && hoverImg.getAttribute("src")) imgs.push(hoverImg.src);
+        var gallery = '<div class="men-quickadd-gallery">' +
+          imgs.map(function (src) { return '<img src="' + src + '" alt="">'; }).join("") +
+          "</div>";
+
+        // Panel
+        var panel = '<div class="men-quickadd-panel">';
+        panel += '<div class="men-quickadd-titlewrap">' +
+          '<h3 class="men-quickadd-name" id="menQuickaddName">' + (name ? name.textContent : "") + "</h3>" +
+          '<span class="men-quickadd-brand">' + (brand ? brand.textContent : "") + "</span></div>";
+        panel += '<div class="men-quickadd-price">' + (price ? price.innerHTML : "") + "</div>";
 
         if (swatches.length) {
-          html += '<div><span class="men-quickadd-label">Colour: <b>' + (activeSwatch ? activeSwatch.title : "") + "</b></span>" +
+          panel += '<div class="men-quickadd-section">' +
+            '<span class="men-quickadd-label">Colour:<b>' + (activeSwatch ? activeSwatch.title : "") + "</b></span>" +
             '<div class="men-quickadd-swatches">' +
             swatches.map(function (sw, i) {
               return '<button type="button" class="men-quickadd-swatch' + (i === current.swatchIdx ? " is-active" : "") +
@@ -913,27 +994,37 @@
         }
 
         if (opts.sizes.length) {
-          html += '<div><span class="men-quickadd-label">Size' + (current.size ? ": <b>" + current.size + "</b>" : "") + "</span>" +
-            '<div class="men-quickadd-grid">' + chipsHTML("size", opts.sizes, current.size) + "</div></div>";
+          panel += '<div class="men-quickadd-section">' +
+            '<div class="men-quickadd-sizehead">' +
+              '<span class="men-quickadd-label">Size:<b>' + (current.size || "") + "</b></span>" +
+              '<span class="men-quickadd-sizechart">' + RULER + " Size Chart</span>" +
+            "</div>" +
+            '<div class="men-quickadd-chips">' + chipsHTML("size", opts.sizes, current.size, un) + "</div></div>";
         }
 
         if (opts.lengths && opts.lengths.length) {
-          html += '<div><span class="men-quickadd-label">Length' + (current.length ? ": <b>" + current.length + "</b>" : "") + "</span>" +
-            '<div class="men-quickadd-grid">' + chipsHTML("length", opts.lengths, current.length) + "</div></div>";
+          panel += '<div class="men-quickadd-section">' +
+            '<span class="men-quickadd-label">Length:<b>' + (current.length || "") + "</b></span>" +
+            '<div class="men-quickadd-chips">' + chipsHTML("length", opts.lengths, current.length, []) + "</div></div>";
         }
 
-        html += '<button type="button" class="men-quickadd-cta" id="menQuickaddAdd">Add to Bag</button>';
-        html += '<a class="men-quickadd-fulldetails" href="product.html?id=' + id + '">Full details</a>';
+        panel += '<div class="men-quickadd-actions">' +
+          '<button type="button" class="men-quickadd-cta" id="menQuickaddAdd">Add to Cart</button>' +
+          '<button type="button" class="men-quickadd-wish' + (wish[id] ? " is-active" : "") +
+            '" id="menQuickaddWish" aria-label="Add to wishlist" aria-pressed="' + (wish[id] ? "true" : "false") + '">' + HEART + "</button>" +
+          "</div>";
+        panel += '<a class="men-quickadd-fulldetails" href="product.html?id=' + id + '">Full details</a>';
+        panel += "</div>";
 
-        body.innerHTML = html;
+        body.innerHTML = gallery + panel;
       }
 
       function open(card) {
-        var opts = OPTIONS[card.dataset.id] || { sizes: [] };
+        var opts = OPTIONS[card.dataset.id] || { sizes: [], unavailable: [] };
         current = {
           card: card,
           swatchIdx: 0,
-          size: opts.sizes[0] || null,
+          size: firstAvailable(opts.sizes, opts.unavailable || []),
           length: opts.lengths ? opts.lengths[1] || opts.lengths[0] : null
         };
         render();
@@ -973,12 +1064,21 @@
         if (!current) return;
         var sw = e.target.closest("[data-quickadd-swatch]");
         if (sw) { current.swatchIdx = Number(sw.dataset.quickaddSwatch); render(); return; }
-        var sz = e.target.closest("[data-quickadd-size]");
+        var sz = e.target.closest("[data-quickadd-size]:not(.is-unavailable)");
         if (sz) { current.size = sz.dataset.quickaddSize; render(); return; }
         var ln = e.target.closest("[data-quickadd-length]");
         if (ln) { current.length = ln.dataset.quickaddLength; render(); return; }
 
+        if (e.target.closest("#menQuickaddWish")) {
+          var wid = current.card.dataset.id;
+          wish[wid] = !wish[wid];
+          render();
+          if (window.bsToast) window.bsToast(wish[wid] ? "Added to wishlist" : "Removed from wishlist");
+          return;
+        }
+
         if (e.target.closest("#menQuickaddAdd")) {
+          if (!current.size) { if (window.bsToast) window.bsToast("Please select a size"); return; }
           var card = current.card;
           var id = card.dataset.id;
           var swatches = card.querySelectorAll(".plp-swatch");

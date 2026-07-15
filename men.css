@@ -1628,209 +1628,226 @@
   }
 }
 
-/* ── Quick Add drawer — a full-height panel that slides in from the
-   right when a New Arrivals card's "Add to cart" is clicked, letting
-   the shopper confirm colour/size before the item is actually added
-   (see the script at the bottom of men.html). ─────────────────────── */
-.men-quickadd-scrim {
-  position: fixed;
-  inset: 0;
-  z-index: 590;
-  background: rgba(0, 0, 0, 0.45);
-  opacity: 0;
-  transition: opacity var(--dur-base, .25s) var(--ease-standard);
+
+/* ── Account panel — a Sign In dropdown revealed on hover/focus
+   of the header's Account icon. Pure CSS (no JS), mirrors the
+   mega-menu's hover-reveal pattern but scoped to this one icon. ── */
+.bs-account-wrap {
+  position: relative;
 }
 
-.men-quickadd-scrim[hidden] {
-  display: none;
-}
-
-.men-quickadd-scrim.is-open {
-  opacity: 1;
-}
-
-.men-quickadd-drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 600;
-  width: min(92vw, 420px);
-  height: 100%;
-  background: #fff;
-  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.18);
-  overflow-y: auto;
-  transform: translateX(100%);
-  transition: transform var(--dur-base, .32s) var(--ease-standard);
-}
-
-.men-quickadd-drawer[hidden] {
-  display: none;
-}
-
-.men-quickadd-drawer.is-open {
-  transform: translateX(0);
-}
-
-.men-quickadd-close {
+.bs-account-panel {
   position: absolute;
-  z-index: 2;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: 0;
-  color: var(--ink-800);
-  cursor: pointer;
-  padding: 0;
-}
-
-.men-quickadd-close:hover {
-  color: var(--color-primary, var(--ink-900));
-}
-
-.men-quickadd-body {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  min-height: 100%;
-  padding: 64px 32px 40px;
-}
-
-.men-quickadd-img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  top: 100%;
+  right: 0;
+  z-index: 300;
+  width: 420px;
   background: var(--surface-sunken);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 18px 40px rgba(14, 23, 34, 0.14);
+  padding: 26px 24px 24px;
+  opacity: 0;
+  visibility: hidden;
+  transform-origin: top right;
+  transform: translateY(-14px) scaleY(0.96);
+  transition: opacity var(--dur-slow) var(--ease-standard),
+              transform var(--dur-slow) var(--ease-standard),
+              visibility var(--dur-slow) var(--ease-standard);
 }
 
-.men-quickadd-brand {
-  font-size: 13px;
-  font-weight: var(--fw-bold);
-  letter-spacing: var(--ls-wide);
-  text-transform: uppercase;
-  color: var(--text-muted);
+.bs-account-wrap:hover .bs-account-panel,
+.bs-account-wrap:focus-within .bs-account-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scaleY(1);
 }
 
-.men-quickadd-name {
+.bs-account-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.bs-account-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-display);
   font-size: 22px;
-  line-height: 1.3;
-  color: var(--ink-900);
-  margin: -14px 0 0;
-}
-
-.men-quickadd-price {
-  font-size: 16px;
-  color: var(--ink-900);
-}
-
-.men-quickadd-price .was {
-  color: var(--text-muted);
-  text-decoration: line-through;
-  margin-right: 8px;
-}
-
-.men-quickadd-label {
-  display: block;
-  font-size: 12px;
-  font-weight: var(--fw-bold);
-  letter-spacing: var(--ls-wide);
-  text-transform: uppercase;
-  color: var(--ink-900);
-  margin-bottom: 10px;
-}
-
-.men-quickadd-label b {
   font-weight: var(--fw-medium);
-  text-transform: none;
-  letter-spacing: 0;
+  color: var(--ink-900);
+}
+
+.bs-account-panel-create {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  border-bottom: 1px solid var(--ink-900);
+  padding-bottom: 2px;
+}
+
+.bs-account-panel-create:hover {
+  text-decoration: none;
+}
+
+.bs-account-field {
+  margin-bottom: 16px;
+}
+
+.bs-account-field input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  background: #fff;
+  border: 1px solid var(--border-default, #ccc);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-strong);
+}
+
+.bs-account-field input::placeholder {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+}
+
+.bs-account-panel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.bs-account-panel-forgot {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  color: var(--text-strong);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.bs-account-panel-required {
+  font-family: var(--font-sans);
+  font-size: 12px;
   color: var(--text-muted);
 }
 
-.men-quickadd-swatches {
+.bs-account-panel-remember {
   display: flex;
+  align-items: flex-start;
   gap: 10px;
-}
-
-.men-quickadd-swatch {
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius-circle);
-  border: 2px solid transparent;
-  padding: 2px;
-  background-clip: content-box;
+  margin-bottom: 20px;
   cursor: pointer;
 }
 
-.men-quickadd-swatch.is-active {
-  border-color: var(--ink-900);
+.bs-account-panel-remember input {
+  margin-top: 3px;
+  flex: none;
 }
 
-.men-quickadd-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-}
-
-.men-quickadd-chip {
-  border: 1px solid var(--border-subtle);
-  background: #fff;
-  color: var(--ink-900);
-  padding: 11px 4px;
-  font-size: 13px;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color var(--dur-base) var(--ease-standard),
-    background var(--dur-base) var(--ease-standard),
-    color var(--dur-base) var(--ease-standard);
-}
-
-.men-quickadd-chip:hover {
-  border-color: var(--ink-900);
-}
-
-.men-quickadd-chip.is-active {
-  border-color: var(--ink-900);
-  background: var(--ink-900);
-  color: #fff;
-}
-
-.men-quickadd-cta {
-  display: block;
-  width: 100%;
-  margin-top: auto;
-  background: var(--ink-900);
-  color: #fff;
-  border: 0;
-  padding: 16px;
-  text-align: center;
+.bs-account-panel-remember span {
   font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: var(--fw-bold);
-  letter-spacing: var(--ls-wide);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-strong);
+}
+
+.bs-account-panel-submit {
+  width: 100%;
+  height: 50px;
+  border: 0;
+  background: var(--color-primary);
+  color: var(--text-on-primary);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
   text-transform: uppercase;
   cursor: pointer;
+  transition: background var(--dur-base) var(--ease-standard);
+}
+
+.bs-account-panel-submit:hover {
+  background: var(--color-primary-hover);
+}
+
+.bs-account-panel-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 20px 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  text-transform: lowercase;
+}
+
+.bs-account-panel-divider::before,
+.bs-account-panel-divider::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--border-default, #ddd);
+}
+
+.bs-account-panel-social {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.bs-account-social-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   text-decoration: none;
 }
 
-.men-quickadd-cta:hover {
-  background: var(--gold-500, #000);
+.bs-account-social-item:hover {
   text-decoration: none;
 }
 
-.men-quickadd-fulldetails {
-  text-align: center;
-  font-size: 13px;
-  color: var(--ink-800);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.bs-account-social-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-circle);
+  background: #fff;
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bs-account-social-fb {
+  background: #1877f2;
+  color: #fff;
+  border-color: #1877f2;
+}
+
+.bs-account-social-apple {
+  color: var(--ink-900);
+}
+
+.bs-account-social-label {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-strong);
 }
 
 @media (max-width: 560px) {
-  .men-quickadd-drawer {
-    width: 100vw;
-  }
-
-  .men-quickadd-body {
-    padding: 56px 20px 32px;
+  .bs-account-panel {
+    width: 92vw;
+    right: -8px;
   }
 }
+

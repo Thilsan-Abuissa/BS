@@ -50,9 +50,63 @@
       </a>
       <!-- Utilities -->
       <div class="bs-utils">
-        <button class="bs-iconbtn" type="button" aria-label="Account" title="Account">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-        </button>
+        <span class="bs-util-wrap bs-account-wrap">
+          <button class="bs-iconbtn" type="button" aria-label="Account" title="Account">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          </button>
+
+          <div class="bs-account-panel">
+            <div class="bs-account-panel-head">
+              <span class="bs-account-panel-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                Sign In
+              </span>
+              <a href="#" class="bs-account-panel-create">Create Account</a>
+            </div>
+
+            <div class="bs-account-field">
+              <input type="email" placeholder="Email Address *">
+            </div>
+            <div class="bs-account-field">
+              <input type="password" placeholder="Password *">
+            </div>
+
+            <div class="bs-account-panel-row">
+              <a href="#" class="bs-account-panel-forgot">Forgot Password?</a>
+              <span class="bs-account-panel-required">* Required</span>
+            </div>
+
+            <label class="bs-account-panel-remember">
+              <input type="checkbox">
+              <span>Remember me &mdash; I want Blue Salon to personalise my shopping experience</span>
+            </label>
+
+            <button type="button" class="bs-account-panel-submit">Sign In</button>
+
+            <div class="bs-account-panel-divider"><span>or</span></div>
+
+            <div class="bs-account-panel-social">
+              <a href="#" class="bs-account-social-item">
+                <span class="bs-account-social-icon bs-account-social-fb">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.6h2.6l.4-3h-3V8.4c0-.87.24-1.46 1.5-1.46h1.6V4.24C15.9 4.16 15 4.08 13.94 4.08c-2.2 0-3.7 1.34-3.7 3.8v2.12H7.6v3h2.64V21h3.26z"/></svg>
+                </span>
+                <span class="bs-account-social-label">Facebook</span>
+              </a>
+              <a href="#" class="bs-account-social-item">
+                <span class="bs-account-social-icon bs-account-social-google">
+                  <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.25 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.3 9.14 5.38 12 5.38z"/></svg>
+                </span>
+                <span class="bs-account-social-label">Google</span>
+              </a>
+              <a href="#" class="bs-account-social-item">
+                <span class="bs-account-social-icon bs-account-social-apple">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 1.43c0 1.14-.42 2.2-1.24 3.06-.9.94-2.13 1.6-3.34 1.5a3.4 3.4 0 0 1-.03-.42c0-1.1.5-2.24 1.32-3.05.86-.85 2.24-1.47 3.24-1.52.02.14.05.29.05.43zm3.6 16.02c-.5 1.16-.74 1.68-1.38 2.7-.9 1.42-2.16 3.2-3.73 3.21-1.39.02-1.75-.9-3.64-.89-1.88.01-2.27.9-3.67.88-1.57-.02-2.76-1.6-3.66-3.02-2.5-3.9-2.77-8.48-1.22-10.92 1.1-1.75 2.83-2.78 4.45-2.78 1.65 0 2.68.9 4.05.9 1.32 0 2.13-.9 4.05-.9 1.45 0 2.98.79 4.07 2.16-3.58 1.96-3 7.06.68 8.66z"/></svg>
+                </span>
+                <span class="bs-account-social-label">Apple</span>
+              </a>
+            </div>
+          </div>
+        </span>
         <span class="bs-util-wrap">
           <button class="bs-iconbtn" type="button" aria-label="Wishlist" title="Wishlist">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l9 9 8.8-8.6a5.5 5.5 0 0 0-.2-7.8z"/></svg>
@@ -193,6 +247,315 @@
           <img src="images/jacket.webp" alt="">
           <span class="women-mosaic-tag">Fine Jewellery <svg width="14" height="8" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h23M19 1l5 5-5 5"/></svg></span>
         </a>
+      </div>
+    </section>
+
+    <!-- ════════════════ More to Explore ════════════════ -->
+    <section class="women-explore">
+      <div class="women-explore-inner">
+        <div class="women-explore-text">
+          <h2 class="bs-display women-explore-title">More to Explore</h2>
+          <p class="women-explore-sub">Discover our curated edits and seasonal collections</p>
+        </div>
+
+        <div class="explore-collection-home-grid-wrapper women-explore-slider-wrap">
+          <button class="explore-slider-arrow explore-slider-arrow-left" aria-label="Previous" type="button" disabled>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <div class="explore-collection-home-grid" data-explore-slider>
+
+            <a href="listing.html" class="explore-collection-home-card">
+              <div class="explore-collection-home-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1562292817-58d294c3a7e3?auto=format&fit=crop&w=900&q=80" alt="Dresses" class="explore-collection-home-image">
+              </div>
+              <div class="explore-collection-home-title">Dresses</div>
+            </a>
+
+            <a href="listing.html" class="explore-collection-home-card">
+              <div class="explore-collection-home-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1632070149652-40f5974c7496?auto=format&fit=crop&w=900&q=80" alt="Coats &amp; Jackets" class="explore-collection-home-image">
+              </div>
+              <div class="explore-collection-home-title">Coats &amp; Jackets</div>
+            </a>
+
+            <a href="listing.html" class="explore-collection-home-card">
+              <div class="explore-collection-home-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1564595076323-71cc27edacf8?auto=format&fit=crop&w=900&q=80" alt="Blouses" class="explore-collection-home-image">
+              </div>
+              <div class="explore-collection-home-title">Blouses</div>
+            </a>
+
+            <a href="listing.html" class="explore-collection-home-card">
+              <div class="explore-collection-home-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1695996966975-9ed413650619?auto=format&fit=crop&w=900&q=80" alt="Skirts" class="explore-collection-home-image">
+              </div>
+              <div class="explore-collection-home-title">Skirts</div>
+            </a>
+
+            <a href="listing.html" class="explore-collection-home-card">
+              <div class="explore-collection-home-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1582822785550-d465062c62e9?auto=format&fit=crop&w=900&q=80" alt="Jeans" class="explore-collection-home-image">
+              </div>
+              <div class="explore-collection-home-title">Jeans</div>
+            </a>
+
+          </div>
+          <button class="explore-slider-arrow explore-slider-arrow-right" aria-label="Next" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Women's Categories ════════════════ -->
+    <section class="women-categories">
+      <h2 class="bs-display women-categories-title">Women&rsquo;s Categories</h2>
+      <hr class="bs-rule-gold women-categories-rule">
+
+      <div class="women-categories-grid">
+
+        <a href="listing.html" class="women-categories-card women-categories-card-1">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=900&q=80" alt="Casual Tops">
+          <span class="women-categories-tag">Casual Tops</span>
+        </a>
+
+        <a href="listing.html" class="women-categories-card women-categories-card-2">
+          <img src="https://images.unsplash.com/photo-1475048975523-705992b13a68?auto=format&fit=crop&w=900&q=80" alt="Knitwear &amp; Cardigans">
+          <span class="women-categories-tag">Knitwear &amp; Cardigans</span>
+        </a>
+
+        <a href="listing.html" class="women-categories-card women-categories-card-3">
+          <img src="https://images.unsplash.com/photo-1695996966975-9ed413650619?auto=format&fit=crop&w=900&q=80" alt="Skirts">
+          <span class="women-categories-tag">Skirts</span>
+        </a>
+
+        <a href="listing.html" class="women-categories-card women-categories-card-4">
+          <img src="https://images.unsplash.com/photo-1535043934128-cf0b28d52f95?auto=format&fit=crop&w=900&q=80" alt="Heels">
+          <span class="women-categories-tag">Heels</span>
+        </a>
+
+        <a href="listing.html" class="women-categories-card women-categories-card-5">
+          <img src="https://images.unsplash.com/photo-1495890238575-bc6ea0503834?auto=format&fit=crop&w=900&q=80" alt="Swimwear">
+          <span class="women-categories-tag">Swimwear</span>
+        </a>
+
+        <a href="listing.html" class="women-categories-card women-categories-card-6">
+          <img src="images/EMMA-TOTE-MINI_RUBY-MULTI_H1041-878-695_A.webp" alt="Bags">
+          <span class="women-categories-tag">Bags</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ The Stories ════════════════ -->
+    <section class="women-stories">
+      <div class="women-stories-row">
+
+        <div class="women-stories-video-card">
+          <video class="women-stories-video" id="womenStoriesVideo" autoplay muted loop playsinline
+                 poster="https://bluesalon-new-simple.vercel.app/assets/fashion-women.jpg">
+            <source src="https://videos.pexels.com/video-files/9512048/9512048-uhd_1440_2732_25fps.mp4" type="video/mp4">
+          </video>
+          <button class="women-stories-playtoggle" id="womenStoriesPlayToggle" type="button" aria-label="Pause video" aria-pressed="false">
+            <svg class="women-stories-icon-pause" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16"/><rect x="14" y="4" width="5" height="16"/></svg>
+            <svg class="women-stories-icon-play" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" hidden><path d="M6 4l15 8-15 8V4z"/></svg>
+          </button>
+          <span class="women-stories-video-caption">
+            <span class="women-stories-eyebrow">Zuhair Murad</span>
+            <span class="bs-display women-stories-video-title">Spring 2027 Runway</span>
+          </span>
+        </div>
+
+        <div class="women-stories-right">
+          <div class="women-stories-text">
+            <h2 class="bs-display women-stories-title">The Stories</h2>
+            <p class="women-stories-sub">Seasonal collections and curated edits from Blue Salon&rsquo;s wide-reaching world of womenswear brands.</p>
+          </div>
+
+          <div class="stories-collection-home-grid-wrapper women-stories-slider-wrap">
+            <button class="stories-slider-arrow stories-slider-arrow-left" aria-label="Previous" type="button" disabled>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <div class="stories-collection-home-grid" data-stories-slider>
+
+              <a href="listing.html" class="stories-collection-home-card">
+                <div class="stories-collection-home-image-wrapper">
+                  <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_600x.jpg?v=1778078027" alt="Gowns Reimagined" class="stories-collection-home-image">
+                </div>
+                <span class="women-stories-card-eyebrow">Zuhair Murad</span>
+                <div class="stories-collection-home-title">Gowns Reimagined</div>
+              </a>
+
+              <a href="listing.html" class="stories-collection-home-card">
+                <div class="stories-collection-home-image-wrapper">
+                  <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_6_e27b0143-e408-4c18-a241-834fabf6d437_600x.jpg?v=1778151636" alt="Silk &amp; Lace" class="stories-collection-home-image">
+                </div>
+                <span class="women-stories-card-eyebrow">La Perla</span>
+                <div class="stories-collection-home-title">Silk &amp; Lace</div>
+              </a>
+
+              <a href="listing.html" class="stories-collection-home-card">
+                <div class="stories-collection-home-image-wrapper">
+                  <img src="https://www.bluesalon.com/cdn/shop/files/BS_Watches_600x.jpg?v=1771492826" alt="Crystal Edit" class="stories-collection-home-image">
+                </div>
+                <span class="women-stories-card-eyebrow">Swarovski</span>
+                <div class="stories-collection-home-title">Crystal Edit</div>
+              </a>
+
+            </div>
+            <button class="stories-slider-arrow stories-slider-arrow-right" aria-label="Next" type="button">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Runway Looks (auto-scrolling marquee) ════════════════ -->
+    <section class="women-runway">
+      <div class="women-runway-viewport" id="womenRunwayViewport">
+        <div class="women-runway-track" id="womenRunwayTrack">
+
+          <div class="women-runway-item">
+            <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_600x.jpg?v=1778078027" alt="">
+            <div class="women-runway-overlay">
+              <span class="women-runway-name">Clothing</span>
+              <a href="listing.html" class="women-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="women-runway-item">
+            <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_79_600x.jpg?v=1776689958" alt="">
+            <div class="women-runway-overlay">
+              <span class="women-runway-name">Bags</span>
+              <a href="listing.html" class="women-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="women-runway-item">
+            <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_7_16aa4789-aee1-4741-a7c6-0f3fd30903b0_600x.jpg?v=1778151902" alt="">
+            <div class="women-runway-overlay">
+              <span class="women-runway-name">Footwear</span>
+              <a href="listing.html" class="women-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="women-runway-item">
+            <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_1_5fe2ba48-9160-4650-b7ff-065ea291e2a6_600x.jpg?v=1778140218" alt="">
+            <div class="women-runway-overlay">
+              <span class="women-runway-name">Fine Jewellery</span>
+              <a href="listing.html" class="women-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="women-runway-item">
+            <img src="https://www.bluesalon.com/cdn/shop/files/Guerlain_Make_up-Blue_Salon_600x.jpg?v=1778160088" alt="">
+            <div class="women-runway-overlay">
+              <span class="women-runway-name">Beauty</span>
+              <a href="listing.html" class="women-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="women-runway-item">
+            <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_6_e27b0143-e408-4c18-a241-834fabf6d437_600x.jpg?v=1778151636" alt="">
+            <div class="women-runway-overlay">
+              <span class="women-runway-name">Lingerie</span>
+              <a href="listing.html" class="women-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+          <div class="women-runway-item">
+            <img src="https://www.bluesalon.com/cdn/shop/files/Parfume_de_Marly_600x.jpg?v=1778160612" alt="">
+            <div class="women-runway-overlay">
+              <span class="women-runway-name">Perfumes</span>
+              <a href="listing.html" class="women-runway-shopbtn">Shop Now <span aria-hidden="true">+</span></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Shoppable Editorial ════════════════ -->
+    <section class="women-shopedit">
+      <div class="women-shopedit-card">
+        <img src="https://images.unsplash.com/photo-1742237424056-ea5cbb674d66?auto=format&fit=crop&w=1600&q=80" alt="">
+        <div class="women-shopedit-cta">
+          <a href="listing.html" class="women-shopedit-shopbtn">
+            Shop Now
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </a>
+          <span class="women-shopedit-audio" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="10" x2="4" y2="14"/><line x1="9" y1="6" x2="9" y2="18"/><line x1="14" y1="3" x2="14" y2="21"/><line x1="19" y1="8" x2="19" y2="16"/></svg>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Editorial Spotlight ════════════════ -->
+    <section class="women-spotlight">
+      <div class="women-spotlight-grid">
+
+        <a href="listing.html" class="women-spotlight-hero">
+          <img src="https://images.unsplash.com/photo-1743079701830-c4a45ddc11a1?auto=format&fit=crop&w=1200&q=80" alt="">
+          <span class="women-spotlight-hero-overlay"></span>
+          <span class="women-spotlight-hero-caption">
+            <span class="bs-display women-spotlight-hero-brand">Zuhair Murad</span>
+            <span class="women-spotlight-hero-line">Haute Couture</span>
+            <span class="women-spotlight-hero-desc">The ultimate expression of luxury for the modern woman — hand-embroidered gowns from the world&rsquo;s finest ateliers.</span>
+            <span class="women-spotlight-ctas">
+              <span class="women-spotlight-btn">Explore Now</span>
+              <span class="women-spotlight-btn">Shop Now</span>
+            </span>
+          </span>
+        </a>
+
+        <div class="women-spotlight-shop">
+          <div class="women-spotlight-shop-stage">
+            <button class="women-spotlight-arrow women-spotlight-arrow-left" aria-label="Previous" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <a href="listing.html" class="women-spotlight-shop-frame">
+              <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1200&q=80" alt="">
+            </a>
+            <button class="women-spotlight-arrow women-spotlight-arrow-right" aria-label="Next" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div class="women-spotlight-shop-cap">
+            <a href="listing.html" class="women-spotlight-shop-title">The Resort Shop</a>
+            <a href="listing.html" class="women-spotlight-shop-link">Shop Now</a>
+            <span class="women-spotlight-dots"><span class="is-active"></span><span></span></span>
+          </div>
+        </div>
+
+        <div class="women-spotlight-shop">
+          <div class="women-spotlight-shop-stage">
+            <button class="women-spotlight-arrow women-spotlight-arrow-left" aria-label="Previous" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <a href="listing.html" class="women-spotlight-shop-frame">
+              <img src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?auto=format&fit=crop&w=1200&q=80" alt="">
+            </a>
+            <button class="women-spotlight-arrow women-spotlight-arrow-right" aria-label="Next" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div class="women-spotlight-shop-cap">
+            <a href="listing.html" class="women-spotlight-shop-title">Linen Shop</a>
+            <a href="listing.html" class="women-spotlight-shop-link">Shop Now</a>
+            <span class="women-spotlight-dots"><span class="is-active"></span><span></span></span>
+          </div>
+        </div>
+
+        <a href="listing.html" class="women-spotlight-hero">
+          <img src="https://images.unsplash.com/photo-1750064139819-da3bf362e7b3?auto=format&fit=crop&w=1200&q=80" alt="">
+          <span class="women-spotlight-hero-overlay"></span>
+          <span class="women-spotlight-hero-caption">
+            <span class="women-spotlight-hero-logobox">La Perla</span>
+            <span class="women-spotlight-hero-desc">Defining timeless intimate luxury — La Perla blends Italian lace craftsmanship, refined silhouettes and heritage artistry for every occasion.</span>
+            <span class="women-spotlight-ctas">
+              <span class="women-spotlight-btn">Explore Now</span>
+              <span class="women-spotlight-btn">Shop Now</span>
+            </span>
+          </span>
+        </a>
+
       </div>
     </section>
 
@@ -662,6 +1025,107 @@
         item.addEventListener("mouseenter", function () { show(item); });
         item.addEventListener("focus", function () { show(item); });
       });
+    })();
+
+    // "The Stories" — play/pause toggle for the featured runway video.
+    (function () {
+      "use strict";
+      var video = document.getElementById("womenStoriesVideo");
+      var btn = document.getElementById("womenStoriesPlayToggle");
+      if (!video || !btn) return;
+      var pauseIcon = btn.querySelector(".women-stories-icon-pause");
+      var playIcon = btn.querySelector(".women-stories-icon-play");
+      btn.addEventListener("click", function () {
+        if (video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+      function sync() {
+        var playing = !video.paused;
+        pauseIcon.hidden = !playing;
+        playIcon.hidden = playing;
+        btn.setAttribute("aria-pressed", String(!playing));
+        btn.setAttribute("aria-label", playing ? "Pause video" : "Play video");
+      }
+      video.addEventListener("play", sync);
+      video.addEventListener("pause", sync);
+      sync();
+    })();
+
+    // "Runway Looks" — duplicate the strip so the auto-scroll
+    // (translateX(-50%) in women.css) loops without a visible jump.
+    (function () {
+      "use strict";
+      var track = document.getElementById("womenRunwayTrack");
+      if (!track) return;
+      var items = Array.prototype.slice.call(track.querySelectorAll(".women-runway-item"));
+      if (!items.length) return;
+      items.forEach(function (item) {
+        var clone = item.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        track.appendChild(clone);
+      });
+    })();
+
+    // "Runway Looks" — the strip is also natively scrollable (drag,
+    // swipe or wheel). Interacting pauses the marquee (.is-interacting,
+    // see women.css); it resumes automatically after a short idle delay.
+    (function () {
+      "use strict";
+      var viewport = document.getElementById("womenRunwayViewport");
+      if (!viewport) return;
+      var isDown = false;
+      var startX = 0;
+      var scrollStart = 0;
+      var resumeTimer = null;
+
+      function pause() {
+        viewport.classList.add("is-interacting");
+      }
+      function scheduleResume() {
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(function () {
+          viewport.classList.remove("is-interacting");
+        }, 2500);
+      }
+
+      viewport.addEventListener("mousedown", function (e) {
+        isDown = true;
+        viewport.classList.add("is-dragging");
+        pause();
+        startX = e.pageX - viewport.offsetLeft;
+        scrollStart = viewport.scrollLeft;
+      });
+      window.addEventListener("mouseup", function () {
+        if (!isDown) return;
+        isDown = false;
+        viewport.classList.remove("is-dragging");
+        scheduleResume();
+      });
+      window.addEventListener("mousemove", function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        var x = e.pageX - viewport.offsetLeft;
+        viewport.scrollLeft = scrollStart - (x - startX);
+      });
+
+      viewport.addEventListener("touchstart", function () {
+        pause();
+      }, { passive: true });
+      viewport.addEventListener("touchend", function () {
+        scheduleResume();
+      }, { passive: true });
+
+      viewport.addEventListener("wheel", function (e) {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          viewport.scrollLeft += e.deltaY;
+          e.preventDefault();
+        }
+        pause();
+        scheduleResume();
+      }, { passive: false });
     })();
   </script>
 </body>

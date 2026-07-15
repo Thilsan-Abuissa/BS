@@ -489,26 +489,10 @@
         return;
       }
 
-      // Quick add → shared cart store + confirmation modal
+      // Quick add → Quick View drawer (confirm colour/size, then add)
       if (e.target.closest("[data-quickadd]")) {
         e.preventDefault();
-        if (product && window.BS_CART) {
-          var addedVariant = product.variants[state.selected[id] || 0] || product.variants[0];
-          window.BS_CART.add({
-            id: product.id,
-            vendor: product.vendor,
-            name: product.name,
-            image: displayImage(product),
-            price: product.price,
-            compareAt: product.compareAt,
-            color: addedVariant ? addedVariant.color : null,
-            colorHex: addedVariant ? addedVariant.hex : null,
-            colorImage: addedVariant ? addedVariant.image : null,
-            size: state.size[id] || null,
-            qty: 1
-          });
-        }
-        if (product) openCartModal(product);
+        if (product) openQuickView(product);
         return;
       }
 
@@ -1067,6 +1051,182 @@
         state.size[cartModalProduct.id] = sz.dataset.modalSize;
         cartModalBody.innerHTML = cartModalBodyHTML(cartModalProduct);
         syncCardFromState(cartModalProduct);
+      }
+    });
+  }
+
+  /* ── Quick View drawer ─────────────────────────────────────
+     Opens on a card's "Add to cart": a two-column overlay (image
+     gallery + colour/size panel) that adds the chosen variant to
+     the shared cart. Shares the .men-quickadd-* styles with the
+     Men page (see listing.css). */
+  var qvScrim = document.getElementById("menQuickaddScrim");
+  var qvDrawer = document.getElementById("menQuickaddDrawer");
+  var qvBody = document.getElementById("menQuickaddBody");
+  var qvCloseBtn = document.getElementById("menQuickaddClose");
+  var qvProduct = null;   // product currently in the drawer
+  var qvSize = {};        // id -> chosen size (drawer-local)
+
+  var QV_RULER =
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M3 8h18v8H3z"/><path d="M7 8v3M11 8v4M15 8v3M19 8v4"/></svg>';
+
+  function qvFirstSize(p) {
+    var sizes = p.sizes || [], out = p.soldOutSizes || [];
+    for (var i = 0; i < sizes.length; i++) {
+      if (out.indexOf(sizes[i]) === -1) return sizes[i];
+    }
+    return null;
+  }
+
+  function qvRender() {
+    if (!qvProduct) return;
+    var p = qvProduct;
+    var selIdx = state.selected[p.id] || 0;
+    var activeVariant = p.variants[selIdx] || p.variants[0];
+    var out = p.soldOutSizes || [];
+
+    // Gallery — selected variant image first, then the rest of the gallery.
+    var primary = displayImage(p);
+    var imgs = [primary].concat(galleryOf(p).filter(function (s) { return s !== primary; }));
+    var gallery = '<div class="men-quickadd-gallery">' +
+      imgs.map(function (src) { return '<img src="' + src + '" alt="">'; }).join("") + "</div>";
+
+    var panel = '<div class="men-quickadd-panel">';
+    panel += '<div class="men-quickadd-titlewrap">' +
+      '<h3 class="men-quickadd-name" id="menQuickaddName">' + p.name + "</h3>" +
+      '<span class="men-quickadd-brand">' + p.vendor + "</span></div>";
+    var priceHTML = p.compareAt
+      ? '<span class="was">' + money(p.compareAt) + "</span>" + money(p.price)
+      : money(p.price);
+    panel += '<div class="men-quickadd-pricewrap">' +
+      '<div class="men-quickadd-price">' + priceHTML + "</div>" +
+      payLaterHTML(p) +
+      loyaltyHTML(p) +
+      '<hr class="bs-rule-gold men-quickadd-rule">' +
+      "</div>";
+
+    panel += '<div class="men-quickadd-section">' +
+      '<span class="men-quickadd-label">Colour:<b>' + (activeVariant ? activeVariant.color : "") + "</b></span>" +
+      '<div class="men-quickadd-swatches">' +
+      p.variants.map(function (v, i) {
+        var isImg = p.imageSwatches && v.image;
+        var style = isImg ? "background-image:url(" + v.image + ")" : "background:" + v.hex;
+        return '<button type="button" class="men-quickadd-swatch' + (isImg ? " men-quickadd-swatch-img" : "") +
+          (i === selIdx ? " is-active" : "") + '" style="' + style + '" title="' + v.color + '" data-qv-swatch="' + i + '"></button>';
+      }).join("") + "</div></div>";
+
+    if (p.sizes && p.sizes.length) {
+      var chosen = qvSize[p.id];
+      panel += '<div class="men-quickadd-section">' +
+        '<div class="men-quickadd-sizehead">' +
+          '<span class="men-quickadd-label">Size:<b>' + (chosen || "") + "</b></span>" +
+          '<span class="men-quickadd-sizechart">' + QV_RULER + " Size Chart</span>" +
+        "</div>" +
+        '<div class="men-quickadd-chips">' +
+        p.sizes.map(function (s) {
+          var un = out.indexOf(s) !== -1;
+          return '<button type="button" class="men-quickadd-chip' + (s === chosen ? " is-active" : "") +
+            (un ? " is-unavailable" : "") + '"' + (un ? ' disabled aria-disabled="true"' : "") +
+            ' data-qv-size="' + s + '">' + s + "</button>";
+        }).join("") + "</div></div>";
+    }
+
+    panel += '<div class="men-quickadd-actions">' +
+      '<button type="button" class="men-quickadd-cta" id="menQuickaddAdd">Add to Cart</button>' +
+      '<button type="button" class="men-quickadd-wish' + (state.wishlist[p.id] ? " is-active" : "") +
+        '" id="menQuickaddWish" aria-label="Add to wishlist" aria-pressed="' + (state.wishlist[p.id] ? "true" : "false") + '">' + HEART + "</button>" +
+      "</div>";
+    panel += '<a class="men-quickadd-fulldetails" href="product.html?id=' + p.id + '">Full details</a>';
+    panel += "</div>";
+
+    qvBody.innerHTML = gallery + panel;
+  }
+
+  function openQuickView(product) {
+    if (!qvScrim || !qvDrawer || !qvBody) return;
+    qvProduct = product;
+    if (qvSize[product.id] === undefined) qvSize[product.id] = state.size[product.id] || qvFirstSize(product);
+    qvRender();
+    qvDrawer.hidden = false;
+    qvScrim.hidden = false;
+    void qvDrawer.offsetWidth;
+    qvDrawer.classList.add("is-open");
+    qvScrim.classList.add("is-open");
+    qvDrawer.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeQuickView() {
+    qvDrawer.classList.remove("is-open");
+    qvScrim.classList.remove("is-open");
+    qvDrawer.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    setTimeout(function () {
+      qvDrawer.hidden = true;
+      qvScrim.hidden = true;
+    }, 320);
+  }
+
+  if (qvDrawer) {
+    if (qvCloseBtn) qvCloseBtn.addEventListener("click", closeQuickView);
+    qvScrim.addEventListener("click", closeQuickView);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && qvDrawer.classList.contains("is-open")) closeQuickView();
+    });
+
+    qvBody.addEventListener("click", function (e) {
+      if (!qvProduct) return;
+      var sw = e.target.closest("[data-qv-swatch]");
+      if (sw) {
+        state.selected[qvProduct.id] = Number(sw.dataset.qvSwatch);
+        qvRender();
+        syncCardFromState(qvProduct);
+        return;
+      }
+      var sz = e.target.closest("[data-qv-size]:not(.is-unavailable)");
+      if (sz) {
+        qvSize[qvProduct.id] = sz.dataset.qvSize;
+        state.size[qvProduct.id] = sz.dataset.qvSize;
+        qvRender();
+        return;
+      }
+      if (e.target.closest("#menQuickaddWish")) {
+        var pid = qvProduct.id;
+        if (state.wishlist[pid]) delete state.wishlist[pid];
+        else state.wishlist[pid] = true;
+        qvRender();
+        syncCardFromState(qvProduct);
+        if (typeof syncHeaderWishCount === "function") syncHeaderWishCount();
+        if (window.bsToast) window.bsToast(state.wishlist[pid] ? "Added to wishlist" : "Removed from wishlist");
+        return;
+      }
+      if (e.target.closest("#menQuickaddAdd")) {
+        var p = qvProduct;
+        var chosen = qvSize[p.id];
+        if (p.sizes && p.sizes.length && !chosen) {
+          if (window.bsToast) window.bsToast("Please select a size");
+          return;
+        }
+        var v = p.variants[state.selected[p.id] || 0] || p.variants[0];
+        if (window.BS_CART) {
+          window.BS_CART.add({
+            id: p.id,
+            vendor: p.vendor,
+            name: p.name,
+            image: displayImage(p),
+            price: p.price,
+            compareAt: p.compareAt,
+            color: v ? v.color : null,
+            colorHex: v ? v.hex : null,
+            colorImage: v ? v.image : null,
+            size: chosen || null,
+            qty: 1
+          });
+        }
+        if (window.bsToast) window.bsToast("Added to bag");
+        closeQuickView();
       }
     });
   }

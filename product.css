@@ -308,8 +308,8 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-size:hover { border-color: var(--ink-700); }
 .pdp-size.is-active {
   color: #fff;
-  background: var(--ink-900);
-  border-color: var(--ink-900);
+  background: #041e3a;
+  border-color: #041e3a;
 }
 .pdp-size.is-soldout {
   color: var(--text-disabled);
@@ -355,8 +355,8 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   letter-spacing: var(--ls-wider);
   text-transform: uppercase;
   color: #fff;
-  background: var(--ink-900);
-  border: 1px solid var(--ink-900);
+  background: #041e3a;
+  border: 1px solid #041e3a;
   cursor: pointer;
   transition: background var(--dur-base) var(--ease-standard);
 }
@@ -737,8 +737,8 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
   letter-spacing: var(--ls-wider);
   text-transform: uppercase;
   color: #fff;
-  background: var(--ink-900);
-  border: 1px solid var(--ink-900);
+  background: #041e3a;
+  border: 1px solid #041e3a;
   cursor: pointer;
   transition: background var(--dur-base) var(--ease-standard);
 }

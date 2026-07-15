@@ -243,8 +243,8 @@
 
 .plp-subcat.is-active {
   color: #fff;
-  background: var(--ink-900);
-  border-color: var(--ink-900);
+  background: #041e3a;
+  border-color: #041e3a;
 }
 
 /* Toolbar "Show filters" — visible only while the sidebar is collapsed */
@@ -879,8 +879,8 @@
   letter-spacing: var(--ls-wider);
   text-transform: uppercase;
   color: #fff;
-  background: rgba(14, 23, 34, 0.92);
-  border: 0;
+  background: #041e3a;
+  border: 1px solid #041e3a;
   cursor: pointer;
   transition: background var(--dur-base) var(--ease-standard);
 }
@@ -1052,7 +1052,7 @@ a.plp-card-name:hover {
 }
 
 .plp-size.is-active {
-  color: var(--ink-900);
+  color: #041e3a;
   font-weight: var(--fw-medium);
 }
 
@@ -1570,5 +1570,354 @@ a.plp-card-name:hover {
 @media (max-width: 420px) {
   .plp-title {
     font-size: 27px;
+  }
+}
+/* ── Quick View — a two-column overlay (image gallery left, details
+   panel right) opened from a product card's "Add to cart" on both the
+   Men landing page and this listing/PLP. Anchored to the right edge;
+   full-width and stacked on small screens. Shared here because both
+   men.html and listing.html load listing.css. ─────────────────────── */
+.men-quickadd-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 590;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity var(--dur-base, .25s) var(--ease-standard);
+}
+
+.men-quickadd-scrim[hidden] {
+  display: none;
+}
+
+.men-quickadd-scrim.is-open {
+  opacity: 1;
+}
+
+.men-quickadd-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 600;
+  display: flex;
+  width: min(100%, 900px);
+  background: #fff;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity var(--dur-base, .3s) var(--ease-standard),
+    transform var(--dur-base, .3s) var(--ease-standard);
+}
+
+.men-quickadd-modal[hidden] {
+  display: none;
+}
+
+.men-quickadd-modal.is-open {
+  opacity: 1;
+  transform: none;
+}
+
+.men-quickadd-close {
+  position: absolute;
+  z-index: 3;
+  top: 26px;
+  right: 30px;
+  background: none;
+  border: 0;
+  color: var(--ink-800);
+  cursor: pointer;
+  padding: 0;
+}
+
+.men-quickadd-close:hover {
+  color: var(--color-primary, var(--ink-900));
+}
+
+.men-quickadd-body {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* Left — scrollable image gallery */
+.men-quickadd-gallery {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-y: auto;
+  /* background: var(--surface-sunken); */
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.men-quickadd-gallery img {
+  width: 100%;
+  display: block;
+}
+
+/* Right — details panel */
+.men-quickadd-panel {
+  position: relative;
+  flex: 0 0 440px;
+  overflow-y: auto;
+  padding: 70px 48px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.men-quickadd-titlewrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.men-quickadd-name {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: var(--fw-light);
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: var(--ls-tight);
+  color: var(--ink-900);
+  margin: 0;
+}
+
+.men-quickadd-brand {
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+  color: var(--text-muted);
+}
+
+/* Price group — price, PayLater line, Mozoon loyalty badge and a
+   gold rule, kept tight together (the panel's larger gap only
+   separates this whole group from the colour section below). */
+.men-quickadd-pricewrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.men-quickadd-price {
+  font-size: 18px;
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+}
+
+.men-quickadd-price .was {
+  color: var(--text-muted);
+  font-weight: var(--fw-regular, 400);
+  text-decoration: line-through;
+  margin-right: 10px;
+}
+
+.men-quickadd-rule {
+  width: 56px;
+  margin: 4px 0 0;
+}
+
+.men-quickadd-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.men-quickadd-label {
+  font-size: 14px;
+  font-weight: var(--fw-medium);
+  color: var(--text-muted);
+}
+
+.men-quickadd-label b {
+  font-weight: var(--fw-bold);
+  color: var(--ink-900);
+  margin-left: 4px;
+}
+
+.men-quickadd-sizehead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.men-quickadd-sizechart {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ink-800);
+  letter-spacing: 0.02em;
+}
+
+/* Colour swatches — match the detail page: small flat rounded
+   rectangles (image variants show a slightly taller thumbnail). */
+.men-quickadd-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.men-quickadd-swatch {
+  width: 30px;
+  height: 20px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(14, 23, 34, 0.12);
+  background-clip: padding-box;
+  cursor: pointer;
+  transition: transform var(--dur-fast, .12s) var(--ease-standard);
+}
+
+.men-quickadd-swatch-img {
+  width: 30px;
+  height: 38px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface-sunken);
+}
+
+.men-quickadd-swatch:hover {
+  transform: scale(1.08);
+}
+
+.men-quickadd-swatch.is-active {
+  outline: 1px solid var(--ink-800);
+  outline-offset: 2px;
+}
+
+/* Size / length chips — match the detail page: a grid of bordered,
+   near-square chips; active is filled dark, sold-out is struck. */
+.men-quickadd-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+  gap: 8px;
+}
+
+.men-quickadd-chip {
+  position: relative;
+  overflow: hidden;
+  height: var(--control-md, 44px);
+  padding: 0 8px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  color: var(--ink-800);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 1.4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--dur-base) var(--ease-standard),
+    background var(--dur-base) var(--ease-standard),
+    color var(--dur-base) var(--ease-standard);
+}
+
+.men-quickadd-chip:hover {
+  border-color: var(--ink-700);
+}
+
+.men-quickadd-chip.is-active {
+  background: #041e3a;
+  border-color: #041e3a;
+  color: #fff;
+}
+
+.men-quickadd-chip.is-unavailable {
+  color: var(--text-disabled);
+  border-color: var(--border-subtle);
+  cursor: not-allowed;
+}
+
+.men-quickadd-chip.is-unavailable::after {
+  content: "";
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  top: 50%;
+  height: 1px;
+  background: var(--ink-300);
+  transform: rotate(-18deg);
+}
+
+/* Add to bag + wishlist */
+.men-quickadd-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.men-quickadd-cta {
+  flex: 1 1 auto;
+  background: #041e3a;
+  color: #fff;
+  border: 1px solid #041e3a;
+  padding: 18px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.men-quickadd-cta:hover {
+  background: var(--gold-500, #000);
+  border-color: var(--gold-500, #000);
+}
+
+.men-quickadd-wish {
+  flex: 0 0 58px;
+  border: 1px solid #041e3a;
+  background: #fff;
+  color: #041e3a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.men-quickadd-wish.is-active svg {
+  fill: currentColor;
+}
+
+.men-quickadd-fulldetails {
+  align-self: center;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+@media (max-width: 820px) {
+  .men-quickadd-modal {
+    width: 100%;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .men-quickadd-body {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .men-quickadd-gallery {
+    flex: none;
+    overflow: visible;
+  }
+
+  .men-quickadd-panel {
+    flex: none;
+    overflow: visible;
+    padding: 40px 24px 32px;
   }
 }

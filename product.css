@@ -404,23 +404,166 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-wish.is-active { color: var(--sale); }
 .pdp-wish.is-active svg { fill: var(--sale); }
 
-/* ── Service reassurance ──────────────────────────────────── */
+/* ── Service reassurance — icon-only row. The label text still
+   exists (aria-label + a visually-hidden-until-hover tooltip) so the
+   meaning survives for screen readers and anyone unsure what an
+   icon means, without cluttering the PDP with three lines of copy. */
 .pdp-service {
   list-style: none;
-  margin: 0 0 28px;
-  padding: 22px 0;
-  border-top: 1px solid var(--border-subtle);
-  display: grid;
-  gap: 14px;
-}
-.pdp-service li {
+  margin: 0;
+  padding: 22px 0 0;
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 13px;
-  color: var(--text-muted);
+  gap: 22px;
 }
-.pdp-service svg { flex: none; color: var(--color-primary); }
+.pdp-service li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-circle);
+  border: 1px solid var(--border-subtle);
+  color: var(--color-primary);
+  cursor: default;
+  transition: border-color var(--dur-base) var(--ease-standard),
+    background var(--dur-base) var(--ease-standard);
+}
+.pdp-service li:hover,
+.pdp-service li:focus-visible {
+  border-color: var(--color-primary);
+  background: var(--surface-sunken);
+  outline: none;
+}
+.pdp-service svg { flex: none; }
+
+.pdp-service-tip {
+  position: absolute;
+  z-index: 2;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  width: max-content;
+  max-width: 200px;
+  padding: 8px 12px;
+  background: var(--ink-900);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+  white-space: normal;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-standard),
+    transform var(--dur-base) var(--ease-standard);
+}
+.pdp-service-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--ink-900);
+}
+.pdp-service li:hover .pdp-service-tip,
+.pdp-service li:focus-visible .pdp-service-tip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Complete the Look — a vertical list in the info panel
+   (thumbnail · name/price · Quick Shop), distinct from the
+   "You may also like" card grid further down the page. ─────── */
+.pdp-complete {
+  margin-top: 48px;
+}
+
+.pdp-complete-title {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: 28px;
+  color: var(--ink-900);
+  margin: 0 0 28px;
+}
+
+.pdp-complete-list {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.pdp-ctl-item {
+  display: flex;
+  gap: 24px;
+}
+
+.pdp-ctl-media {
+  flex: none;
+  width: 140px;
+  aspect-ratio: 4 / 5;
+  background: var(--surface-sunken);
+  overflow: hidden;
+  display: block;
+}
+.pdp-ctl-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pdp-ctl-info {
+  display: flex;
+  flex-direction: column;
+  padding-top: 4px;
+}
+
+.pdp-ctl-name {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: var(--fw-light);
+  font-size: 16px;
+  line-height: 1.3;
+  /* letter-spacing: var(--ls-tight); */
+  color: var(--ink-900);
+  text-decoration: none;
+}
+.pdp-ctl-name:hover { text-decoration: underline; }
+
+.pdp-ctl-price {
+  margin-top: 8px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--ink-900);
+}
+
+.pdp-ctl-quickshop {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  cursor: pointer;
+  align-self: flex-start;
+}
+.pdp-ctl-quickshop svg { width: 15px; height: 15px; }
+.pdp-ctl-quickshop:hover { color: var(--color-primary); }
+
+@media (max-width: 560px) {
+  .pdp-ctl-media { width: 110px; }
+  .pdp-complete-title { font-size: 24px; }
+}
 
 /* ── Share ────────────────────────────────────────────────── */
 .pdp-share { display: flex; align-items: center; gap: 12px; margin: 28px 0; }

@@ -318,6 +318,11 @@
           '<img id="pdpMainImg" src="' + state.photo + '" alt="' + esc(product.name) + '">' +
           (product.tag ? '<span class="pdp-tag' + (product.tag === "New" ? " dark" : "") + '">' + esc(product.tag) + "</span>" : "") +
           '<button type="button" class="pdp-wish" id="pdpWish" aria-label="Add to wishlist" aria-pressed="false">' + HEART + "</button>" +
+          (completeTheLookItems().length
+            ? '<button type="button" class="pdp-ctl-jump" id="pdpCtlJump">Complete the Look' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>' +
+              "</button>"
+            : "") +
         "</figure>" +
       "</div>";
   }
@@ -446,11 +451,14 @@
 
         shareHTML() +
 
+        accordionHTML() +
+
         '<ul class="pdp-service">' + SVC.map(function (s) {
-          return "<li>" + svcIcon(s.icon) + "<span>" + s.label + "</span></li>";
+          return '<li tabindex="0" aria-label="' + s.label + '">' + svcIcon(s.icon) +
+            '<span class="pdp-service-tip" role="tooltip">' + s.label + "</span></li>";
         }).join("") + "</ul>" +
 
-        accordionHTML() +
+        completeTheLookHTML() +
       "</div>"
     );
   }
@@ -752,6 +760,49 @@
       "</section>";
   }
 
+  /* ── Complete the Look — a vertical list in the info panel
+     (image · name/price · Quick Shop), pulling complementary pieces
+     from other categories so it reads as an outfit, not a duplicate
+     of "You may also like" below. Quick Shop reuses the same
+     [data-rel-add] add-to-bag wiring as the related cards. ────── */
+  function completeTheLookItems() {
+    var others = PRODUCTS.filter(function (p) { return p.id !== product.id; });
+    others.sort(function (a, b) {
+      var as = a.cat === product.cat ? 1 : 0, bs = b.cat === product.cat ? 1 : 0;
+      return as - bs;
+    });
+    return others.slice(0, 3);
+  }
+
+  function completeTheLookHTML() {
+    var items = completeTheLookItems();
+    if (!items.length) return "";
+
+    var rows = items.map(function (p) {
+      var img = imageForVariant(p, firstImageVariant(p));
+      var href = "product.html?id=" + p.id;
+      return (
+        '<div class="pdp-ctl-item">' +
+          '<a class="pdp-ctl-media" href="' + href + '" aria-label="' + esc(p.name) + '">' +
+            '<img src="' + img + '" alt="' + esc(p.name) + '" loading="lazy">' +
+          "</a>" +
+          '<div class="pdp-ctl-info">' +
+            '<a class="pdp-ctl-name" href="' + href + '">' + esc(p.name) + "</a>" +
+            '<span class="pdp-ctl-price">' + money(p.price) + "</span>" +
+            '<button type="button" class="pdp-ctl-quickshop" data-rel-add="' + p.id + '">' + BAG + " Quick Shop</button>" +
+          "</div>" +
+        "</div>"
+      );
+    }).join("");
+
+    return (
+      '<div class="pdp-complete">' +
+        '<h2 class="pdp-complete-title">Complete the Look</h2>' +
+        '<div class="pdp-complete-list">' + rows + "</div>" +
+      "</div>"
+    );
+  }
+
   /* ── Mount ────────────────────────────────────────────────── */
   var root = document.getElementById("pdp");
   if (!root) return;
@@ -932,6 +983,15 @@
 
   /* ── Delegated clicks ─────────────────────────────────────── */
   root.addEventListener("click", function (e) {
+    /* "Complete the Look" pill on the main image — jumps down to the
+       list in the info panel. Checked early for the same reason as
+       the wishlist button below (it also sits inside [data-zoom]). */
+    if (e.target.closest("#pdpCtlJump")) {
+      var ctlSection = document.querySelector(".pdp-complete");
+      if (ctlSection) ctlSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
     /* Wishlist toggle — checked before the zoom handler below since the
        button now sits inside the zoomable [data-zoom] figure. */
     var wish = e.target.closest("#pdpWish");

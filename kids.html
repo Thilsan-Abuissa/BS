@@ -1,0 +1,688 @@
+<!-- @dsCard group="Website" viewport="1320x900" name="Storefront — Kids Landing" subtitle="bluesalon.com Kids &amp; Baby hub: hero, shop-by-department, new arrivals, edit, brands" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blue Salon — Kids &amp; Baby</title>
+<link rel="icon" href="assets/app-icon.png">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="listing.css">
+<link rel="stylesheet" href="kids.css">
+</head>
+<body>
+
+  <!-- ════════════════ Header ════════════════ -->
+  <header class="bs-nav-root bs-header">
+
+    <!-- Announcement -->
+    <div class="bs-announce">
+      <div class="bs-announce-inner">
+      <span class="bs-announce-msg">Complimentary shipping on orders over QAR 499 &nbsp;·&nbsp; Split your payment into 4 installments</span>
+      <div class="bs-announce-utils">
+        <span class="bs-util-wrap bs-locale">
+          <button class="bs-iconbtn bs-locale-btn" type="button" id="localeBtn" aria-label="Switch language" title="Switch language">
+            <span class="bs-lang-switch is-ar" id="localeLangSwitch" aria-hidden="true">ع</span>
+          </button>
+        </span>
+        <button class="bs-iconbtn bs-locale-btn" type="button" aria-label="Store locator" title="Store locator">
+          <span class="bs-lang-switch">Store</span>
+        </button>
+      </div>
+      </div>
+    </div>
+
+    <!-- Main bar -->
+    <div class="bs-topbar">
+      <!-- Hamburger (mobile only) -->
+      <button class="bs-iconbtn bs-hamburger" type="button" id="hamburgerBtn" aria-label="Menu" aria-expanded="false" aria-controls="mobileDrawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <!-- Search -->
+      <div class="bs-search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="7"/></svg>
+        <input type="search" placeholder="Search 500+ luxury brands">
+      </div>
+      <!-- Logo -->
+      <a class="bs-logo" href="index.html">
+        <img src="assets/logo-horizontal.svg" alt="Blue Salon">
+      </a>
+      <!-- Utilities -->
+      <div class="bs-utils">
+        <span class="bs-util-wrap bs-account-wrap">
+          <button class="bs-iconbtn" type="button" aria-label="Account" title="Account">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          </button>
+
+          <div class="bs-account-panel">
+            <div class="bs-account-panel-head">
+              <span class="bs-account-panel-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                Sign In
+              </span>
+              <a href="#" class="bs-account-panel-create">Create Account</a>
+            </div>
+
+            <div class="bs-account-field">
+              <input type="email" placeholder="Email Address *">
+            </div>
+            <div class="bs-account-field">
+              <input type="password" placeholder="Password *">
+            </div>
+
+            <div class="bs-account-panel-row">
+              <a href="#" class="bs-account-panel-forgot">Forgot Password?</a>
+              <span class="bs-account-panel-required">* Required</span>
+            </div>
+
+            <label class="bs-account-panel-remember">
+              <input type="checkbox">
+              <span>Remember me &mdash; I want Blue Salon to personalise my shopping experience</span>
+            </label>
+
+            <button type="button" class="bs-account-panel-submit">Sign In</button>
+
+            <div class="bs-account-panel-divider"><span>or</span></div>
+
+            <div class="bs-account-panel-social">
+              <a href="#" class="bs-account-social-item">
+                <span class="bs-account-social-icon bs-account-social-fb">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.6h2.6l.4-3h-3V8.4c0-.87.24-1.46 1.5-1.46h1.6V4.24C15.9 4.16 15 4.08 13.94 4.08c-2.2 0-3.7 1.34-3.7 3.8v2.12H7.6v3h2.64V21h3.26z"/></svg>
+                </span>
+                <span class="bs-account-social-label">Facebook</span>
+              </a>
+              <a href="#" class="bs-account-social-item">
+                <span class="bs-account-social-icon bs-account-social-google">
+                  <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.25 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.3 9.14 5.38 12 5.38z"/></svg>
+                </span>
+                <span class="bs-account-social-label">Google</span>
+              </a>
+              <a href="#" class="bs-account-social-item">
+                <span class="bs-account-social-icon bs-account-social-apple">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 1.43c0 1.14-.42 2.2-1.24 3.06-.9.94-2.13 1.6-3.34 1.5a3.4 3.4 0 0 1-.03-.42c0-1.1.5-2.24 1.32-3.05.86-.85 2.24-1.47 3.24-1.52.02.14.05.29.05.43zm3.6 16.02c-.5 1.16-.74 1.68-1.38 2.7-.9 1.42-2.16 3.2-3.73 3.21-1.39.02-1.75-.9-3.64-.89-1.88.01-2.27.9-3.67.88-1.57-.02-2.76-1.6-3.66-3.02-2.5-3.9-2.77-8.48-1.22-10.92 1.1-1.75 2.83-2.78 4.45-2.78 1.65 0 2.68.9 4.05.9 1.32 0 2.13-.9 4.05-.9 1.45 0 2.98.79 4.07 2.16-3.58 1.96-3 7.06.68 8.66z"/></svg>
+                </span>
+                <span class="bs-account-social-label">Apple</span>
+              </a>
+            </div>
+          </div>
+        </span>
+        <span class="bs-util-wrap">
+          <button class="bs-iconbtn" type="button" aria-label="Wishlist" title="Wishlist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l9 9 8.8-8.6a5.5 5.5 0 0 0-.2-7.8z"/></svg>
+          </button>
+          <span class="bs-count" id="wishCount" hidden>0</span>
+        </span>
+        <span class="bs-util-wrap">
+          <button class="bs-iconbtn" type="button" aria-label="Bag" title="Bag">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+          </button>
+          <span class="bs-count" id="cartCount" hidden>0</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Nav + mega menu hover zone -->
+    <div id="navZone">
+      <nav class="bs-nav">
+        <div class="bs-nav-inner" id="navInner">
+          <div class="bs-nav-item" data-menu="new" data-href="listing.html">New In</div>
+          <div class="bs-nav-item" data-menu="women" data-href="women.html">Women</div>
+          <div class="bs-nav-item" data-menu="men" data-href="men.html">Men</div>
+          <div class="bs-nav-item is-current" data-menu="kids" data-href="kids.html">Kids &amp; Baby</div>
+          <div class="bs-nav-item" data-menu="beauty">Beauty</div>
+          <div class="bs-nav-item" data-menu="luggage">Luggage</div>
+          <div class="bs-nav-item" data-menu="home">Home &amp; Linen</div>
+          <div class="bs-nav-item" data-menu="gourmet">Gourmet</div>
+          <div class="bs-nav-item" data-menu="brands">Brands</div>
+          <div class="bs-nav-item" data-menu="gift">Gift</div>
+          <div class="bs-nav-item sale" data-menu="sale">Sale</div>
+          <div class="bs-mega-holder" id="megaHolder"></div>
+        </div>
+      </nav>
+    </div>
+
+  </header>
+
+  <!-- ════════════════ Mobile drawer (built by app.js) ════════════════ -->
+  <div class="bs-drawer-scrim" id="drawerScrim" hidden></div>
+  <aside class="bs-drawer" id="mobileDrawer" aria-hidden="true" hidden>
+    <div class="bs-drawer-head">
+      <img class="bs-drawer-logo" src="assets/logo-horizontal.svg" alt="Blue Salon">
+      <button class="bs-iconbtn bs-drawer-close" type="button" id="drawerClose" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <nav class="bs-drawer-nav" id="drawerNav"></nav>
+  </aside>
+
+  <main>
+
+    <!-- ════════════════ Quick-shop shortcuts ════════════════ -->
+    <section class="kids-quicknav">
+      <div class="kids-quicknav-row">
+
+        <a href="listing.html" class="kids-quicknav-item">
+          <span class="kids-quicknav-circle"><img src="https://cdn-static.farfetch-contents.com/cms-ccloud/caas/v1/media/10706096/data/bdc9961d891433a1eab9fac6d7a2959b/3x4_three-columns/480/2026-06-22-kw-webapp-chloe-kids-vacation-chloe-kids-multicategory-img.jpeg" alt="New In"></span>
+          <span class="kids-quicknav-label">New In</span>
+        </a>
+
+        <a href="listing.html" class="kids-quicknav-item">
+          <span class="kids-quicknav-circle"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_10_bc7e0bd2-1185-41c7-a02c-56d341757fa6_600x.jpg?v=1778154026" alt="Newborn Boys"></span>
+          <span class="kids-quicknav-label">Newborn Boys</span>
+        </a>
+
+        <a href="listing.html" class="kids-quicknav-item">
+          <span class="kids-quicknav-circle"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_11_3c02abdb-e76c-4749-91df-bb654320bf6c_600x.jpg?v=1778154421" alt="Newborn Girls"></span>
+          <span class="kids-quicknav-label">Newborn Girls</span>
+        </a>
+
+        <a href="listing.html" class="kids-quicknav-item">
+          <span class="kids-quicknav-circle"><img src="https://www.bluesalon.com/cdn/shop/files/Boy_s_clothing_600x.jpg?v=1771912547" alt="Boys Clothing"></span>
+          <span class="kids-quicknav-label">Boys Clothing</span>
+        </a>
+
+        <a href="listing.html" class="kids-quicknav-item">
+          <span class="kids-quicknav-circle"><img src="https://www.bluesalon.com/cdn/shop/files/Girl_s_clothing_600x.jpg?v=1771912756" alt="Girls Clothing"></span>
+          <span class="kids-quicknav-label">Girls Clothing</span>
+        </a>
+
+        <a href="listing.html" class="kids-quicknav-item">
+          <span class="kids-quicknav-circle"><img src="https://www.bluesalon.com/cdn/shop/files/Shoes_b0e1304c-d5c6-4c76-9b89-31c0d839a8d4_600x.jpg?v=1771913018" alt="Footwear"></span>
+          <span class="kids-quicknav-label">Footwear</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Hero ════════════════ -->
+    <section class="kids-hero">
+      <img class="kids-hero-img" src="https://cdn-static.farfetch-contents.com/cms-ccloud/caas/v1/media/10706096/data/bdc9961d891433a1eab9fac6d7a2959b/3x4_three-columns/480/2026-06-22-kw-webapp-chloe-kids-vacation-chloe-kids-multicategory-img.jpeg" alt="">
+      <div class="kids-hero-panel">
+        <span class="kids-hero-kicker">SS26 Edit</span>
+        <h1 class="bs-display kids-hero-title">Kids &amp; Baby</h1>
+        <p class="kids-hero-sub">Playful pieces, everyday essentials and tiny luxuries for little ones — curated from Aigner Kids, Missoni Kids and 500 more maisons.</p>
+        <div class="kids-hero-ctas">
+          <a class="bs-btn bs-btn-primary" href="listing.html">Shop New In</a>
+          <a class="kids-hero-link" href="#kidsDepts">Explore departments</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Editorial mosaic ════════════════ -->
+    <section class="kids-mosaic">
+      <a class="kids-mosaic-hero" href="listing.html">
+        <img src="https://www.bluesalon.com/cdn/shop/files/Girl_s_clothing_600x.jpg?v=1771912756" alt="">
+        <span class="kids-mosaic-hero-caption">
+          <span class="bs-display kids-mosaic-hero-title">The Playroom Edit</span>
+          <span class="kids-mosaic-link">Shop the edit <svg width="18" height="10" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h23M19 1l5 5-5 5"/></svg></span>
+        </span>
+      </a>
+
+      <div class="kids-mosaic-grid">
+        <a class="kids-mosaic-tile" href="listing.html">
+          <img src="https://www.bluesalon.com/cdn/shop/files/Shoes_b0e1304c-d5c6-4c76-9b89-31c0d839a8d4_600x.jpg?v=1771913018" alt="">
+          <span class="kids-mosaic-tag">Footwear <svg width="14" height="8" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h23M19 1l5 5-5 5"/></svg></span>
+        </a>
+        <a class="kids-mosaic-tile" href="listing.html">
+          <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_10_bc7e0bd2-1185-41c7-a02c-56d341757fa6_600x.jpg?v=1778154026" alt="">
+          <span class="kids-mosaic-tag">Newborn <svg width="14" height="8" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h23M19 1l5 5-5 5"/></svg></span>
+        </a>
+        <a class="kids-mosaic-tile kids-mosaic-tile-wide" href="listing.html">
+          <img src="https://cdn-static.farfetch-contents.com/cms-ccloud/caas/v1/media/10706096/data/bdc9961d891433a1eab9fac6d7a2959b/3x4_three-columns/480/2026-06-22-kw-webapp-chloe-kids-vacation-chloe-kids-multicategory-img.jpeg" alt="">
+          <span class="kids-mosaic-tag">Kids &amp; Teens <svg width="14" height="8" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h23M19 1l5 5-5 5"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ════════════════ Shop by Department ════════════════ -->
+    <section class="cat-fashion cat-fashion-kids" id="kidsDepts">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <span class="bs-eyebrow">Explore</span>
+          <h2 class="cat-fashion-title">Shop by Department</h2>
+          <hr class="bs-rule-gold kids-dept-rule">
+          <p class="cat-fashion-sub">Everything for them, curated department by department.</p>
+        </div>
+
+        <div class="kids-dept-row">
+
+          <a href="listing.html" class="kids-dept-circle">
+            <span class="kids-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_10_bc7e0bd2-1185-41c7-a02c-56d341757fa6_600x.jpg?v=1778154026" alt="Newborn Boys"></span>
+            <span class="kids-dept-circle-label">Newborn Boys</span>
+          </a>
+
+          <a href="listing.html" class="kids-dept-circle">
+            <span class="kids-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_11_3c02abdb-e76c-4749-91df-bb654320bf6c_600x.jpg?v=1778154421" alt="Newborn Girls"></span>
+            <span class="kids-dept-circle-label">Newborn Girls</span>
+          </a>
+
+          <a href="listing.html" class="kids-dept-circle">
+            <span class="kids-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/Boy_s_clothing_600x.jpg?v=1771912547" alt="Boys Clothing"></span>
+            <span class="kids-dept-circle-label">Boys Clothing</span>
+          </a>
+
+          <a href="listing.html" class="kids-dept-circle">
+            <span class="kids-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/Girl_s_clothing_600x.jpg?v=1771912756" alt="Girls Clothing"></span>
+            <span class="kids-dept-circle-label">Girls Clothing</span>
+          </a>
+
+          <a href="listing.html" class="kids-dept-circle">
+            <span class="kids-dept-circle-frame"><img src="https://www.bluesalon.com/cdn/shop/files/Shoes_b0e1304c-d5c6-4c76-9b89-31c0d839a8d4_600x.jpg?v=1771913018" alt="Footwear"></span>
+            <span class="kids-dept-circle-label">Footwear</span>
+          </a>
+
+          <a href="listing.html" class="kids-dept-circle">
+            <span class="kids-dept-circle-frame"><img src="https://cdn-static.farfetch-contents.com/cms-ccloud/caas/v1/media/10706096/data/bdc9961d891433a1eab9fac6d7a2959b/3x4_three-columns/480/2026-06-22-kw-webapp-chloe-kids-vacation-chloe-kids-multicategory-img.jpeg" alt="Kids &amp; Teens"></span>
+            <span class="kids-dept-circle-label">Kids &amp; Teens</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Style Notes ════════════════ -->
+    <section class="cat-fashion">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">Style Notes</h2>
+          <p class="cat-fashion-sub">A quick read on what's inside each department.</p>
+        </div>
+
+        <div class="kids-notes-row">
+
+          <a href="listing.html" class="kids-notes-item">
+            <div class="kids-notes-frame"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_10_bc7e0bd2-1185-41c7-a02c-56d341757fa6_600x.jpg?v=1778154026" alt="Newborn"></div>
+            <div class="kids-notes-rule"></div>
+            <p class="kids-notes-name">Newborn</p>
+            <p class="kids-notes-desc">Babysuits, sets &amp; essentials</p>
+          </a>
+
+          <a href="listing.html" class="kids-notes-item">
+            <div class="kids-notes-frame"><img src="https://www.bluesalon.com/cdn/shop/files/Boy_s_clothing_600x.jpg?v=1771912547" alt="Boys Clothing"></div>
+            <div class="kids-notes-rule"></div>
+            <p class="kids-notes-name">Boys Clothing</p>
+            <p class="kids-notes-desc">Tops, bottoms &amp; outerwear</p>
+          </a>
+
+          <a href="listing.html" class="kids-notes-item">
+            <div class="kids-notes-frame"><img src="https://www.bluesalon.com/cdn/shop/files/Girl_s_clothing_600x.jpg?v=1771912756" alt="Girls Clothing"></div>
+            <div class="kids-notes-rule"></div>
+            <p class="kids-notes-name">Girls Clothing</p>
+            <p class="kids-notes-desc">Dresses, sets &amp; knitwear</p>
+          </a>
+
+          <a href="listing.html" class="kids-notes-item">
+            <div class="kids-notes-frame"><img src="https://www.bluesalon.com/cdn/shop/files/Shoes_b0e1304c-d5c6-4c76-9b89-31c0d839a8d4_600x.jpg?v=1771913018" alt="Footwear"></div>
+            <div class="kids-notes-rule"></div>
+            <p class="kids-notes-name">Footwear</p>
+            <p class="kids-notes-desc">Trainers, sandals &amp; school shoes</p>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ New Arrivals ════════════════ -->
+    <section class="cat-fashion">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">New Arrivals</h2>
+          <a class="cat-fashion-sub-link" href="listing.html">Shop all new in →</a>
+        </div>
+
+        <div class="plp-grid" style="--plp-cols:4">
+
+          <!-- Cards mirror listing.js's cardHTML() exactly — same
+               markup/classes as the New In grid, so a shopper sees
+               one consistent product-card design everywhere. -->
+
+          <article class="plp-card plp-card--legacy" data-id="missoni-dress">
+            <a class="plp-card-media" href="product.html?id=missoni-dress" aria-label="Girl's Zigzag Knit Dress Multicolor">
+              <img class="plp-card-mainimg" src="https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?auto=format&fit=crop&w=900&q=80" alt="Girl's Zigzag Knit Dress Multicolor" loading="lazy">
+              <img class="plp-card-hoverimg" src="https://images.unsplash.com/photo-1503944168849-8bf86875bbd8?auto=format&fit=crop&w=900&q=80" alt="" aria-hidden="true" loading="lazy">
+              <span class="plp-tag">New</span>
+              <button type="button" class="plp-wish" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <span class="plp-quickadd"><button type="button">Add to cart</button></span>
+              <div class="plp-dots">
+                <button type="button" class="plp-dot is-active" aria-label="View image 1"></button>
+                <button type="button" class="plp-dot" aria-label="View image 2"></button>
+              </div>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=missoni-dress">MISSONI KIDS</a>
+                <span class="plp-card-price">QAR 1,850</span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=missoni-dress">Girl's Zigzag Knit Dress Multicolor</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch" style="background:linear-gradient(90deg,#d6455a,#f2c94c,#2d9cdb)" aria-label="Multicolor" title="Multicolor"></button>
+                <button type="button" class="plp-swatch" style="background:#191919" aria-label="Black" title="Black"></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="plp-card plp-card--legacy" data-id="aignerkids-polo">
+            <a class="plp-card-media" href="product.html?id=aignerkids-polo" aria-label="Logo Print Cotton Polo Shirt">
+              <img class="plp-card-mainimg" src="https://www.bluesalon.com/cdn/shop/files/Boy_s_clothing_600x.jpg?v=1771912547" alt="Logo Print Cotton Polo Shirt" loading="lazy">
+              <span class="plp-tag dark">New</span>
+              <button type="button" class="plp-wish" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <span class="plp-quickadd"><button type="button">Add to cart</button></span>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=aignerkids-polo">AIGNER KIDS</a>
+                <span class="plp-card-price">QAR 420</span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=aignerkids-polo">Logo Print Cotton Polo Shirt</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch" style="background:#e9e4d8" aria-label="Ivory" title="Ivory"></button>
+                <button type="button" class="plp-swatch" style="background:#2b3648" aria-label="Navy" title="Navy"></button>
+                <button type="button" class="plp-swatch" style="background:#8a1f2b" aria-label="Burgundy" title="Burgundy"></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="plp-card plp-card--legacy" data-id="tommy-stripedress">
+            <a class="plp-card-media" href="product.html?id=tommy-stripedress" aria-label="Signature Stripe Cotton Dress">
+              <img class="plp-card-mainimg" src="https://www.bluesalon.com/cdn/shop/files/Girl_s_clothing_600x.jpg?v=1771912756" alt="Signature Stripe Cotton Dress" loading="lazy">
+              <span class="plp-tag sale">-20%</span>
+              <button type="button" class="plp-wish" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <span class="plp-quickadd"><button type="button">Add to cart</button></span>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=tommy-stripedress">TOMMY HILFIGER</a>
+                <span class="plp-card-price"><span class="was">QAR 550</span><span class="now">QAR 440</span></span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=tommy-stripedress">Signature Stripe Cotton Dress</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch" style="background:#d6202b" aria-label="Red" title="Red"></button>
+                <button type="button" class="plp-swatch" style="background:#191919" aria-label="Navy Stripe" title="Navy Stripe"></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="plp-card plp-card--legacy" data-id="armani-giftset">
+            <a class="plp-card-media" href="product.html?id=armani-giftset" aria-label="Newborn Gift Set — Babysuit &amp; Blanket">
+              <img class="plp-card-mainimg" src="https://www.bluesalon.com/cdn/shop/files/New_Project_10_bc7e0bd2-1185-41c7-a02c-56d341757fa6_600x.jpg?v=1778154026" alt="Newborn Gift Set — Babysuit &amp; Blanket" loading="lazy">
+              <span class="plp-tag dark">Exclusive</span>
+              <button type="button" class="plp-wish" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <span class="plp-quickadd"><button type="button">Add to cart</button></span>
+            </a>
+            <div class="plp-card-info">
+              <div class="plp-card-row">
+                <a class="plp-card-brand" href="product.html?id=armani-giftset">EMPORIO ARMANI</a>
+                <span class="plp-card-price">QAR 690</span>
+              </div>
+              <a class="plp-card-name" href="product.html?id=armani-giftset">Newborn Gift Set — Babysuit &amp; Blanket</a>
+              <div class="plp-swatches">
+                <button type="button" class="plp-swatch" style="background:#cfe0ea" aria-label="Powder Blue" title="Powder Blue"></button>
+                <button type="button" class="plp-swatch" style="background:#f3e3e8" aria-label="Blush" title="Blush"></button>
+                <button type="button" class="plp-swatch" style="background:#efece3" aria-label="Ivory" title="Ivory"></button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ In Focus ════════════════ -->
+    <section class="cat-fashion">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">In Focus</h2>
+          <p class="cat-fashion-sub">One world at a time — hover a name to step inside.</p>
+        </div>
+
+        <div class="kids-focus">
+          <nav class="kids-focus-list" id="kidsFocusList">
+            <a href="listing.html" class="kids-focus-item is-active" data-img="https://www.bluesalon.com/cdn/shop/files/New_Project_10_bc7e0bd2-1185-41c7-a02c-56d341757fa6_600x.jpg?v=1778154026" data-name="Newborn">
+              <span class="kids-focus-name">Newborn</span>
+              <span class="kids-focus-desc">Babysuits · Sets · Blankets</span>
+            </a>
+            <a href="listing.html" class="kids-focus-item" data-img="https://www.bluesalon.com/cdn/shop/files/Boy_s_clothing_600x.jpg?v=1771912547" data-name="Boys Clothing">
+              <span class="kids-focus-name">Boys Clothing</span>
+              <span class="kids-focus-desc">Tops · Bottoms · Outerwear</span>
+            </a>
+            <a href="listing.html" class="kids-focus-item" data-img="https://www.bluesalon.com/cdn/shop/files/Girl_s_clothing_600x.jpg?v=1771912756" data-name="Girls Clothing">
+              <span class="kids-focus-name">Girls Clothing</span>
+              <span class="kids-focus-desc">Dresses · Sets · Knitwear</span>
+            </a>
+            <a href="listing.html" class="kids-focus-item" data-img="https://www.bluesalon.com/cdn/shop/files/Shoes_b0e1304c-d5c6-4c76-9b89-31c0d839a8d4_600x.jpg?v=1771913018" data-name="Footwear">
+              <span class="kids-focus-name">Footwear</span>
+              <span class="kids-focus-desc">Trainers · Sandals · School shoes</span>
+            </a>
+            <a href="listing.html" class="kids-focus-item" data-img="https://cdn-static.farfetch-contents.com/cms-ccloud/caas/v1/media/10706096/data/bdc9961d891433a1eab9fac6d7a2959b/3x4_three-columns/480/2026-06-22-kw-webapp-chloe-kids-vacation-chloe-kids-multicategory-img.jpeg" data-name="Kids &amp; Teens">
+              <span class="kids-focus-name">Kids &amp; Teens</span>
+              <span class="kids-focus-desc">Vacation · Everyday · Occasion</span>
+            </a>
+          </nav>
+          <div class="kids-focus-stage" id="kidsFocusStage">
+            <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_10_bc7e0bd2-1185-41c7-a02c-56d341757fa6_600x.jpg?v=1778154026" class="is-active" data-key="https://www.bluesalon.com/cdn/shop/files/New_Project_10_bc7e0bd2-1185-41c7-a02c-56d341757fa6_600x.jpg?v=1778154026" alt="">
+            <img src="https://www.bluesalon.com/cdn/shop/files/Boy_s_clothing_600x.jpg?v=1771912547" data-key="https://www.bluesalon.com/cdn/shop/files/Boy_s_clothing_600x.jpg?v=1771912547" alt="">
+            <img src="https://www.bluesalon.com/cdn/shop/files/Girl_s_clothing_600x.jpg?v=1771912756" data-key="https://www.bluesalon.com/cdn/shop/files/Girl_s_clothing_600x.jpg?v=1771912756" alt="">
+            <img src="https://www.bluesalon.com/cdn/shop/files/Shoes_b0e1304c-d5c6-4c76-9b89-31c0d839a8d4_600x.jpg?v=1771913018" data-key="https://www.bluesalon.com/cdn/shop/files/Shoes_b0e1304c-d5c6-4c76-9b89-31c0d839a8d4_600x.jpg?v=1771913018" alt="">
+            <img src="https://cdn-static.farfetch-contents.com/cms-ccloud/caas/v1/media/10706096/data/bdc9961d891433a1eab9fac6d7a2959b/3x4_three-columns/480/2026-06-22-kw-webapp-chloe-kids-vacation-chloe-kids-multicategory-img.jpeg" data-key="https://cdn-static.farfetch-contents.com/cms-ccloud/caas/v1/media/10706096/data/bdc9961d891433a1eab9fac6d7a2959b/3x4_three-columns/480/2026-06-22-kw-webapp-chloe-kids-vacation-chloe-kids-multicategory-img.jpeg" alt="">
+            <span class="kids-focus-caption" id="kidsFocusCaption">Newborn</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Editorial edits (two-up) ════════════════ -->
+    <section class="edit-duo">
+      <div class="edit-duo-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">The Edit</h2>
+        </div>
+
+        <a href="listing.html" class="edit-duo-card">
+          <img src="https://www.bluesalon.com/cdn/shop/files/New_Project_11_3c02abdb-e76c-4749-91df-bb654320bf6c_600x.jpg?v=1778154421" alt="Newborn Essentials" class="edit-duo-img" loading="lazy">
+          <span class="edit-duo-overlay"></span>
+          <span class="edit-duo-caption">
+            <span class="bs-display edit-duo-title">Newborn Essentials</span>
+            <span class="edit-duo-link">Shop the edit</span>
+          </span>
+        </a>
+
+        <a href="listing.html" class="edit-duo-card">
+          <img src="https://cdn-static.farfetch-contents.com/cms-ccloud/caas/v1/media/10706096/data/bdc9961d891433a1eab9fac6d7a2959b/3x4_three-columns/480/2026-06-22-kw-webapp-chloe-kids-vacation-chloe-kids-multicategory-img.jpeg" alt="Back to School Edit" class="edit-duo-img" loading="lazy">
+          <span class="edit-duo-overlay"></span>
+          <span class="edit-duo-caption">
+            <span class="bs-display edit-duo-title">Back to School Edit</span>
+            <span class="edit-duo-link">Shop the edit</span>
+          </span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ The Atelier ════════════════ -->
+    <section class="cat-fashion">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">The Atelier</h2>
+          <p class="cat-fashion-sub">Favourites from the collection, framed.</p>
+        </div>
+
+        <div class="kids-atelier-grid">
+
+          <a href="listing.html" class="kids-atelier-item">
+            <div class="kids-atelier-frame"><div class="kids-atelier-frame-inner"><img src="https://www.bluesalon.com/cdn/shop/files/New_Project_10_bc7e0bd2-1185-41c7-a02c-56d341757fa6_600x.jpg?v=1778154026" alt="Newborn"></div></div>
+            <div class="kids-atelier-dot"></div>
+            <p class="kids-atelier-name">Newborn</p>
+          </a>
+
+          <a href="listing.html" class="kids-atelier-item">
+            <div class="kids-atelier-frame"><div class="kids-atelier-frame-inner"><img src="https://www.bluesalon.com/cdn/shop/files/Boy_s_clothing_600x.jpg?v=1771912547" alt="Boys Clothing"></div></div>
+            <div class="kids-atelier-dot"></div>
+            <p class="kids-atelier-name">Boys Clothing</p>
+          </a>
+
+          <a href="listing.html" class="kids-atelier-item">
+            <div class="kids-atelier-frame"><div class="kids-atelier-frame-inner"><img src="https://www.bluesalon.com/cdn/shop/files/Girl_s_clothing_600x.jpg?v=1771912756" alt="Girls Clothing"></div></div>
+            <div class="kids-atelier-dot"></div>
+            <p class="kids-atelier-name">Girls Clothing</p>
+          </a>
+
+          <a href="listing.html" class="kids-atelier-item">
+            <div class="kids-atelier-frame"><div class="kids-atelier-frame-inner"><img src="https://www.bluesalon.com/cdn/shop/files/Shoes_b0e1304c-d5c6-4c76-9b89-31c0d839a8d4_600x.jpg?v=1771913018" alt="Footwear"></div></div>
+            <div class="kids-atelier-dot"></div>
+            <p class="kids-atelier-name">Footwear</p>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Brands loved by them ════════════════ -->
+    <section class="cat-fashion cat-fashion-brands">
+      <div class="cat-fashion-inner">
+        <div class="cat-fashion-head">
+          <h2 class="cat-fashion-title">Brands Loved By Them</h2>
+          <a class="cat-fashion-sub-link" href="/collections">All Brands →</a>
+        </div>
+
+        <div class="brands-collection-home-grid-wrapper">
+          <div class="brands-collection-home-grid">
+
+            <a title="Aigner Kids" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/aigner_250x_65346155-e057-4adb-aae5-ddc4a61f9a72_250x.webp?v=1771916863" alt="Aigner Kids" loading="lazy"></span>
+            </a>
+
+            <a title="MCM" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/mcm_logo_250x_1_250x.avif?v=1771916863" alt="MCM" loading="lazy"></span>
+            </a>
+
+            <a title="Swarovski" href="listing.html" class="brand-item">
+              <span class="brand-logo"><img src="https://www.bluesalon.com/cdn/shop/files/swarovski_250x_8ae97c0e-56d0-4cfb-b2e2-70120be6819e_250x.avif?v=1771916863" alt="Swarovski" loading="lazy"></span>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════ Footer ════════════════ -->
+  <footer class="bs-footer">
+
+    <!-- Shop more -->
+    <div class="bs-shopmore">
+      <div class="bs-shopmore-inner">
+        <h2>Shop more</h2>
+        <div class="bs-shopmore-grid" id="shopMoreGrid"></div>
+      </div>
+    </div>
+
+    <!-- Newsletter / App download -->
+    <div class="bs-appband">
+      <div class="bs-appband-inner">
+
+        <!-- Newsletter -->
+        <div>
+          <h3>Never miss a thing</h3>
+          <p class="bs-appband-copy">Sign up for exclusive launches, offers, and in-store events.</p>
+          <form class="bs-newsletter-form" onsubmit="return false;">
+            <input type="email" placeholder="Your email address">
+            <button type="submit">Sign up</button>
+          </form>
+          <p class="bs-newsletter-fine">By subscribing you agree to our privacy policy. Unsubscribe anytime.</p>
+        </div>
+
+        <!-- App download -->
+        <div>
+          <h3>Download our App</h3>
+          <p class="bs-app-sub">Your pocket-sized Blue Salon</p>
+          <p class="bs-appband-copy bs-app-copy">
+            The iOS and Android app puts the extraordinary world of Blue Salon at your fingertips — with personalised style inspiration from the brands you love.
+          </p>
+        </div>
+
+        <!-- QR code -->
+        <div class="bs-qr">
+          <div class="bs-qr-label">Scan to download</div>
+           <div class="foot-qr-code">
+            <a href="https://apps.apple.com/qa/app/blue-salon-%D8%A7%D9%84%D8%B5%D8%A7%D9%84%D9%88%D9%86-%D8%A7%D9%84%D8%A7%D8%B2%D8%B1%D9%82/id1512188214" target="_blank" rel="noopener">
+              <img src="https://cdn.shopify.com/s/files/1/0370/6444/1991/files/qrapp-01.svg?v=1632989194" alt="App Store" width="98">
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=co.shopney.bluesaloncom&amp;hl=en&amp;gl=US" target="_blank" rel="noopener">
+              <img src="https://cdn.shopify.com/s/files/1/0370/6444/1991/files/qrapp-02.svg?v=1632667366" alt="Play Store" width="120">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Original footer -->
+    <div class="bs-mainfooter">
+      <div class="bs-mainfooter-inner">
+        <div class="bs-mainfooter-about">
+          <img src="https://www.bluesalon.com/cdn/shop/files/BS_Logo_horizontal-01-white1.png?v=1644232279" alt="Blue Salon">
+          <p>Qatar's first and foremost luxury department store since 1981. Over 500 international and niche brands, curated for you.</p>
+
+          <ul class="bs-contact">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Suhaim Bin Hamad Street, Doha, Qatar</span>
+            </li>
+          </ul>
+
+        </div>
+        <div id="footerCols" class="bs-mainfooter-cols"></div>
+      </div>
+      <div class="bs-bottomstrip">
+        <div class="bs-bottomstrip-inner">
+          <span class="bs-copyright">Ⓒ Copyright 2026
+            <a class="bs-copyright-aih" href="https://www.abuissa.com" target="_blank" rel="noopener">
+              <img src="https://www.abuissa.com/wp-content/uploads/2024/09/cropped-aih-favicon-192x192.png" alt="AbuIssa Holding" width="16" height="16" loading="lazy">
+              AbuIssa Holding
+            </a>
+            all rights reserved.</span>
+          <ul class="payment-methods">
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/Visa_Inverted_x32_5700ab8c-cb49-4355-83c3-4d1146a8076c_x32.png?v=1644226717" alt="Visa" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/mastercard-logo-design-history-1979_x32.jpg?v=1644232735" alt="Mastercard" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/Group_1_x32.jpg?v=1660140162" alt="Apple Pay" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/21Google_Pay9bc22ee1-7e10-4d6f-b0ec-57672824e23d_x32_1_x32.png?v=1709793011" alt="Google Pay" loading="lazy"></li>
+            <li><img src="https://www.bluesalon.com/cdn/shop/files/unnamed_1_x32.webp?v=1776589537" alt="Western Union" loading="lazy"></li>
+            <li><img src="https://colehaan.qa/cdn/shop/files/Theqa-01.svg?v=1726476176&width=540" alt="Theqa" loading="lazy"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // "In Focus" — hovering (or focusing, for keyboard users) a
+    // department name swaps the single large photo on the right.
+    (function () {
+      "use strict";
+      var list = document.getElementById("kidsFocusList");
+      var stage = document.getElementById("kidsFocusStage");
+      var caption = document.getElementById("kidsFocusCaption");
+      if (!list || !stage || !caption) return;
+      var items = list.querySelectorAll(".kids-focus-item");
+      var imgs = stage.querySelectorAll("img");
+      function show(item) {
+        items.forEach(function (i) { i.classList.remove("is-active"); });
+        item.classList.add("is-active");
+        var key = item.getAttribute("data-img");
+        imgs.forEach(function (img) {
+          img.classList.toggle("is-active", img.getAttribute("data-key") === key);
+        });
+        caption.textContent = item.getAttribute("data-name");
+      }
+      items.forEach(function (item) {
+        item.addEventListener("mouseenter", function () { show(item); });
+        item.addEventListener("focus", function () { show(item); });
+      });
+    })();
+  </script>
+</body>
+</html>

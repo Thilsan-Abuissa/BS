@@ -404,6 +404,35 @@ a.pdp-brand:hover { color: var(--color-primary); text-decoration: none; }
 .pdp-wish.is-active { color: var(--sale); }
 .pdp-wish.is-active svg { fill: var(--sale); }
 
+/* "Complete the Look" pill — floats on the main image, jumps down
+   to the list in the info panel (see product.js). */
+.pdp-ctl-jump {
+  position: absolute;
+  z-index: 2;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 22px;
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 0;
+  border-radius: var(--radius-pill, 999px);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  cursor: pointer;
+  transition: background var(--dur-base) var(--ease-standard);
+}
+.pdp-ctl-jump:hover { background: #fff; }
+
 /* ── Service reassurance — icon-only row. The label text still
    exists (aria-label + a visually-hidden-until-hover tooltip) so the
    meaning survives for screen readers and anyone unsure what an

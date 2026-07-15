@@ -1193,7 +1193,8 @@
   });
   var mainFig = root.querySelector("[data-zoom]");
   if (mainFig) mainFig.addEventListener("keydown", function (e) {
-    if (e.target.closest("#pdpWish")) return;  // let the wish button handle its own Enter/Space
+    // let these buttons handle their own Enter/Space instead of also zooming
+    if (e.target.closest("#pdpWish") || e.target.closest("#pdpCtlJump")) return;
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(); }
   });
 
